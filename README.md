@@ -22,7 +22,11 @@ LS project
 | Azure Container Instance  | [docs](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app) |
 | Alibaba Container Service | [docs](https://www.alibabacloud.com/help/doc-detail/90670.htm)                                              |
 
-## Python 3
+## server
+
+docker: [docker.pkg.github.com/seankhliao/uva-ls/server](https://github.com/seankhliao/uva-ls/packages/60824)
+
+min python: 3.7
 
 ```
 python3 -m venv env

@@ -3,6 +3,9 @@ on:
   push:
     brnaches:
       - master
+    paths:
+      - .github/workflows/workflow.yaml
+      - app/*
 jobs:
   docker:
     name: build container
