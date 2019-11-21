@@ -24,6 +24,7 @@ LS project
 
 ## Python 3
 
-| lib    | docs                                             |
-| ------ | ------------------------------------------------ |
-| pillow | [docs](https://pillow.readthedocs.io/en/latest/) |
+| lib    | docs                                                       |
+| ------ | ---------------------------------------------------------- |
+| pillow | [docs](https://pillow.readthedocs.io/en/latest/)           |
+| http   | [docs](https://docs.python.org/3/library/http.server.html) |
