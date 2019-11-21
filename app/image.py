@@ -12,7 +12,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         t = time.time_ns()
-        pt = time.process_time_ns()
         tt = time.thread_time_ns()
 
         post_data = self.rfile.read(int(self.headers['Content-Length']))
@@ -23,13 +22,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
         buf.seek(0)
 
         t = time.time_ns() - t
-        pt = time.process_time_ns() - pt
         tt = time.thread_time_ns() - tt
 
         self.send_response(200)
         self.send_header("Time", str(t))
-        self.send_header("Process-Thread", str(pt))
-        self.send_header("Time-Thread", str(tt))
+        self.send_header("Thread-Time", str(tt))
         self.end_headers()
         self.wfile.write(buf.read())
 
