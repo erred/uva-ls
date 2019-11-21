@@ -1,0 +1,17 @@
+name: workflow
+on:
+  push:
+    brnaches:
+      - master
+jobs:
+  docker:
+    name: build container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - run: docker login docker.pkg.github.com -u seankhliao -p $TOKEN
+        env:
+          TOKEN: ${{ secrets.GITHUB_PAT }}
+      - run: docker build -t docker.pkg.github.com/seankhliao/uva-ls/server:latest app
+      # push one at a time
+      - run: docker push docker.pkg.github.com/USER/TEMPLATE/TEMPLATE:latest
