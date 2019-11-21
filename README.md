@@ -21,3 +21,9 @@ LS project
 | GCP Cloud Run             | [docs](https://cloud.google.com/run/docs/deploying)                                                         |
 | Azure Container Instance  | [docs](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app) |
 | Alibaba Container Service | [docs](https://www.alibabacloud.com/help/doc-detail/90670.htm)                                              |
+
+## Python 3
+
+| lib    | docs                                             |
+| ------ | ------------------------------------------------ |
+| pillow | [docs](https://pillow.readthedocs.io/en/latest/) |
