@@ -1,25 +1,39 @@
 from PIL import Image
 import http.server
 import socketserver
+import os
+import io
+import time
 
-NEW_SIZE = (256, 256)
-PORT = 8080
+SIZE = int(os.getenv("SIZE", "256"))
+PORT = int(os.getenv("PORT", "8080"))
 
 class Handler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
+        t = time.time_ns()
+        pt = time.process_time_ns()
+        tt = time.thread_time_ns()
 
-    def process(im: Image.Image) -> Image.Image:
-        return im.resize(new_size)
+        post_data = self.rfile.read(int(self.headers['Content-Length']))
+        im = Image.open(io.BytesIO(post_data))
+        im = im.resize((SIZE, SIZE))
+        buf = io.BytesIO()
+        im.save(buf, format='jpeg')
+        buf.seek(0)
 
+        t = time.time_ns() - t
+        pt = time.process_time_ns() - pt
+        tt = time.thread_time_ns() - tt
 
-def serve():
+        self.send_response(200)
+        self.send_header("Time", str(t))
+        self.send_header("Process-Thread", str(pt))
+        self.send_header("Time-Thread", str(tt))
+        self.end_headers()
+        self.wfile.write(buf.read())
+
+if __name__ == "__main__":
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
         print("serving at port", PORT)
         httpd.serve_forever()
-
-
-if __name__ == "__main__":
-    im = Image.open('./image.jpeg')
-    im = process(im)
-    im.save('./image-small.jpeg')
