@@ -14,4 +14,4 @@ jobs:
           TOKEN: ${{ secrets.GITHUB_PAT }}
       - run: docker build -t docker.pkg.github.com/seankhliao/uva-ls/server:latest app
       # push one at a time
-      - run: docker push docker.pkg.github.com/USER/TEMPLATE/TEMPLATE:latest
+      - run: docker push docker.pkg.github.com/seankhliao/uva-ls/server:latest
