@@ -24,6 +24,12 @@ LS project
 
 ## Python 3
 
+```
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
 | lib    | docs                                                       |
 | ------ | ---------------------------------------------------------- |
 | pillow | [docs](https://pillow.readthedocs.io/en/latest/)           |
