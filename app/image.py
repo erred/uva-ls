@@ -1,12 +1,14 @@
 from PIL import Image
 import http.server
-import socketserver
-import os
 import io
+import os
+import socketserver
 import time
+import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
 PORT = int(os.getenv("PORT", "8080"))
+SERVERID = uuid.uuid4()
 
 class Handler(http.server.BaseHTTPRequestHandler):
 
@@ -27,6 +29,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Time", str(t))
         self.send_header("Thread-Time", str(tt))
+        self.send_header("Server-UUID", SERVERID)
         self.end_headers()
         self.wfile.write(buf.read())
 
