@@ -6,9 +6,9 @@ clean: clean-local-env clean-aws-lambda
 .PHONY: local-env clean-local-env
 local-env:
 	${PYTHON} -m venv env-local
-	bash -c "source env/bin/activate && pip install -r requirements.txt"
+	bash -c "source env-local/bin/activate && pip install -r requirements.txt"
 clean-local-env:
-	rm -rf env-local
+	rm -rf env-local || true
 
 .PHONY: aws-lambda clean-aws-lambda
 aws-lambda: clean-aws-lambda

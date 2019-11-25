@@ -5,7 +5,9 @@ on:
       - master
     paths:
       - .github/workflows/workflow.yaml
-      - app/*
+      - app/Dockerfile
+      - app/image.py
+      - app/requirements.txt
 jobs:
   docker:
     name: build container
