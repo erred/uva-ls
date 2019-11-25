@@ -37,7 +37,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(buf.read())
         except Exception as e:
             self.send_response(500)
-            self.wfile.write(bytes(str(e)))
+            self.wfile.write(io.BytesIO(str(e)))
 
 if __name__ == "__main__":
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
