@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 from PIL import Image
-import glob, requests, time, csv, datetime, os
+import glob, requests, time, csv, datetime, os, json
 
-services_url = {'localhost0':'http://localhost:8080',
+services_url = {'nevesserver':'http://145.100.104.117:8080',
  				'localhost1':'http://localhost:8080',
  				'localhost2':'http://localhost:8080'}
 
@@ -24,13 +24,40 @@ services_url = {'localhost0':'http://localhost:8080',
 
 #get 10 images
 def get_images():
-	image_list = []
-	for filename in glob.glob('/sne/home/mbadiassimo/LS/images/*.*')[:10]: 
-		im=open(filename, 'rb')
-		im1= im.read()
-		im.close()
-		image_list.append(im1)
-	return image_list
+	try:
+		image_list = []
+		for filename in glob.glob('/sne/home/mbadiassimo/LS/images/*.*')[:10]: 
+			im=open(filename, 'rb')
+			im1= im.read()
+			im.close()
+			image_list.append(im1)
+		return image_list
+
+	except Exception as e:
+		with open('./logs/imageproblems.log', 'a') as logfile:
+			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': ' + str(e) + '\n')
+
+	
+
+#prepare the file for writing the results
+#if file does not exists, create and write headers
+def save_results(name, results):
+	try:
+		if not os.path.isfile('./results/iterative_' + name + '.csv'):
+			f = open('iterative_' + name + '.csv', 'w')
+			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time'])
+			writer.writeheader()
+			f.close()	
+
+		with open('./results/iterative_' + name + '.csv', 'a') as csvFile:
+			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time'])
+			for result in results:
+				writer.writerow(result)
+
+	except Exception as e:
+		with open('./logs/log_' + name + '.log', 'a') as logfile:
+			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '(save results error): ' + str(e)  + 'results are: ' + str(results) + '\n')
+
 
 
 
@@ -40,16 +67,8 @@ if __name__ == "__main__":
 
 	for name, url in services_url.items():
 		try:
-
-			#prepare the file for writing the results
-			#if file does not exists, create and write headers
-			if not os.path.isfile('iterative_' + name + '.csv'):
-				f = open('iterative_' + name + '.csv', 'w')
-				writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time'])
-				writer.writeheader()
-				f.close()
-
 			#we send the request, mesure time and save results 10 times
+			results = []
 			for i in range(10):
 
 				var = image_list[i]
@@ -63,25 +82,16 @@ if __name__ == "__main__":
 						'Server_time' : r.headers['Time'],
 						'ServerThread_time' : r.headers['Thread-Time']
 					}
-
-					try:
-						with open('iterative_' + name + '.csv', 'a') as csvFile:
-							writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time'])
-							writer.writerow(data)
-
-					except Exception as e:
-						raise e
-						#log file?
-
-
+					results.append(data)
 				else:
-					#log services errors
-					print(r.status_code)
-					pass
+					with open('./logs/log_' + name + '.log', 'a') as logfile:
+						logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': Status code ' + str(r.status_code) + ', ERROR: ' +  str(r.reason) +'\n')
+			
+			save_results(name, results)
 
 		except Exception as e:
-			print(str(e))
-			#maybe do a log file
+			with open('./logs/log_' + name + '.log', 'a') as logfile:
+				logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': ' + str(e) + '\n')
 
 
 
