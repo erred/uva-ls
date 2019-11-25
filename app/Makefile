@@ -1,7 +1,7 @@
 .PHONY: aws-lambda
 aws-lambda: aws-lambda-clean
 	bash -c " \
-	python3 -m venv aws-lambda-env && \
+	python3.8 -m venv aws-lambda-env && \
 	source ./aws-lambda-env/bin/activate && \
 	pip install -r requirements.txt && \
 	deactivate && \
@@ -16,5 +16,5 @@ aws-lambda-clean:
 
 .PHONY: local-env
 local-env:
-	python3 -m venv env
+	python3.8 -m venv env
 	bash -c "source env/bin/activate && pip install -r requirements.txt"
