@@ -21,7 +21,7 @@ def handler(request):
         im = Image.open(io.BytesIO(post_data))
         im = im.resize((SIZE, SIZE))
         buf = io.BytesIO()
-        im.save(buf, format='jpeg')
+        im.save(buf, format='jpg')
         buf.seek(0)
 
         t = time.time_ns() - t
@@ -31,5 +31,6 @@ def handler(request):
         res.headers.set("Time", str(t))
         res.headers.set("Thread-Time", str(tt))
         res.headers.set("Server-UUID", SERVERID)
+        res.headers.set("Content-Type", 'image/jpg')
     except Exception as e:
         flask.abort(500, str(e))

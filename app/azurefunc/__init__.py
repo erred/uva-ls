@@ -1,0 +1,41 @@
+from PIL import Image
+import azure.functions as func
+import io
+import os
+import time
+import uuid
+
+SIZE = int(os.getenv("SIZE", "256"))
+SERVERID = uuid.uuid4()
+
+def do_POST(self):
+def main(req: func.HttpRequest) -> func.HttpResponse:
+    try:
+        t = time.time_ns()
+        tt = time.thread_time_ns()
+
+        post_data = req.get_body()
+        im = Image.open(io.BytesIO(post_data))
+        im = im.resize((SIZE, SIZE))
+        buf = io.BytesIO()
+        im.save(buf, format='jpg')
+        buf.seek(0)
+
+        t = time.time_ns() - t
+        tt = time.thread_time_ns() - tt
+
+        return func.HTTPRespnse(
+            body-buf.read(),
+            status_code=200,
+            headers={
+                "Time": str(t),
+                "Thread-Time": str(tt),
+                "Server-UUID": SERVERID,
+                "Content-Type": "image/jpg"
+            }
+        )
+    except Exception as e:
+        return func.HTTPRespnse(
+            str(e),
+            status_code=500,
+        )
