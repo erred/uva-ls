@@ -27,8 +27,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
             t = time.time_ns() - t
             tt = time.thread_time_ns() - tt
 
-            1 /0
-
             self.send_response(200)
             self.send_header("Time", str(t))
             self.send_header("Thread-Time", str(tt))
@@ -36,7 +34,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(buf.read())
         except Exception as e:
-            self.rror_message_format = "%"
             self.send_error(500, message=str(e))
 
 if __name__ == "__main__":
