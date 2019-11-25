@@ -1,21 +1,22 @@
 PYTHON := python3.8
 
-.PHONY: aws-lambda
-aws-lambda: aws-lambda-clean
-	${PYTHON} -m venv aws-lambda-env
-	bash -c "source ./aws-lambda-env/bin/activate && pip install -r requirements.txt"
-	cd ./aws-lambda-env/lib/python3.8/site-packages && \
+.PHONY: clean
+clean: clean-local-env clean-aws-lambda
+
+.PHONY: local-env clean-local-env
+local-env:
+	${PYTHON} -m venv env-local
+	bash -c "source env/bin/activate && pip install -r requirements.txt"
+clean-local-env:
+	rm -rf env-local
+
+.PHONY: aws-lambda clean-aws-lambda
+aws-lambda: clean-aws-lambda
+	${PYTHON} -m venv env-aws-lambda
+	bash -c "source ./env-aws-lambda/bin/activate && pip install -r requirements.txt"
+	cd ./env-aws-lambda/lib/python3.8/site-packages && \
 		zip -r9 ../../../../aws-lambda.zip . && \
 		cd ../../../.. && \
 		zip -g aws-lambda.zip image.py
-
-.PHONY: aws-lambda-clean
-aws-lambda-clean:
-	rm -rf aws-lambda-env aws-lambda.zip || true
-
-.PHONY: local-env local-env-clean
-local-env:
-	${PYTHON} -m venv env
-	bash -c "source env/bin/activate && pip install -r requirements.txt"
-local-env-clean:
-	rm -rf env
+clean-aws-lambda:
+	rm -rf env-aws-lambda aws-lambda.zip || true
