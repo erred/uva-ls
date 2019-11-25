@@ -2,15 +2,12 @@ PYTHON := python3.8
 
 .PHONY: aws-lambda
 aws-lambda: aws-lambda-clean
-	bash -c " \
-	${PYTHON} -m venv aws-lambda-env && \
-	source ./aws-lambda-env/bin/activate && \
-	pip install -r requirements.txt && \
-	deactivate && \
+	${PYTHON} -m venv aws-lambda-env
+	bash -c "source ./aws-lambda-env/bin/activate && pip install -r requirements.txt"
 	cd ./aws-lambda-env/lib/python3.8/site-packages && \
-	zip -r9 ../../../../aws-lambda.zip . && \
-	cd ../../../.. && \
-	zip -g aws-lambda.zip image.py"
+		zip -r9 ../../../../aws-lambda.zip . && \
+		cd ../../../.. && \
+		zip -g aws-lambda.zip image.py
 
 .PHONY: aws-lambda-clean
 aws-lambda-clean:
