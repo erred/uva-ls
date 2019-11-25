@@ -36,7 +36,8 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(buf.read())
         except Exception as e:
-            self.send_response(500, str(e))
+            self.send_error(500, explain=str(e))
+            # self.send_response(500)
             # self.wfile.write(bytearray(str(e), "utf-8"))
 
 if __name__ == "__main__":
