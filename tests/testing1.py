@@ -3,9 +3,9 @@
 from PIL import Image
 import glob, requests, time, csv, datetime, os, json
 
-services_url = {'nevesserver':'http://145.100.104.117:8080',
- 				'localhost1':'http://localhost:8080',
- 				'localhost2':'http://localhost:8080'}
+services_url = {'nevesserver0':'http://145.100.104.117:8080',
+ 				'nevesserver1':'http://145.100.104.117:8080',
+ 				'nevesserver2':'http://145.100.104.117:8080'}
 
 
 #TODO
@@ -36,6 +36,7 @@ def get_images():
 	except Exception as e:
 		with open('./logs/imageproblems.log', 'a') as logfile:
 			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': ' + str(e) + '\n')
+		exit()
 
 	
 
@@ -44,18 +45,18 @@ def get_images():
 def save_results(name, results):
 	try:
 		if not os.path.isfile('./results/iterative_' + name + '.csv'):
-			f = open('iterative_' + name + '.csv', 'w')
-			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time'])
+			f = open('./results/iterative_' + name + '.csv', 'w')
+			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
 			writer.writeheader()
 			f.close()	
 
 		with open('./results/iterative_' + name + '.csv', 'a') as csvFile:
-			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time'])
+			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
 			for result in results:
 				writer.writerow(result)
 
 	except Exception as e:
-		with open('./logs/log_' + name + '.log', 'a') as logfile:
+		with open('./logs/log_iterative_' + name + '.log', 'a') as logfile:
 			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '(save results error): ' + str(e)  + 'results are: ' + str(results) + '\n')
 
 
@@ -63,8 +64,6 @@ def save_results(name, results):
 
 if __name__ == "__main__":
 	image_list = get_images()
-	print(len(image_list))
-
 	for name, url in services_url.items():
 		try:
 			#we send the request, mesure time and save results 10 times
@@ -80,17 +79,18 @@ if __name__ == "__main__":
 						'Date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
 						'Client_time' : total_time,
 						'Server_time' : r.headers['Time'],
-						'ServerThread_time' : r.headers['Thread-Time']
+						'ServerThread_time' : r.headers['Thread-Time'],
+						'Server-UUID' : r.headers['Server-UUID']
 					}
 					results.append(data)
 				else:
-					with open('./logs/log_' + name + '.log', 'a') as logfile:
+					with open('./logs/log_iterative_' + name + '.log', 'a') as logfile:
 						logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': Status code ' + str(r.status_code) + ', ERROR: ' +  str(r.reason) +'\n')
 			
 			save_results(name, results)
 
 		except Exception as e:
-			with open('./logs/log_' + name + '.log', 'a') as logfile:
+			with open('./logs/log_iterative_' + name + '.log', 'a') as logfile:
 				logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': ' + str(e) + '\n')
 
 
