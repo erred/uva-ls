@@ -13,3 +13,8 @@ aws-lambda: aws-lambda-clean
 .PHONY: aws-lambda-clean
 aws-lambda-clean:
 	rm -rf aws-lambda-env aws-lambda.zip || true
+
+.PHONY: local-env
+local-env:
+	python3 -m venv env
+	bash -c "source env/bin/activate && pip install -r requirements.txt"
