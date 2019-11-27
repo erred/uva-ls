@@ -39,10 +39,10 @@ def handler(event, context):
             "body": base64.encodebytes(buf.read())
         }
         print(res.headers)
-    except Exception as e:
-        traceback.print_tb(e)
-        res = {
-            "statusCode": 500,
-            "statusDescription": str(e),
-        }
+    # except Exception as e:
+    #     traceback.print_tb(e)
+    #     res = {
+    #         "statusCode": 500,
+    #         "statusDescription": str(e),
+    #     }
     return res
