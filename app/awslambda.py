@@ -31,7 +31,7 @@ def handler(event, context):
             "statusCode": 200,
             "statusDescription": "200 OK",
             "headers": {
-                "Time": str(t)
+                "Time": str(t),
                 "Thread-Time": str(tt),
                 "Server-UUID": SERVERID,
                 "Content-Type": "image/jpg",
