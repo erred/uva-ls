@@ -32,7 +32,7 @@ def handler(event, context):
             "Server-UUID": SERVERID,
             "Content-Type": "image/jpeg",
         },
-        # "isBase64Encoded": True,
+        "isBase64Encoded": True,
         "body": base64.b64encode(buf.read()),
     }
     return res
