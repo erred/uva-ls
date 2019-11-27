@@ -12,14 +12,17 @@ clean-local-env:
 
 .PHONY: aws-lambda clean-aws-lambda
 aws-lambda: clean-aws-lambda
-	${PYTHON} -m venv env-aws-lambda
-	bash -c "source ./env-aws-lambda/bin/activate && pip install -r requirements.txt"
-	cd ./env-aws-lambda/lib/python3.8/site-packages && \
-		zip -r9 ../../../../aws-lambda.zip . && \
+	${PYTHON} -m venv awslambda/env
+	bash -c "cd awslambda && source ./env/bin/activate && pip install -r requirements.txt"
+	cd ./awslambda/env/lib/python3.8/site-packages && \
+		zip -r9 ../../../../../awslambda.zip . && \
 		cd ../../../.. && \
-		zip -g aws-lambda.zip awslambda.py
+		zip -g ../awslambda.zip awslambda.py
 clean-aws-lambda:
-	rm -rf env-aws-lambda aws-lambda.zip || true
+	rm -rf awslambda/env awslambda.zip || true
 
 .PHONY: gcp-functions
-gcp-functions:
+gcp-functions: gcp-functions-clean
+	cd gcpfunctions && zip -r9 ../gcpfunctions.zip *
+gcp-functions-clean:
+	rm -rf gcpfunctions.zip || true

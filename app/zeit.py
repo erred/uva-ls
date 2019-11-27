@@ -20,7 +20,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             im = Image.open(io.BytesIO(post_data))
             im = im.resize((SIZE, SIZE))
             buf = io.BytesIO()
-            im.save(buf, format='jpg')
+            im.save(buf, format='JPEG')
             buf.seek(0)
 
             t = time.time_ns() - t
@@ -30,7 +30,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.send_header("Time", str(t))
             self.send_header("Thread-Time", str(tt))
             self.send_header("Server-UUID", SERVERID)
-            self.send_header("Content-Type", "image/jpg")
+            self.send_header("Content-Type", "image/jpeg")
             self.end_headers()
             self.wfile.write(buf.read())
         except Exception as e:

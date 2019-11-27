@@ -18,7 +18,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         im = Image.open(io.BytesIO(post_data))
         im = im.resize((SIZE, SIZE))
         buf = io.BytesIO()
-        im.save(buf, format='jpg')
+        im.save(buf, format='JPEG')
         buf.seek(0)
 
         t = time.time_ns() - t
@@ -31,7 +31,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 "Time": str(t),
                 "Thread-Time": str(tt),
                 "Server-UUID": SERVERID,
-                "Content-Type": "image/jpg"
+                "Content-Type": "image/jpeg"
             }
         )
     except Exception as e:

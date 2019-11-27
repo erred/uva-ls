@@ -16,7 +16,7 @@ def main(env, start_response):
         im = Image.open(io.BytesIO(post_data))
         im = im.resize((SIZE, SIZE))
         buf = io.BytesIO()
-        im.save(buf, format='jpg')
+        im.save(buf, format='JPEG')
         buf.seek(0)
 
         td = datetime.now() - t
@@ -25,7 +25,7 @@ def main(env, start_response):
             ("Time", str(1000 * td / timedelta(microseconds=1))),
             ("Thread-Time", str(1000 * td / timedelta(microseconds=1))),
             ("Server-UUID", SERVERID),
-            ("Content-Type", "image/jpg"),
+            ("Content-Type", "image/jpeg"),
         ])
         return [buf.read()]
 
