@@ -7,7 +7,7 @@ import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
 # PORT = int(os.getenv("PORT", "8080"))
-SERVERID = uuid.uuid4()
+SERVERID = str(uuid.uuid4())
 
 def main(args):
     try:

@@ -7,7 +7,7 @@ import traceback
 import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
-SERVERID = uuid.uuid4()
+SERVERID = str(uuid.uuid4())
 
 def handler(event, context):
     t = time.time_ns()

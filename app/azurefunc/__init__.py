@@ -6,7 +6,7 @@ import time
 import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
-SERVERID = uuid.uuid4()
+SERVERID = str(uuid.uuid4())
 
 def do_POST(self):
 def main(req: func.HttpRequest) -> func.HttpResponse:

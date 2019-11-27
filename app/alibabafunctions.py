@@ -5,7 +5,7 @@ import datetime
 import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
-SERVERID = uuid.uuid4()
+SERVERID = str(uuid.uuid4())
 
 def main(env, start_response):
     try:
