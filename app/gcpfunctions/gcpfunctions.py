@@ -1,6 +1,5 @@
 from PIL import Image
 import flask
-import werkzeug.exceptions.InternalServerError
 import io
 import os
 import time
@@ -23,8 +22,9 @@ def handler(request):
     t = time.time_ns() - t
     tt = time.thread_time_ns() - tt
 
-    res = flask.make_response(buf.read())
-    res.headers.set("Time", str(t))
-    res.headers.set("Thread-Time", str(tt))
-    res.headers.set("Server-UUID", SERVERID)
-    res.headers.set("Content-Type", 'image/jpeg')
+    return (buf.read(), 200, {
+        "Time": str(t),
+        "Thread-Time": str(tt),
+        "Server-UUID": SERVERID,
+        "Content-Type": "image/jpeg",
+    })
