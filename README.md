@@ -19,18 +19,28 @@ LS project
 
 ## background
 
-| platform      | Product            | framework          |
-| ------------- | ------------------ | ------------------ |
-| AWS           | Lambda             | custom             |
-| GCP           | Functions          | flask              |
-| Azure         | Functions          | custom             |
-| IBM Cloud     | Functions          | openwhisk          |
-| Alibaba Cloud | Function Compute   | WSGI               |
-| Zeit          | Now                | Python HTTP / WSGI |
-| AWS           | Fargate            | N/A                |
-| GCP           | Cloud Run          | Kubernetes         |
-| Azure         | Container Instance | N/A                |
-| Alibaba Cloud | Container Service  | N/A                |
+| platform      | Product            | framework                     | dev notes                                                        |
+| ------------- | ------------------ | ----------------------------- | ---------------------------------------------------------------- |
+| AWS           | Lambda             | custom                        | so many pieces to configure, long feedback cycle, scarce logging |
+| GCP           | Functions          | flask                         | just works, good logging                                         |
+| Azure         | Functions          | custom                        |                                                                  |
+| IBM Cloud     | Functions          | openwhisk                     |                                                                  |
+| Alibaba Cloud | Function Compute   | WSGI                          |                                                                  |
+| Zeit          | Now                | Python HTTP / WSGI            | just works, good logging                                         |
+| AWS           | Fargate            | N/A                           |                                                                  |
+| GCP           | Cloud Run          | kubernetes / anthos / knative | just works, good logging                                         |
+| Azure         | Container Instance | N/A                           |                                                                  |
+| Alibaba Cloud | Container Service  | N/A                           |                                                                  |
+
+## testing variables
+
+- image size
+- image contents
+- DNS resolution
+- platform location
+- machine size
+- Python version
+- platform feature parity ?
 
 ## docs
 

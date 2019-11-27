@@ -10,14 +10,16 @@ awslambda: clean-awslambda
 		cd ../../../.. && \
 		zip -g ../awslambda.zip awslambda.py
 clean-awslambda:
-	rm -rf awslambda.zip || true
+	-rm -rf awslambda.zip
 
 .PHONY: gcp-functions clean-gcpfunctions
 gcpfunctions: clean-gcpfunctions
 	cd gcpfunctions && zip -r9 ../gcpfunctions.zip *
 clean-gcpfunctions:
-	rm -rf gcpfunctions.zip || true
+	-rm -rf gcpfunctions.zip
 
-.PHONY: docker
+.PHONY: docker docker-pypy
 docker:
-	docker build docker
+	docker build -t ls-server:latest docker
+docker-pypy:
+	docker build -t ls-server-pypy docker-pypy
