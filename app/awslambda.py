@@ -3,6 +3,7 @@ import base64
 import io
 import os
 import time
+import traceback
 import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
@@ -14,9 +15,7 @@ def handler(event, context):
         t = time.time_ns()
         tt = time.thread_time_ns()
 
-        post_data = event["body"]
-        if event["isBase64Encoded"]:
-            post_data = base64.decodebytes(post_data)
+        post_data = base64.decodebytes(event["body"])
 
         im = Image.open(io.BytesIO(post_data))
         im = im.resize((SIZE, SIZE))
@@ -41,7 +40,7 @@ def handler(event, context):
         }
         print(res.headers)
     except Exception as e:
-        print(str(e))
+        traceback.print_tb(e)
         res = {
             "statusCode": 500,
             "statusDescription": str(e),
