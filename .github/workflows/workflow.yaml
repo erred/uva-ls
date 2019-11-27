@@ -20,7 +20,7 @@ jobs:
       - run: docker login -u seankhliao -p $TOKEN
         env:
           TOKEN: ${{ secrets.DOCKERPAT }}
-      - run: docker build -t docker.pkg.github.com/seankhliao/uva-ls/server:latest seankhliao/uva-ls-server:latest app/docker
+      - run: docker build -t docker.pkg.github.com/seankhliao/uva-ls/server:latest -t seankhliao/uva-ls-server:latest app/docker
       # push one at a time
       - run: docker push docker.pkg.github.com/seankhliao/uva-ls/server:latest
       - run: docker push seankhliao/uva-ls-server:latest
