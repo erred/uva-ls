@@ -20,3 +20,6 @@ aws-lambda: clean-aws-lambda
 		zip -g aws-lambda.zip awslambda.py
 clean-aws-lambda:
 	rm -rf env-aws-lambda aws-lambda.zip || true
+
+.PHONY: gcp-functions
+gcp-functions:
