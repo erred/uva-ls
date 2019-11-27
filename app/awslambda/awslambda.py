@@ -33,6 +33,6 @@ def handler(event, context):
             "Content-Type": "image/jpeg",
         },
         "isBase64Encoded": True,
-        "body": base64.encodestring(buf.read()),
+        "body": base64.b64encode(buf.read()).decode("utf-8"),
     }
     return res
