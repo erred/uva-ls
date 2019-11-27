@@ -13,9 +13,10 @@ def handler(event, context):
     t = time.time_ns()
     tt = time.thread_time_ns()
 
-    post_data = event["body"]
-    if event["isBase64Encoded"]:
-        post_data = base64.b64decode(event["body"])
+    # post_data = event["body"]
+    # if event["isBase64Encoded"]:
+    #     post_data = base64.b64decode(event["body"])
+    post_data = base64.decodebytes(event["body"])
 
     im = Image.open(io.BytesIO(post_data))
     im = im.resize((SIZE, SIZE))
