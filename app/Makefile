@@ -17,6 +17,6 @@ aws-lambda: clean-aws-lambda
 	cd ./env-aws-lambda/lib/python3.8/site-packages && \
 		zip -r9 ../../../../aws-lambda.zip . && \
 		cd ../../../.. && \
-		zip -g aws-lambda.zip image.py
+		zip -g aws-lambda.zip awslambda.py
 clean-aws-lambda:
 	rm -rf env-aws-lambda aws-lambda.zip || true
