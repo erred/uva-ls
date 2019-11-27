@@ -39,7 +39,9 @@ def handler(event, context):
             "isBase64Encoded": True,
             "body": base64.encodebytes(buf.read())
         }
+        print(res.headers)
     except Exception as e:
+        print(str(e))
         res = {
             "statusCode": 500,
             "statusDescription": str(e),
