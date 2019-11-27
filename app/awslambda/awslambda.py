@@ -26,14 +26,13 @@ def handler(event, context):
 
     res = {
         "statusCode": 200,
-        "statusDescription": "200 OK",
         "headers": {
             "Time": str(t),
             "Thread-Time": str(tt),
             "Server-UUID": SERVERID,
             "Content-Type": "image/jpeg",
         },
-        "isBase64Encoded": True,
-        "body": base64.b64encode(buf.read())
+        # "isBase64Encoded": True,
+        "body": base64.b64encode(buf.read()),
     }
     return res

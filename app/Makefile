@@ -14,7 +14,7 @@ awslambda: clean-awslambda
 		cd ../../../.. && \
 		zip -g ../awslambda.zip awslambda.py
 clean-awslambda:
-	rm -rf awslambda/env awslambda.zip || true
+	rm -rf awslambda.zip || true
 
 .PHONY: gcp-functions clean-gcpfunctions
 gcpfunctions: clean-gcpfunctions
