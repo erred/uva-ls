@@ -2,39 +2,50 @@
 
 LS project
 
-## FaaS
+## Services
 
-| Product                  | docs                                                                                      |
-| ------------------------ | ----------------------------------------------------------------------------------------- |
-| AWS Lambda               | [docs](https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model.html)        |
-| GCP Cloud Functions      | [docs](https://cloud.google.com/functions/docs/writing/http)                              |
-| Azure Functions          | [docs](https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python) |
-| IBM Cloud Functions      | [docs](https://cloud.ibm.com/docs/openwhisk?topic=cloud-functions-actions)                |
-| Alibaba Function Compute | [docs](https://www.alibabacloud.com/help/doc-detail/56316.htm)                            |
-| Zeit Now                 | [docs](https://zeit.co/docs/runtimes#official-runtimes/python)                            |
+| type | platform      | Product            | docs       | python | status   |
+| ---- | ------------- | ------------------ | ---------- | ------ | -------- |
+| FaaS | AWS           | Lambda             | [docs][1]  | 3.8    |          |
+| FaaS | GCP           | Functions          | [docs][2]  | 3.7    | can work |
+| FaaS | Azure         | Functions          | [docs][3]  | 3.7    |          |
+| FaaS | IBM Cloud     | Functions          | [docs][4]  | 3.7    |          |
+| FaaS | Alibaba Cloud | Function Compute   | [docs][5]  | 3.6    |          |
+| FaaS | Zeit          | Now                | [docs][6]  | 3.6    | can work |
+| CaaS | AWS           | Fargate            | [docs][7]  | 3.8    |          |
+| CaaS | GCP           | Cloud Run          | [docs][8]  | 3.8    | can work |
+| CaaS | Azure         | Container Instance | [docs][9]  | 3.8    |          |
+| CaaS | Alibaba Cloud | Container Service  | [docs][10] | 3.8    |          |
 
-## Containers as a Service
+## background
 
-| Product                   | docs                                                                                                        |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| AWS Fargate               | [docs](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html)                        |
-| GCP Cloud Run             | [docs](https://cloud.google.com/run/docs/deploying)                                                         |
-| Azure Container Instance  | [docs](https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app) |
-| Alibaba Container Service | [docs](https://www.alibabacloud.com/help/doc-detail/90670.htm)                                              |
+| platform      | Product            | framework          |
+| ------------- | ------------------ | ------------------ |
+| AWS           | Lambda             | custom             |
+| GCP           | Functions          | flask              |
+| Azure         | Functions          | custom             |
+| IBM Cloud     | Functions          | openwhisk          |
+| Alibaba Cloud | Function Compute   | WSGI               |
+| Zeit          | Now                | Python HTTP / WSGI |
+| AWS           | Fargate            | N/A                |
+| GCP           | Cloud Run          | Kubernetes         |
+| Azure         | Container Instance | N/A                |
+| Alibaba Cloud | Container Service  | N/A                |
 
-## server
-
-docker: [docker.pkg.github.com/seankhliao/uva-ls/server](https://github.com/seankhliao/uva-ls/packages/60824)
-
-min python: 3.7
-
-```
-python3 -m venv env
-source env/bin/activate
-pip install -r requirements.txt
-```
+## docs
 
 | lib    | docs                                                       |
 | ------ | ---------------------------------------------------------- |
 | pillow | [docs](https://pillow.readthedocs.io/en/latest/)           |
 | http   | [docs](https://docs.python.org/3/library/http.server.html) |
+
+[1]: https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model.html
+[2]: https://cloud.google.com/functions/docs/writing/http
+[3]: https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python
+[4]: https://cloud.ibm.com/docs/openwhisk?topic=cloud-functions-actions
+[5]: https://www.alibabacloud.com/help/doc-detail/56316.htm
+[6]: https://zeit.co/docs/runtimes#official-runtimes/python
+[7]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html
+[8]: https://cloud.google.com/run/docs/deploying
+[9]: https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app
+[10]: https://www.alibabacloud.com/help/doc-detail/90670.htm
