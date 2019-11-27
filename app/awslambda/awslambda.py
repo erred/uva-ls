@@ -9,15 +9,14 @@ import uuid
 SIZE = int(os.getenv("SIZE", "256"))
 SERVERID = str(uuid.uuid4())
 
+# https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
 def handler(event, context):
     t = time.time_ns()
     tt = time.thread_time_ns()
 
     post_data = event["body"]
-    # if event["isBase64Encoded"]:
-    #     post_data = base64.b64decode(event["body"])
-    # post_data = base64.b64decode(event["body"])
-    # post_data = base64.decodebytes(event["body"])
+    if event["isBase64Encoded"]:
+        post_data = base64.b64decode(post_data)
 
     im = Image.open(io.BytesIO(post_data))
     im = im.resize((SIZE, SIZE))
@@ -37,6 +36,6 @@ def handler(event, context):
             "Content-Type": "image/jpeg",
         },
         "isBase64Encoded": True,
-        "body": base64.b64encode(buf.read()).decode("utf-8"),
+        "body": base64.b64encode(buf.read()),
     }
     return res
