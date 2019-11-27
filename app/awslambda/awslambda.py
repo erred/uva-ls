@@ -17,7 +17,7 @@ def handler(event, context):
     post_data = event["body"]
     if event["isBase64Encoded"]:
         post_data = base64.b64decode(post_data)
-    print(post_data)
+    post_data = base64.b64decode(post_data)
 
     im = Image.open(io.BytesIO(post_data))
     im = im.resize((SIZE, SIZE))
