@@ -23,3 +23,7 @@ test-zeitnow: clean
 
 test-azure: clean
 	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg"  https://ls-benchmark.azurewebsites.net/api/ls-project?code=WQxbpOmKFASyfrtGTmHM6SFJoSvw8EXJHncfUX3C/an7FpVT7UvF4Q==  -o ${OUTFILE}
+
+test-ibm: clean
+	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg"  https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/ls-benchmark  -o ${OUTFILE}
+

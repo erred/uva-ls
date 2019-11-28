@@ -10,30 +10,36 @@ SIZE = int(os.getenv("SIZE", "256"))
 SERVERID = str(uuid.uuid4())
 
 def main(args):
-    t = time.time_ns()
-    tt = time.thread_time_ns()
+    try:
+        t = time.time_ns()
+        tt = time.thread_time_ns()
 
-    post_data = args["body"]
-    if event["isBase64Encoded"]:
-        post_data = base64.decodebytes(post_data)
+        post_data = base64.b64decode(args["__ow_body"])
 
-    im = Image.open(io.BytesIO(post_data))
-    im = im.resize((SIZE, SIZE))
-    buf = io.BytesIO()
-    im.save(buf, format='JPEG')
-    buf.seek(0)
+        im = Image.open(io.BytesIO(post_data))
+        im = im.resize((SIZE, SIZE))
+        buf = io.BytesIO()
+        im.save(buf, format='JPEG')
+        buf.seek(0)
 
-    t = time.time_ns() - t
-    tt = time.thread_time_ns() - tt
+        t = time.time_ns() - t
+        tt = time.thread_time_ns() - tt
 
-    res = {
-        "statusCode": 200,
-        "headers": {
-            "Time": str(t),
-            "Thread-Time": str(tt),
-            "Server-UUID": SERVERID,
-            "Content-Type": "image/jpeg",
-        },
-        "body": base64.encodebytes(buf.read())
-    }
+        body = base64.b64encode(buf.read())
+
+        res = {
+            "statusCode": 200,
+            "headers": {
+                "Time": str(t),
+                "Thread-Time": str(tt),
+                "Server-UUID": SERVERID,
+                "Content-Type": "image/jpeg",
+            },
+            "body": body.decode("UTF-8")
+        }
+    except Exception as e:
+        res = {
+                "statusCode": 200,
+                "body":str(e),
+        }
     return res
