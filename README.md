@@ -8,7 +8,7 @@ LS project
 | ---- | ------------- | ----------------- | ---------- | ------ | ------ |
 | FaaS | AWS           | Lambda            | [docs][1]  | 3.8    | works  |
 | FaaS | GCP           | Functions         | [docs][2]  | 3.7    | works  |
-| FaaS | Azure         | Functions         | [docs][3]  | 3.7    |        |
+| FaaS | Azure         | Functions         | [docs][3]  | 3.7    | works  |
 | FaaS | IBM Cloud     | Functions         | [docs][4]  | 3.7    | works  |
 | FaaS | Alibaba Cloud | Function Compute  | [docs][5]  | 3.6    |        |
 | FaaS | Zeit          | Now               | [docs][6]  | 3.6    | works  |
