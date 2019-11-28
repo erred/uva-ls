@@ -17,6 +17,8 @@ LS project
 | CaaS | Azure         | Container Instance | [docs][9]  | 3.8    |          |
 | CaaS | Alibaba Cloud | Container Service  | [docs][10] | 3.8    |          |
 
+IBM also has docker, but STDIN/STDOUT ?
+
 ## background
 
 | platform      | Product            | framework                     | dev notes                                                        |
@@ -25,7 +27,7 @@ LS project
 | GCP           | Functions          | flask                         | just works, good logging                                         |
 | Azure         | Functions          | custom                        |                                                                  |
 | IBM Cloud     | Functions          | openwhisk                     |                                                                  |
-| Alibaba Cloud | Function Compute   | WSGI                          |                                                                  |
+| Alibaba Cloud | Function Compute   | WSGI / Terraform              |                                                                  |
 | Zeit          | Now                | Python HTTP / WSGI            | just works, good logging                                         |
 | AWS           | Fargate            | N/A                           |                                                                  |
 | GCP           | Cloud Run          | kubernetes / anthos / knative | just works, good logging                                         |
