@@ -14,7 +14,6 @@ LS project
 | FaaS | Zeit          | Now                | [docs][6]  | 3.6    | can work |
 | CaaS | AWS           | Fargate            | [docs][7]  | 3.8    |          |
 | CaaS | GCP           | Cloud Run          | [docs][8]  | 3.8    | work     |
-| CaaS | Azure         | Container Instance | [docs][9]  | 3.8    |          |
 | CaaS | Alibaba Cloud | Container Service  | [docs][10] | 3.8    |          |
 
 IBM also has docker, but STDIN/STDOUT ?
