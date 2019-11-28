@@ -2,9 +2,7 @@
 
 import glob, requests, time, csv, datetime, os, json
 
-services_url = {'nevesserver0':'http://145.100.104.117:8080',
- 				'nevesserver1':'http://145.100.104.117:8080',
- 				'nevesserver2':'http://145.100.104.117:8080'}
+services_url = {'nevesserver0':'http://145.100.104.117:8080'}
 
 
 #TODO

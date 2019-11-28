@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
 from PIL import Image
-import glob, requests, time, csv, datetime, os, asyncio
+import glob, requests, time, csv, datetime, os, asyncio, queue
 
 
 image_list = []
-services_url = {'nevesserver0':'http://145.100.104.117:8080',
- 				'nevesserver1':'http://145.100.104.117:8080',
- 				'nevesserver2':'http://145.100.104.117:8080'}
+services_url = {'nevesserver0':'http://145.100.104.117:8080'}
 
+
+res = queue.Queue()
+err = queue.Queue()
 
 
 def get_images():
@@ -25,25 +26,34 @@ def get_images():
 		exit()
 
 
-def save_results(name, results):
+def save_results(name):
 	try:
 		if not os.path.isfile('./results/recursive_' + name + '.csv'):
-			f = open('./results/iterative_' + name + '.csv', 'w')
+			f = open('./results/recursive_' + name + '.csv', 'w')
 			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
 			writer.writeheader()
 			f.close()	
 
 		with open('./results/recursive_' + name + '.csv', 'a') as csvFile:
 			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
-			for result in results:
-				writer.writerow(result)
+
+			while not res.empty():
+				x = res.get()
+				for i in x:
+					writer.writerow(i)
+
+		#if there is any error save it in a log file
+		while not err.empty():
+			with open('./logs/log_recursive_' + name + '.log', 'a') as logfile:
+				y = err.get()
+				logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + y + '\n')
 
 	except Exception as e:
 		with open('./logs/log_recursive_' + name + '.log', 'a') as logfile:
-			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '(save results error): ' + str(e)  + 'results are: ' + str(results) + '\n')
+			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '(save results error): ' + str(e) + '\n')
 
 
-#we need to have this func running 50 times in parallel
+
 async def do_requests(name, url):
 	
 	results = []
@@ -63,14 +73,16 @@ async def do_requests(name, url):
 			}
 			results.append(data)
 		else:
-			with open('./logs/log_iterative_' + name + '.log', 'a') as logfile:
-				logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': Status code ' + str(r.status_code) + ', ERROR: ' +  str(r.reason))
+			error = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': Status code ' + str(r.status_code) + ', ERROR: ' +  str(r.reason)
+			err.put(error)
+	#store the results of the 10 requests in the queue
+	res.put(results)
 
 
 async def main(name, url):
 	aws = []
 	for i in range(50):
-		aws.append(do_requests())
+		aws.append(do_requests(name, url))
 	await asyncio.gather(*aws)
 
 
@@ -78,7 +90,5 @@ if __name__ == "__main__":
 	get_images()
 
 	for name, url in services_url.items():
-
 		asyncio.run(main(name, url))
-		pass
-		#set de asyinc stuff
+		save_results(name)
