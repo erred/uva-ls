@@ -15,3 +15,6 @@ test-gcp-fun: clean
 
 test-zeitnow: clean
 	curl -L -v --data-binary "@chrome2x.jpg" --header "Content-Type: image/jpeg" https://zeitnow.lsproject.now.sh/api/zeit  -o out.jpeg
+
+test-azure: clean
+	curl -L -v --data-binary "@chrome2x.jpg" --header "Content-Type: image/jpeg"  https://ls-benchmark.azurewebsites.net/api/ls-project?code=WQxbpOmKFASyfrtGTmHM6SFJoSvw8EXJHncfUX3C/an7FpVT7UvF4Q==  -o out.jpeg
