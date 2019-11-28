@@ -6,14 +6,14 @@ LS project
 
 | type | platform      | Product           | docs       | python | status |
 | ---- | ------------- | ----------------- | ---------- | ------ | ------ |
-| FaaS | AWS           | Lambda            | [docs][1]  | 3.8    |        |
-| FaaS | GCP           | Functions         | [docs][2]  | 3.7    | work   |
+| FaaS | AWS           | Lambda            | [docs][1]  | 3.8    | works  |
+| FaaS | GCP           | Functions         | [docs][2]  | 3.7    | works  |
 | FaaS | Azure         | Functions         | [docs][3]  | 3.7    |        |
-| FaaS | IBM Cloud     | Functions         | [docs][4]  | 3.7    |        |
+| FaaS | IBM Cloud     | Functions         | [docs][4]  | 3.7    | works  |
 | FaaS | Alibaba Cloud | Function Compute  | [docs][5]  | 3.6    |        |
-| FaaS | Zeit          | Now               | [docs][6]  | 3.6    | work   |
+| FaaS | Zeit          | Now               | [docs][6]  | 3.6    | works  |
 | CaaS | AWS           | Fargate           | [docs][7]  | 3.8    |        |
-| CaaS | GCP           | Cloud Run         | [docs][8]  | 3.8    | work   |
+| CaaS | GCP           | Cloud Run         | [docs][8]  | 3.8    | works  |
 | CaaS | Alibaba Cloud | Container Service | [docs][10] | 3.8    |        |
 
 IBM also has docker, but STDIN/STDOUT ?
@@ -24,7 +24,7 @@ IBM also has docker, but STDIN/STDOUT ?
 | ------------- | ------------------ | ----------------------------- | ---------------------------------------------------------------- |
 | AWS           | Lambda             | custom                        | so many pieces to configure, long feedback cycle, scarce logging |
 | GCP           | Functions          | flask                         | just works, good logging                                         |
-| Azure         | Functions          | custom                        |                                                                  |
+| Azure         | Functions          | custom / MS Oryx build        |                                                                  |
 | IBM Cloud     | Functions          | openwhisk                     |                                                                  |
 | Alibaba Cloud | Function Compute   | WSGI / Terraform              |                                                                  |
 | Zeit          | Now                | Python HTTP / WSGI            | just works, good logging                                         |
