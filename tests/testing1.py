@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from PIL import Image
 import glob, requests, time, csv, datetime, os, json
 
 services_url = {'nevesserver0':'http://145.100.104.117:8080',
