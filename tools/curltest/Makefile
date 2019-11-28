@@ -27,3 +27,5 @@ test-azure: clean
 test-ibm: clean
 	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg"  https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/ls-benchmark  -o ${OUTFILE}
 
+test-awslambda: clean
+	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg"  --header "Accept: image/jpeg" https://l9u9mkqc9b.execute-api.us-east-2.amazonaws.com/default/ls-server -o ${OUTFILE}
