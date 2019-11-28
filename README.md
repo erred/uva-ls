@@ -7,13 +7,13 @@ LS project
 | type | platform      | Product            | docs       | python | status   |
 | ---- | ------------- | ------------------ | ---------- | ------ | -------- |
 | FaaS | AWS           | Lambda             | [docs][1]  | 3.8    |          |
-| FaaS | GCP           | Functions          | [docs][2]  | 3.7    | can work |
+| FaaS | GCP           | Functions          | [docs][2]  | 3.7    | work     |
 | FaaS | Azure         | Functions          | [docs][3]  | 3.7    |          |
 | FaaS | IBM Cloud     | Functions          | [docs][4]  | 3.7    |          |
 | FaaS | Alibaba Cloud | Function Compute   | [docs][5]  | 3.6    |          |
 | FaaS | Zeit          | Now                | [docs][6]  | 3.6    | can work |
 | CaaS | AWS           | Fargate            | [docs][7]  | 3.8    |          |
-| CaaS | GCP           | Cloud Run          | [docs][8]  | 3.8    | can work |
+| CaaS | GCP           | Cloud Run          | [docs][8]  | 3.8    | work     |
 | CaaS | Azure         | Container Instance | [docs][9]  | 3.8    |          |
 | CaaS | Alibaba Cloud | Container Service  | [docs][10] | 3.8    |          |
 
