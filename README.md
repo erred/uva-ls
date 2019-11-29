@@ -16,7 +16,14 @@ LS project
 | CaaS | GCP           | Cloud Run         | [docs][8]  | 3.8    | works  |
 | CaaS | Alibaba Cloud | Container Service | [docs][10] | 3.8    |        |
 
-IBM also has docker, but STDIN/STDOUT ?
+- IBM also has docker, but STDIN/STDOUT?
+- Alibaba also has docker functions, but not really documented?
+- Azure docker functions?
+
+## TODO
+
+- [ ] increase timing resolution
+- [ ] check ns resolution for 3.6
 
 ## background
 
