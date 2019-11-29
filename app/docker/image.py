@@ -4,6 +4,7 @@ import io
 import os
 import socketserver
 import time
+import threading
 import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
@@ -47,7 +48,8 @@ class handler(http.server.BaseHTTPRequestHandler):
         except Exception as e:
             self.send_error(500, message=str(e))
 
+
 if __name__ == "__main__":
-    with socketserver.TCPServer(("", PORT), handler) as httpd:
+    with socketserver.ThreadingTCPServer(("", PORT), handler) as httpd:
         print("serving at port", PORT)
         httpd.serve_forever()
