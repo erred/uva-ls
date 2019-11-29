@@ -13,8 +13,8 @@ err = queue.Queue()
 
 
 def get_images():
-	try:	
-		for filename in glob.glob('/sne/home/mbadiassimo/LS/images/*.*')[:50]: 
+	try:
+		for filename in glob.glob('/sne/home/mbadiassimo/LS/images/*.*')[:50]:
 			im=open(filename, 'rb')
 			im1= im.read()
 			im.close()
@@ -32,7 +32,7 @@ def save_results(name):
 			f = open('./results/recursive_' + name + '.csv', 'w')
 			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
 			writer.writeheader()
-			f.close()	
+			f.close()
 
 		with open('./results/recursive_' + name + '.csv', 'a') as csvFile:
 			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
@@ -55,7 +55,7 @@ def save_results(name):
 
 
 async def do_requests(name, url):
-	
+
 	results = []
 	for i in range(10):
 		var = image_list[i]
@@ -65,7 +65,7 @@ async def do_requests(name, url):
 
 		if r.status_code == 200:
 			data = {
-				'Date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
+				'Date': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
 				'Client_time' : total_time,
 				'Server_time' : r.headers['Time'],
 				'ServerThread_time' : r.headers['Thread-Time'],
