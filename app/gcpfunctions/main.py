@@ -9,22 +9,37 @@ SIZE = int(os.getenv("SIZE", "256"))
 SERVERID = str(uuid.uuid4())
 
 def handler(request):
-    t = time.time_ns()
-    tt = time.thread_time_ns()
+    try:
+        st0 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt0 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
 
-    post_data = request.get_data()
-    im = Image.open(io.BytesIO(post_data))
-    im = im.resize((SIZE, SIZE))
-    buf = io.BytesIO()
-    im.save(buf, format='JPEG')
-    buf.seek(0)
+        post_data = request.get_data()
 
-    t = time.time_ns() - t
-    tt = time.thread_time_ns() - tt
+        st1 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt1 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
 
-    return (buf.read(), 200, {
-        "Time": str(t),
-        "Thread-Time": str(tt),
-        "Server-UUID": SERVERID,
-        "Content-Type": "image/jpeg",
-    })
+        im = Image.open(io.BytesIO(post_data))
+        im = im.resize((SIZE, SIZE))
+        buf = io.BytesIO()
+        im.save(buf, format='JPEG')
+
+        st2 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt2 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+
+        buf.seek(0)
+        buf.read()
+
+        st3 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt3 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+
+        res = (buffed, 200, {
+            "Time": ', '.join(map(str, [st1-st0, st2-st1, st3-st2])),
+            "Thread-Time": ', '.join(map(str, [tt1-tt0, tt2-tt1, tt3-tt2])),
+            "Server-UUID": SERVERID,
+            "Content-Type": "image/jpeg",
+        })
+    except Exception as e:
+        res = (str(e), 500, {
+            "Server-UUID": SERVERID
+        })
+    return res

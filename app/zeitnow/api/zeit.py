@@ -3,9 +3,7 @@ import http.server
 import io
 import os
 import socketserver
-# import time
-from datetime import datetime
-from datetime import timedelta
+import time
 import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
@@ -14,25 +12,35 @@ SERVERID = str(uuid.uuid4())
 class handler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
-        # t = time.time_ns()
-        # tt = time.thread_time_ns()
-        t = datetime.now()
+        try:
+            st0 = time.clock_gettime(time.CLOCK_REALTIME)
+            tt0 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
 
-        post_data = self.rfile.read(int(self.headers['Content-Length']))
-        im = Image.open(io.BytesIO(post_data))
-        im = im.resize((SIZE, SIZE))
-        buf = io.BytesIO()
-        im.save(buf, format='JPEG')
-        buf.seek(0)
+            post_data = self.rfile.read(int(self.headers['Content-Length']))
 
-        # t = time.time_ns() - t
-        # tt = time.thread_time_ns() - tt
-        t = datetime.now() - t
+            st1 = time.clock_gettime(time.CLOCK_REALTIME)
+            tt1 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
 
-        self.send_response(200)
-        self.send_header("Time", str(1000 * t / timedelta(microseconds=1)))
-        self.send_header("Thread-Time", str(1000 * t / timedelta(microseconds=1)))
-        self.send_header("Server-UUID", SERVERID)
-        self.send_header("Content-Type", "image/jpeg")
-        self.end_headers()
-        self.wfile.write(buf.read())
+            im = Image.open(io.BytesIO(post_data))
+            im = im.resize((SIZE, SIZE))
+            buf = io.BytesIO()
+            im.save(buf, format='JPEG')
+
+            st2 = time.clock_gettime(time.CLOCK_REALTIME)
+            tt2 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+
+            buf.seek(0)
+            buffed = buf.read()
+
+            st3 = time.clock_gettime(time.CLOCK_REALTIME)
+            tt3 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+
+            self.send_response(200)
+            self.send_header("Time", ', '.join(map(str, [st1-st0, st2-st1, st3-st2])))
+            self.send_header("Thread-Time", ', '.join(map(str, [tt1-tt0, tt2-tt1, tt3-tt2])))
+            self.send_header("Server-UUID", SERVERID)
+            self.send_header("Content-Type", "image/jpeg")
+            self.end_headers()
+            self.wfile.write(buffed)
+        except Exception as e:
+            self.send_error(500, message=str(e))

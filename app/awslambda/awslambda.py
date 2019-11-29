@@ -3,38 +3,52 @@ import base64
 import io
 import os
 import time
-import traceback
 import uuid
 
 SIZE = int(os.getenv("SIZE", "256"))
 SERVERID = str(uuid.uuid4())
 
-
-# https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
 def handler(event, context):
-    t = time.time_ns()
-    tt = time.thread_time_ns()
+    try:
+        st0 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt0 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
 
-    post_data = base64.b64decode(event["body"])
+        post_data = base64.b64decode(event["body"])
 
-    im = Image.open(io.BytesIO(post_data))
-    im = im.resize((SIZE, SIZE))
-    buf = io.BytesIO()
-    im.save(buf, format='JPEG')
-    buf.seek(0)
+        st1 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt1 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
 
-    t = time.time_ns() - t
-    tt = time.thread_time_ns() - tt
+        im = Image.open(io.BytesIO(post_data))
+        im = im.resize((SIZE, SIZE))
+        buf = io.BytesIO()
+        im.save(buf, format='JPEG')
 
-    res = {
-        "statusCode": 200,
-        "headers": {
-            "Time": str(t),
-            "Thread-Time": str(tt),
-            "Server-UUID": SERVERID,
-            "Content-Type": "image/jpeg",
-        },
-        "isBase64Encoded": True,
-        "body": base64.b64encode(buf.read()).decode("UTF-8"),
-    }
+        st2 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt2 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+
+        buf.seek(0)
+        buffed = base64.b64encode(buf.read()).decode("UTF-8")
+
+        st3 = time.clock_gettime(time.CLOCK_REALTIME)
+        tt3 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+
+        res = {
+            "statusCode": 200,
+            "headers": {
+                "Time": ', '.join(map(str, [st1-st0, st2-st1, st3-st2])),
+                "Thread-Time": ', '.join(map(str, [tt1-tt0, tt2-tt1, tt3-tt2])),
+                "Server-UUID": SERVERID,
+                "Content-Type": "image/jpeg",
+            },
+            "isBase64Encoded": True,
+            "body": buffed,
+        }
+    except Exception as e:
+        res = {
+            "statusCode": 500,
+            "headers": {
+                "Server-UUID": SERVERID,
+            }
+            "body": str(e)
+        }
     return res
