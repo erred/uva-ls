@@ -37,9 +37,8 @@ class handler(http.server.BaseHTTPRequestHandler):
             tt3 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
             self.send_response(200)
-            self.send_header("Clock-Res", str(time.clock_getres(time.CLOCK_REALTIME) )+ ", "+ str(time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)))
-            self.send_header("Time", ', '.join(map(str, [int(1000000000 * st1-st0), int(1000000000 * st2-st1), int(1000000000 * st3-st2)])))
-            self.send_header("Thread-Time", ', '.join(map(str, [int(1000000000 * tt1-tt0), int(1000000000 * tt2-tt1), int(1000000000 * tt3-tt2)])))
+            self.send_header("Time", ', '.join(map(str, [int(1000000000 * x) for x in [st1-st0, st2-st1,st3-st2]])))
+            self.send_header("Thread-Time", ', '.join(map(str, [int(1000000000 * x) for x in [tt1-tt0, tt2-tt1,tt3-tt2]])))
             self.send_header("Server-UUID", SERVERID)
             self.send_header("Content-Type", "image/jpeg")
             self.end_headers()
