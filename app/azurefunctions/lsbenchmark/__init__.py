@@ -36,8 +36,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             buffed,
             status_code=200,
             headers={
-                "Time": ', '.join(map(str, [st1-st0, st2-st1, st3-st2])),
-                "Thread-Time": ', '.join(map(str, [tt1-tt0, tt2-tt1, tt3-tt2])),
+                "Time": ', '.join([str(int(1000000000 * x)) for x in [st1-st0, st2-st1, st3-st2]]),
+                "Thread-Time": ', '.join([str(int(1000000000 * x)) for x in [tt1-tt0, tt2-tt1, tt3-tt2]]),
                 "Server-UUID": SERVERID,
                 "Content-Type": "image/jpeg"
             }
