@@ -10,7 +10,7 @@ urls = {'nevesserver0':'http://145.100.104.117:8080',
         'nevesserver2':'http://145.100.104.117:8080'}
 
 def get_images():
-    with open('./tools/curltest/chrome2x.jpg', 'rb') as f:
+    with open('./images', 'rb') as f:
         img = f.read()
         return [img * 10], [ [img * 50 ] * 50 ]
 
@@ -41,6 +41,10 @@ async def do_10(imgs, url):
 async def main():
     # imgss [[img * 10] * 50]
     img10, img500 = get_images()
+
+
+
+    exit()
     for name, url in urls.items():
         t0 = time.time_ns()
 

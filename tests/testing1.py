@@ -5,20 +5,6 @@ import glob, requests, time, csv, datetime, os, json
 services_url = {'nevesserver0':'http://145.100.104.117:8080'}
 
 
-#TODO
-''' get image and resize it to de desired size
-	send it to the services we are testing and compute how long does it take to answer
-	get the answer, take the time in the headesr, claculate what u need.
-	save the data.
-
-	We need:
-	Repeate 10 times:
-	- sending one request. Wait answer.
-
-	Repeate 50 times in paralel
-	- sending 10 request without wainting answer. '''
-
-
 #get 10 images
 def get_images():
 	try:
