@@ -3,9 +3,12 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
+	"path/filepath"
 	"strconv"
 	"time"
 
@@ -50,8 +53,8 @@ func main() {
 		photos, res, err := u.Photos.All(o)
 		if err != nil {
 			if _, ok := err.(*unsplash.RateLimitError); ok {
-				log.Println("rate limited, sleeping for 10min")
-				time.Sleep(10 * time.Minute)
+				log.Println("rate limited, sleeping for 1min")
+				time.Sleep(1 * time.Minute)
 				continue
 			}
 			log.Println("other err: ", err)
@@ -87,8 +90,8 @@ func main() {
 		dl, _, err := u.Photos.DownloadLink(data[i][2])
 		if err != nil {
 			if _, ok := err.(*unsplash.RateLimitError); ok {
-				log.Println("rate limited, sleeping for 10min")
-				time.Sleep(10 * time.Minute)
+				log.Println("rate limited, sleeping for 1min")
+				time.Sleep(1 * time.Minute)
 				continue
 			}
 			log.Println("download link other err")
@@ -96,5 +99,44 @@ func main() {
 			continue
 		}
 		data[i] = append(data[i], dl.String())
+	}
+
+	f, err = os.Create("photos-dl.csv")
+	if err != nil {
+		log.Printf("create file: %v", err)
+		return
+	}
+	defer f.Close()
+
+	w = csv.NewWriter(f)
+	w.WriteAll(data)
+	w.Flush()
+	fmt.Printf("written %d records\n", len(data))
+
+	os.Mkdir("./photos", 0755)
+	for i := 0; i < len(data); {
+		func() {
+			res, err := client.Get(data[i][3])
+			if err != nil {
+				log.Printf("download %d err: %v, sleeping for 1 min\n", i, err)
+				time.Sleep(time.Minute)
+				return
+			}
+			defer res.Body.Close()
+			i++
+			u, err := url.Parse(data[i][3])
+			if err != nil {
+				log.Printf("parse %d url: %v\n", i, err)
+				return
+			}
+			fp := "./photos/" + filepath.Base(u.Path)
+			f, err := os.Create(fp)
+			if err != nil {
+				log.Println("create file %d %s err: %v\n", i, fp, err)
+				return
+			}
+			defer f.Close()
+			io.Copy(f, res.Body)
+		}()
 	}
 }
