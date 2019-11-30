@@ -62,13 +62,25 @@ LS project
 
 ### testing variables
 
-- image size
-- image contents
-- DNS resolution
-- platform location
-- machine size
-- Python version
-- platform feature parity ?
+- Workload:
+  - distribution: stable / burst
+  - memory usage
+  - cpu usage
+  - latency sensitivity
+  - wasted cycles / external calls
+  - async / concurrent / parallel
+- Network:
+  - DNS resolution
+  - bandwidth / payload size
+  - location / latency
+- Platform:
+  - layers / overhead
+  - machine size
+  - runtime version
+  - addons feature parity
+- code / server
+  - optimized for platform ?
+  - concurrent / parallel ?
 
 ### additional testing ideas
 
