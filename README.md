@@ -19,28 +19,43 @@ LS project
 - IBM also has docker, but STDIN/STDOUT?
 - Alibaba also has docker functions, but not really documented?
 - Azure docker functions?
+- Google Appengine scale to 0?
 
-## TODO
-
-- [ ] increase timing resolution
-- [ ] check ns resolution for 3.6
-
-## background
+### background
 
 | platform      | Product            | framework                     | dev notes                                                        |
 | ------------- | ------------------ | ----------------------------- | ---------------------------------------------------------------- |
 | AWS           | Lambda             | custom                        | so many pieces to configure, long feedback cycle, scarce logging |
 | GCP           | Functions          | flask                         | just works, good logging                                         |
-| Azure         | Functions          | custom / MS Oryx build        |                                                                  |
-| IBM Cloud     | Functions          | openwhisk                     |                                                                  |
+| Azure         | Functions          | custom / MS Oryx build        | good docs, + local testing, really bad web console               |
+| IBM Cloud     | Functions          | openwhisk / cloudflare        | meh docs on openwhisk                                            |
 | Alibaba Cloud | Function Compute   | WSGI / Terraform              |                                                                  |
 | Zeit          | Now                | Python HTTP / WSGI            | just works, good logging                                         |
-| AWS           | Fargate            | N/A                           |                                                                  |
+| AWS           | Fargate            | containers on ECS             |                                                                  |
 | GCP           | Cloud Run          | kubernetes / anthos / knative | just works, good logging                                         |
 | Azure         | Container Instance | N/A                           |                                                                  |
 | Alibaba Cloud | Container Service  | N/A                           |                                                                  |
 
-## testing variables
+### additional docs
+
+| lib        | docs                                                       |
+| ---------- | ---------------------------------------------------------- |
+| pillow     | [docs](https://pillow.readthedocs.io/en/latest/)           |
+| http       | [docs](https://docs.python.org/3/library/http.server.html) |
+| flask      | [docs](https://flask.palletsprojects.com/en/1.1.x/api/)    |
+| time (3.6) | [docs](https://docs.python.org/3.6/library/time.html)      |
+| aiohttp    | [docs](https://aiohttp.readthedocs.io/en/stable/)          |
+
+## report ideas
+
+### target featureset
+
+- globally / publicly available HTTPS terminated endpoint
+- serverless: no managing of runtimes
+- scalable: autoscale
+- pay for usage
+
+### testing variables
 
 - image size
 - image contents
@@ -50,12 +65,13 @@ LS project
 - Python version
 - platform feature parity ?
 
-## docs
+### additional testing ideas
 
-| lib    | docs                                                       |
-| ------ | ---------------------------------------------------------- |
-| pillow | [docs](https://pillow.readthedocs.io/en/latest/)           |
-| http   | [docs](https://docs.python.org/3/library/http.server.html) |
+- probe runtime CPU frequency, does 1vcpu = 1vcpu
+
+## additional references:
+
+- [GCP Functions vs Run][11]
 
 [1]: https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model.html
 [2]: https://cloud.google.com/functions/docs/writing/http
@@ -67,3 +83,4 @@ LS project
 [8]: https://cloud.google.com/run/docs/deploying
 [9]: https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app
 [10]: https://www.alibabacloud.com/help/doc-detail/90670.htm
+[11]: https://medium.com/google-cloud/cloud-run-vs-cloud-functions-whats-the-lowest-cost-728d59345a2e
