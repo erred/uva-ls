@@ -25,7 +25,7 @@ func main() {
 	}
 
 	u := unsplash.New(client)
-	o := &unsplash.ListOpt{Page: 1, PerPage: 30}
+	o := &unsplash.ListOpt{Page: 1, PerPage: 100}
 	if !o.Valid() {
 		log.Println("options not valid")
 	}
@@ -54,7 +54,7 @@ func main() {
 				time.Sleep(10 * time.Minute)
 				continue
 			}
-			log.Println("other err: %v", err)
+			log.Println("other err: ", err)
 			return
 		}
 
