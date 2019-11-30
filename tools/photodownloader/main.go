@@ -7,12 +7,11 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
+	// "net/url"
 	"os"
-	"path/filepath"
+	// "path/filepath"
 	"time"
-
-	"github.com/hbagdi/go-unsplash/unsplash"
+	// "github.com/hbagdi/go-unsplash/unsplash"
 )
 
 type myTransport struct{}
@@ -26,12 +25,12 @@ func main() {
 	client := &http.Client{
 		Transport: &myTransport{},
 	}
-
-	u := unsplash.New(client)
-	o := &unsplash.ListOpt{Page: 1, PerPage: 100}
-	if !o.Valid() {
-		log.Fatalln("options not valid")
-	}
+	//
+	// u := unsplash.New(client)
+	// o := &unsplash.ListOpt{Page: 1, PerPage: 100}
+	// if !o.Valid() {
+	// 	log.Fatalln("options not valid")
+	// }
 	//
 	// var data [][]string
 	// defer func() {
@@ -97,38 +96,38 @@ func main() {
 	}
 	f.Close()
 
-	for i := 0; i < len(data); {
-		dl, _, err := u.Photos.DownloadLink(data[i][2])
-		if err != nil {
-			if _, ok := err.(*unsplash.RateLimitError); ok {
-				log.Println("rate limited, sleeping for 1min")
-				time.Sleep(1 * time.Minute)
-				continue
-			}
-			log.Println("download link other err")
-			i++
-			continue
-		}
-		data[i] = append(data[i], dl.String())
-		i++
-	}
-
-	f, err = os.Create("photos-dl.csv")
-	if err != nil {
-		log.Printf("create file: %v", err)
-		return
-	}
-	defer f.Close()
-
-	w := csv.NewWriter(f)
-	w.WriteAll(data)
-	w.Flush()
-	fmt.Printf("written %d records\n", len(data))
+	// for i := 0; i < len(data); {
+	// 	dl, _, err := u.Photos.DownloadLink(data[i][2])
+	// 	if err != nil {
+	// 		if _, ok := err.(*unsplash.RateLimitError); ok {
+	// 			log.Println("rate limited, sleeping for 1min")
+	// 			time.Sleep(1 * time.Minute)
+	// 			continue
+	// 		}
+	// 		log.Println("download link other err")
+	// 		i++
+	// 		continue
+	// 	}
+	// 	data[i] = append(data[i], dl.String())
+	// 	i++
+	// }
+	//
+	// f, err = os.Create("photos-dl.csv")
+	// if err != nil {
+	// 	log.Printf("create file: %v", err)
+	// 	return
+	// }
+	// defer f.Close()
+	//
+	// w := csv.NewWriter(f)
+	// w.WriteAll(data)
+	// w.Flush()
+	// fmt.Printf("written %d records\n", len(data))
 
 	os.Mkdir("./photos", 0755)
 	for i := 0; i < len(data); {
 		func() {
-			res, err := client.Get(data[i][3])
+			res, err := client.Get(fmt.Sprintf("https://unsplash.com/photos/%s/download", data[i][2]))
 			if err != nil {
 				log.Printf("download %d err: %v, sleeping for 1 min\n", i, err)
 				time.Sleep(time.Minute)
@@ -143,19 +142,18 @@ func main() {
 			}
 
 			i++
-			u, err := url.Parse(data[i][3])
-			if err != nil {
-				log.Printf("parse %d url: %v\n", i, err)
-				return
-			}
-			fp := "./photos/" + filepath.Base(u.Path)
+			fp := fmt.Sprintf("./photos/%03d-%s.jpg", i, data[i][2])
 			f, err := os.Create(fp)
 			if err != nil {
-				log.Println("create file %d %s err: %v\n", i, fp, err)
+				log.Printf("create file %d %s err: %v\n", i, fp, err)
 				return
 			}
 			defer f.Close()
 			io.Copy(f, res.Body)
+
+			if i%10 == 0 {
+				log.Println("download progress ", i)
+			}
 		}()
 	}
 }
