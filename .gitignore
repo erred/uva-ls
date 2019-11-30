@@ -1,8 +1,8 @@
-env
+env/
 tests/logs/
 tests/results/
 images/
 docs/*.aux
 docs/*.log
 docs/*.out
-
+testdata/
