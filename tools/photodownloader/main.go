@@ -32,32 +32,30 @@ func main() {
 
 	var data [][]string
 	defer func() {
-		if len(data) > 0 {
-			f, err := os.Create("photos.csv")
-			if err != nil {
-				log.Printf("create file: %v", err)
-				return
-			}
-			defer f.Close()
-
-			w := csv.NewWriter(f)
-			w.WriteAll(data)
-			w.Flush()
-			fmt.Printf("written %d records\n", len(data))
-
+		f, err := os.Create("photos-deferred.csv")
+		if err != nil {
+			log.Printf("create file: %v", err)
+			return
 		}
+		defer f.Close()
+
+		w := csv.NewWriter(f)
+		w.WriteAll(data)
+		w.Flush()
+		fmt.Printf("written %d records\n", len(data))
+
 	}()
 
 	for len(data) < 600 {
 		photos, res, err := u.Photos.All(o)
 		if err != nil {
-                        if _, ok := err.(*unsplash.RateLimitError); ok {
-                                log.Println("rate limited, sleeping for 10min")
-                                time.Sleep(10 * time.Minute)
-                                continue
-                        }
-                        log.Println("other err: %v", err)
-                        return
+			if _, ok := err.(*unsplash.RateLimitError); ok {
+				log.Println("rate limited, sleeping for 10min")
+				time.Sleep(10 * time.Minute)
+				continue
+			}
+			log.Println("other err: %v", err)
+			return
 		}
 
 		for _, p := range *photos {
@@ -71,5 +69,32 @@ func main() {
 			break
 		}
 		o.Page = res.NextPage
+	}
+
+	f, err := os.Create("photos.csv")
+	if err != nil {
+		log.Printf("create file: %v", err)
+		return
+	}
+	defer f.Close()
+
+	w := csv.NewWriter(f)
+	w.WriteAll(data)
+	w.Flush()
+	fmt.Printf("written %d records\n", len(data))
+
+	for i := 0; i < len(data); {
+		dl, _, err := u.Photos.DownloadLink(data[i][2])
+		if err != nil {
+			if _, ok := err.(*unsplash.RateLimitError); ok {
+				log.Println("rate limited, sleeping for 10min")
+				time.Sleep(10 * time.Minute)
+				continue
+			}
+			log.Println("download link other err")
+			i++
+			continue
+		}
+		data[i] = append(data[i], dl.String())
 	}
 }
