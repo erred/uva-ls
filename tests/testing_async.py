@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import glob, requests, time, csv
 import datetime, os, asyncio, queue
 import itertools, aiohttp
@@ -82,14 +80,11 @@ async def do_requests(url, imgs):
         await res.put(results)
 
     except Exception as e:
-        print('this error')
         await err.put(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' ' + str(e) + '\n')
 
             
-
 async def main():
     img500 = get_images()
-
     for name, url in services_url.items():
         aws = []
         for imgs in img500:
@@ -98,5 +93,5 @@ async def main():
         await save_results(name)
 
 if __name__ == "__main__":
-    asyncio.run(main(), debug=True)
+    asyncio.run(main())
     
