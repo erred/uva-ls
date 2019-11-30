@@ -45,6 +45,8 @@ LS project
 | flask      | [docs](https://flask.palletsprojects.com/en/1.1.x/api/)    |
 | time (3.6) | [docs](https://docs.python.org/3.6/library/time.html)      |
 | aiohttp    | [docs](https://aiohttp.readthedocs.io/en/stable/)          |
+| asyncio    | [docs](https://docs.python.org/3/library/asyncio.html)     |
+
 
 ## report ideas
 
