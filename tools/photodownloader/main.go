@@ -22,9 +22,9 @@ func (t *myTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 }
 
 func main() {
-	client := &http.Client{
-		Transport: &myTransport{},
-	}
+	// client := &http.Client{
+	// 	Transport: &myTransport{},
+	// }
 	//
 	// u := unsplash.New(client)
 	// o := &unsplash.ListOpt{Page: 1, PerPage: 100}
@@ -127,7 +127,7 @@ func main() {
 	os.Mkdir("./photos", 0755)
 	for i := 0; i < len(data); {
 		func() {
-			res, err := client.Get(fmt.Sprintf("https://unsplash.com/photos/%s/download", data[i][2]))
+			res, err := http.Get(fmt.Sprintf("https://unsplash.com/photos/%s/download", data[i][2]))
 			if err != nil {
 				log.Printf("download %d err: %v, sleeping for 1 min\n", i, err)
 				time.Sleep(time.Minute)
