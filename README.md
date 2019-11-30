@@ -47,6 +47,9 @@ LS project
 | aiohttp    | [docs](https://aiohttp.readthedocs.io/en/stable/)          |
 | asyncio    | [docs](https://docs.python.org/3/library/asyncio.html)     |
 
+## testing
+
+- 583 raw photos (larger than 4000x4000): [releases: v0.0.0-photos.raw][photos1]
 
 ## report ideas
 
@@ -86,3 +89,4 @@ LS project
 [9]: https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app
 [10]: https://www.alibabacloud.com/help/doc-detail/90670.htm
 [11]: https://medium.com/google-cloud/cloud-run-vs-cloud-functions-whats-the-lowest-cost-728d59345a2e
+[photos1]: https://github.com/seankhliao/uva-ls/releases/tag/v0.0.0-photos.raw
