@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -123,6 +124,13 @@ func main() {
 				return
 			}
 			defer res.Body.Close()
+			if res.StatusCode < 200 || res.StatusCode > 399 {
+				log.Printf("download %d status %d, sleeping for 1 min\n", i, res.StatusCode)
+				time.Sleep(time.Minute)
+				ioutil.ReadAll(res.Body)
+				return
+			}
+
 			i++
 			u, err := url.Parse(data[i][3])
 			if err != nil {
