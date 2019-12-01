@@ -2,7 +2,7 @@ env/
 tests/logs/
 tests/results/
 images/
-docs/*.aux
-docs/*.log
-docs/*.out
+docs/proposal/*.aux
+docs/proposal/*.log
+docs/proposal/*.out
 testdata/
