@@ -28,11 +28,12 @@ def handler(request):
 
         buf.seek(0)
         buf.read()
+        buf.seek(0)
 
         st3 = time.clock_gettime(time.CLOCK_REALTIME)
         tt3 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
 
-        res = (buffed, 200, {
+        res = (buf.read(), 200, {
             "Time": ', '.join([str(int(1000000000 * x)) for x in [st1-st0, st2-st1, st3-st2]]),
             "Thread-Time": ', '.join([str(int(1000000000 * x)) for x in [tt1-tt0, tt2-tt1, tt3-tt2]]),
             "Server-UUID": SERVERID,

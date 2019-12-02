@@ -39,9 +39,9 @@ def main(args):
                 "Time": ', '.join([str(int(1000000000 * x)) for x in [st1-st0, st2-st1, st3-st2]]),
                 "Thread-Time": ', '.join([str(int(1000000000 * x)) for x in [tt1-tt0, tt2-tt1, tt3-tt2]]),
                 "Server-UUID": SERVERID,
-                "Content-Type": "image/jpeg",
+                "Content-Type": "image/jpeg"
             },
-            "body": buffed,
+            "body": buffed
         }
     except Exception as e:
         res = {
@@ -49,6 +49,6 @@ def main(args):
                 "headers": {
                     "Server-UUID": SERVERID,
                 }
-                "body":str(e),
+                "body":str(e)
         }
     return res

@@ -10,11 +10,10 @@ LS project
 | FaaS | GCP           | Functions         | [docs][2]  | 3.7    | works  |
 | FaaS | Azure         | Functions         | [docs][3]  | 3.7    | works  |
 | FaaS | IBM Cloud     | Functions         | [docs][4]  | 3.7    | works  |
-| FaaS | Alibaba Cloud | Function Compute  | [docs][5]  | 3.6    |        |
+| FaaS | Alibaba Cloud | Function Compute  | [docs][5]  | 3.6    | works  |
 | FaaS | Zeit          | Now               | [docs][6]  | 3.6    | works  |
 | CaaS | AWS           | Fargate           | [docs][7]  | 3.8    |        |
 | CaaS | GCP           | Cloud Run         | [docs][8]  | 3.8    | works  |
-| CaaS | Alibaba Cloud | Container Service | [docs][10] | 3.8    |        |
 
 - IBM also has docker, but STDIN/STDOUT?
 - Alibaba also has docker functions, but not really documented?
@@ -50,6 +49,19 @@ LS project
 ## testing
 
 - 583 raw photos (larger than 4000x4000): [releases: v0.0.0-photos.raw][photos1]
+
+```
+ibmcloud fn action create --kind python:3.7 --web raw --memory 128 cold ibmfunctions.zip 
+ibmcloud fn get warm --url
+
+fun init
+fun deploy
+
+in virtualenv
+func init azurefunctions --python
+func azure functionapp publish lsproject
+
+```
 
 ## report ideas
 

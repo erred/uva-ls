@@ -1,11 +1,19 @@
-ROSTemplateFormatVersion: "2015-09-01"
-Transform: "Aliyun::Serverless-2018-04-03"
+ROSTemplateFormatVersion: '2015-09-01'
+Transform: 'Aliyun::Serverless-2018-04-03'
 Resources:
-  FunDemo:
-    Type: "Aliyun::Serverless::Service"
-    pythondemo:
-      Type: "Aliyun::Serverless::Function"
+  alicloudfunctions:
+    Type: 'Aliyun::Serverless::Service'
+    Properties:
+      Description: 'helloworld'
+    alicloudfunctions:
+      Type: 'Aliyun::Serverless::Function'
       Properties:
-        Handler: alicloudfunctions.main
+        Handler: index.handler
         Runtime: python3
-        CodeUri: ". /"
+        CodeUri: './'
+      Events:
+        httpTrigger:
+          Type: HTTP
+          Properties:
+            AuthType: ANONYMOUS
+            Methods: ['POST', 'GET']
