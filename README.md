@@ -12,8 +12,8 @@ LS project
 | FaaS | IBM Cloud     | Functions        | [docs][4] | 3.7    | not working 400       | no logs                                |
 | FaaS | Alibaba Cloud | Function Compute | [docs][5] | 3.6    | not working (PIL)     | how many different CLIs do I need      |
 | FaaS | Zeit          | Now              | [docs][6] | 3.6    | working               | Just Works                             |
-| CaaS | GCP           | Cloud Run        | [docs][8] | 3.8    | working               | thread time is broken for some reason? |
-| CaaS | AWS           | Fargate          | [docs][7] | 3.8    |                       | how do you do this?                    |
+| CaaS | GCP           | Cloud Run        | [docs][7] | 3.8    | working               | thread time is broken for some reason? |
+| CaaS | AWS           | Fargate          | [docs][8] | 3.8    |                       | how do you do this?                    |
 
 - IBM also has docker, but STDIN/STDOUT?
 - Alibaba also has docker functions, but not really documented?
@@ -84,17 +84,15 @@ func azure functionapp publish lsproject
 
 ## additional references:
 
-- [GCP Functions vs Run][11]
+- [GCP Functions vs Run][ref1]
 
 [1]: https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model.html
 [2]: https://cloud.google.com/functions/docs/writing/http
 [3]: https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python
 [4]: https://cloud.ibm.com/docs/openwhisk?topic=cloud-functions-actions
-[5]: https://www.alibabacloud.com/help/doc-detail/56316.htm
+[5]: https://partners-intl.aliyun.com/help/doc-detail/56316.htm#adding-modules
 [6]: https://zeit.co/docs/runtimes#official-runtimes/python
-[7]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html
-[8]: https://cloud.google.com/run/docs/deploying
-[9]: https://docs.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-app
-[10]: https://www.alibabacloud.com/help/doc-detail/90670.htm
-[11]: https://medium.com/google-cloud/cloud-run-vs-cloud-functions-whats-the-lowest-cost-728d59345a2e
+[7]: https://cloud.google.com/run/docs/deploying
+[8]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html
+[ref1]: https://medium.com/google-cloud/cloud-run-vs-cloud-functions-whats-the-lowest-cost-728d59345a2e
 [photos1]: https://github.com/seankhliao/uva-ls/releases/tag/v0.0.0-photos.raw
