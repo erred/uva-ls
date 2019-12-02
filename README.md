@@ -39,13 +39,16 @@ LS project
 ibmcloud fn action create --kind python:3.7 --web raw --memory 128 cold ibmfunctions.zip
 ibmcloud fn get warm --url
 
-fun init
-fun deploy
-
 in virtualenv
 func init azurefunctions --python
 func azure functionapp publish lsproject
+
+fun init
+fun deploy
+fun install -v --runtime python3 --package-type pip package-here
 ```
+
+https://webcache.googleusercontent.com/search?q=cache:FmmiJU_o6qkJ:https://www.alibabacloud.com/help/doc-detail/74571.htm+&cd=2&hl=en&ct=clnk&gl=nl
 
 ## report ideas
 
