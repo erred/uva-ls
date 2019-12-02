@@ -12,12 +12,12 @@ SERVERID = str(uuid.uuid4())
 def main(args):
     try:
         st0 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt0 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+        tt0 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
         post_data = base64.b64decode(args["__ow_body"])
 
         st1 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt1 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+        tt1 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
         im = Image.open(io.BytesIO(post_data))
         im = im.resize((SIZE, SIZE))
@@ -25,13 +25,13 @@ def main(args):
         im.save(buf, format='JPEG')
 
         st2 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt2 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+        tt2 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
         buf.seek(0)
         buffed = base64.b64encode(buf.read()).decode("UTF-8")
 
         st3 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt3 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+        tt3 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
         res = {
             "statusCode": 200,
@@ -48,7 +48,7 @@ def main(args):
                 "statusCode": 500,
                 "headers": {
                     "Server-UUID": SERVERID,
-                }
+                },
                 "body":str(e)
         }
     return res

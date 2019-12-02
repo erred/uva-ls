@@ -1,57 +1,53 @@
 URL := http://nevers.studlab.os3.nl:8080
-
-INFILE := "@chrome2x.jpg"
 OUTFILE := out.jpg
+
+IN := --data-binary "@chrome2x.jpg"
+OUT := -o ${OUTFILE}
+HEADER :=  --header "Content-Type: image/jpeg" --header "Accept: image/jpeg"
+
+CURLOPTS := -L -v
+CURL := curl ${CURLOPTS} ${IN} ${HEADER} ${OUT}
 
 clean:
 	-rm ${OUTFILE}
+test:
+	${CURL} ${URL}
 
-test-console:
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg" ${URL}
+# Working
+zeit-now-warm: clean
+	${CURL} https://warm.lsproject.now.sh/api/zeit
+zeit-now-cold: clean
+	${CURL} https://cold.lsproject.now.sh/api/zeit
 
-test: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg" ${URL} -o ${OUTFILE}
+# needs fix
+gcp-fun-warm: clean
+	${CURL} https://us-central1-cedar-channel-259712.cloudfunctions.net/warm
+gcp-fun-cold: clean
+	${CURL} https://us-central1-cedar-channel-259712.cloudfunctions.net/cold
 
-test-gcp-run: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg" https://ls-project-image-6jdjoh342a-ew.a.run.app  -o ${OUTFILE}
+azure-fun-warm: clean
+	${CURL} https://lsproject.azurewebsites.net/api/warm
+azure-fun-cold: clean
+	${CURL} https://lsproject.azurewebsites.net/api/cold
 
-https://warm-6jdjoh342a-ew.a.run.app/
-https://cold-6jdjoh342a-ew.a.run.app/
+# broken
 
-test-gcp-fun: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg" https://europe-west1-cedar-channel-259712.cloudfunctions.net/ls-benchmark -o ${OUTFILE}
+gcp-run-warm: clean
+	${CURL} https://warm-6jdjoh342a-ew.a.run.app/
+gcp-run-cold: clean
+	${CURL} https://cold-6jdjoh342a-ew.a.run.app/
 
-https://us-central1-cedar-channel-259712.cloudfunctions.net/cold
-https://us-central1-cedar-channel-259712.cloudfunctions.net/warm
+ibm-fun-warm: clean
+	${CURL} https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/warm
+ibm-fun-cold: clean
+	${CURL} https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/cold
 
+aws-lambda-warm: clean
+	${CURL} https://xt8gn4dt7g.execute-api.eu-west-2.amazonaws.com/default/warm
+aws-lambda-cold: clean
+	${CURL} https://wo3u7x3tt8.execute-api.eu-west-2.amazonaws.com/default/cold
 
-test-zeitnow: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg" https://zeitnow.lsproject.now.sh/api/zeit  -o ${OUTFILE}
-
-https://warm.lsproject.now.sh
-https://cold.lsproject.now.sh
-
-test-azure: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg" https://lsproject.azurewebsites.net/api/lsbenchmark -o ${OUTFILE}
-
-https://lsproject.azurewebsites.net/api/cold
-https://lsproject.azurewebsites.net/api/warm
-
-test-ibm: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg" https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/ls-benchmark  -o ${OUTFILE}
-
-https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/warm
-https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/cold
-
-test-awslambda: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg"  --header "Accept: image/jpeg" https://l9u9mkqc9b.execute-api.us-east-2.amazonaws.com/default/ls-server -o ${OUTFILE}
-
-https://xt8gn4dt7g.execute-api.eu-west-2.amazonaws.com/default/warm
-https://wo3u7x3tt8.execute-api.eu-west-2.amazonaws.com/default/cold
-
-
-test-alicloud: clean
-	curl -L -v --data-binary ${INFILE} --header "Content-Type: image/jpeg"  --header "Accept: image/jpeg"  https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/alicloudfunctions/alicloudfunctions/ -o ${OUTFILE}
-
-https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/cold/cold/
-https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/warm/warm/
+ali-fun-warm: clean
+	${CURL} https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/warm/warm/
+ali-fun-cold: clean
+	${CURL} https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/cold/cold/

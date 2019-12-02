@@ -11,12 +11,12 @@ SERVERID = str(uuid.uuid4())
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
         st0 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt0 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+        tt0 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
         post_data = req.get_body()
 
         st1 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt1 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+        tt1 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
         im = Image.open(io.BytesIO(post_data))
         im = im.resize((SIZE, SIZE))
@@ -24,14 +24,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         im.save(buf, format='JPEG')
 
         st2 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt2 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
+        tt2 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
 
         buf.seek(0)
         buffed = buf.read()
 
         st3 = time.clock_gettime(time.CLOCK_REALTIME)
-        tt3 = time.clock_getres(time.CLOCK_THREAD_CPUTIME_ID)
-        
+        tt3 = time.clock_gettime(time.CLOCK_THREAD_CPUTIME_ID)
+
         buf.seek(0)
         res = func.HttpResponse(
             buf.read(),

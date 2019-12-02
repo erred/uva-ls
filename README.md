@@ -4,36 +4,21 @@ LS project
 
 ## Services
 
-| type | platform      | Product           | docs       | python | status |
-| ---- | ------------- | ----------------- | ---------- | ------ | ------ |
-| FaaS | AWS           | Lambda            | [docs][1]  | 3.8    | works  |
-| FaaS | GCP           | Functions         | [docs][2]  | 3.7    | works  |
-| FaaS | Azure         | Functions         | [docs][3]  | 3.7    | works  |
-| FaaS | IBM Cloud     | Functions         | [docs][4]  | 3.7    | works  |
-| FaaS | Alibaba Cloud | Function Compute  | [docs][5]  | 3.6    | works  |
-| FaaS | Zeit          | Now               | [docs][6]  | 3.6    | works  |
-| CaaS | AWS           | Fargate           | [docs][7]  | 3.8    |        |
-| CaaS | GCP           | Cloud Run         | [docs][8]  | 3.8    | works  |
+| type | platform      | Product          | docs      | python | status                | notes                                  |
+| ---- | ------------- | ---------------- | --------- | ------ | --------------------- | -------------------------------------- |
+| FaaS | AWS           | Lambda           | [docs][1] | 3.8    | not working           | nightmare to configure                 |
+| FaaS | GCP           | Functions        | [docs][2] | 3.7    | redeploy time (auth?) | okay                                   |
+| FaaS | Azure         | Functions        | [docs][3] | 3.7    | redeploy time         | dodgy web console, good local testing  |
+| FaaS | IBM Cloud     | Functions        | [docs][4] | 3.7    | not working 400       | no logs                                |
+| FaaS | Alibaba Cloud | Function Compute | [docs][5] | 3.6    | not working (PIL)     | how many different CLIs do I need      |
+| FaaS | Zeit          | Now              | [docs][6] | 3.6    | working               | Just Works                             |
+| CaaS | GCP           | Cloud Run        | [docs][8] | 3.8    | working               | thread time is broken for some reason? |
+| CaaS | AWS           | Fargate          | [docs][7] | 3.8    |                       | how do you do this?                    |
 
 - IBM also has docker, but STDIN/STDOUT?
 - Alibaba also has docker functions, but not really documented?
 - Azure docker functions?
 - Google Appengine scale to 0?
-
-### background
-
-| platform      | Product            | framework                     | dev notes                                                        |
-| ------------- | ------------------ | ----------------------------- | ---------------------------------------------------------------- |
-| AWS           | Lambda             | custom                        | so many pieces to configure, long feedback cycle, scarce logging |
-| GCP           | Functions          | flask                         | just works, good logging                                         |
-| Azure         | Functions          | custom / MS Oryx build        | good docs, + local testing, really bad web console               |
-| IBM Cloud     | Functions          | openwhisk / cloudflare        | meh docs on openwhisk                                            |
-| Alibaba Cloud | Function Compute   | WSGI / Terraform              |                                                                  |
-| Zeit          | Now                | Python HTTP / WSGI            | just works, good logging                                         |
-| AWS           | Fargate            | containers on ECS             |                                                                  |
-| GCP           | Cloud Run          | kubernetes / anthos / knative | just works, good logging                                         |
-| Azure         | Container Instance | N/A                           |                                                                  |
-| Alibaba Cloud | Container Service  | N/A                           |                                                                  |
 
 ### additional docs
 
@@ -51,7 +36,7 @@ LS project
 - 583 raw photos (larger than 4000x4000): [releases: v0.0.0-photos.raw][photos1]
 
 ```
-ibmcloud fn action create --kind python:3.7 --web raw --memory 128 cold ibmfunctions.zip 
+ibmcloud fn action create --kind python:3.7 --web raw --memory 128 cold ibmfunctions.zip
 ibmcloud fn get warm --url
 
 fun init
@@ -60,7 +45,6 @@ fun deploy
 in virtualenv
 func init azurefunctions --python
 func azure functionapp publish lsproject
-
 ```
 
 ## report ideas

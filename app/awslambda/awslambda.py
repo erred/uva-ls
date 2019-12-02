@@ -48,7 +48,7 @@ def handler(event, context):
             "statusCode": 500,
             "headers": {
                 "Server-UUID": SERVERID,
-            }
+            },
             "body": str(e)
         }
     return res
