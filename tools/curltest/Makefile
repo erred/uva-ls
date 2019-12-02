@@ -19,6 +19,12 @@ zeit-now-warm: clean
 zeit-now-cold: clean
 	${CURL} https://cold.lsproject.now.sh/api/zeit
 
+gcp-run-warm: clean
+	${CURL} https://warm-6jdjoh342a-ew.a.run.app/
+gcp-run-cold: clean
+	${CURL} https://cold-6jdjoh342a-ew.a.run.app/
+
+
 # needs fix
 gcp-fun-warm: clean
 	${CURL} https://us-central1-cedar-channel-259712.cloudfunctions.net/warm
@@ -31,11 +37,6 @@ azure-fun-cold: clean
 	${CURL} https://lsproject.azurewebsites.net/api/cold
 
 # broken
-
-gcp-run-warm: clean
-	${CURL} https://warm-6jdjoh342a-ew.a.run.app/
-gcp-run-cold: clean
-	${CURL} https://cold-6jdjoh342a-ew.a.run.app/
 
 ibm-fun-warm: clean
 	${CURL} https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/warm
