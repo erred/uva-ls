@@ -4,16 +4,16 @@ LS project
 
 ## Services
 
-| type | platform      | Product          | docs      | python | status                | notes                                  |
-| ---- | ------------- | ---------------- | --------- | ------ | --------------------- | -------------------------------------- |
-| FaaS | AWS           | Lambda           | [docs][1] | 3.8    | not working           | nightmare to configure                 |
+| type | platform      | Product          | docs      | python | status  | notes                                  |
+| ---- | ------------- | ---------------- | --------- | ------ | ------- | -------------------------------------- |
+| FaaS | AWS           | Lambda           | [docs][1] | 3.8    | working | nightmare to configure                 |
 | FaaS | GCP           | Functions        | [docs][2] | 3.7    | working | okay                                   |
-| FaaS | Azure         | Functions        | [docs][3] | 3.7    | working         | dodgy web console, good local testing  |
-| FaaS | IBM Cloud     | Functions        | [docs][4] | 3.7    | working       | no logs                                |
-| FaaS | Alibaba Cloud | Function Compute | [docs][5] | 3.6    | working               | how many different CLIs do I need      |
-| FaaS | Zeit          | Now              | [docs][6] | 3.6    | working               | Just Works                             |
-| CaaS | GCP           | Cloud Run        | [docs][7] | 3.8    | working               | thread time is broken for some reason? |
-| CaaS | AWS           | Fargate          | [docs][8] | 3.8    |                       | how do you do this?                    |
+| FaaS | Azure         | Functions        | [docs][3] | 3.7    | working | dodgy web console, good local testing  |
+| FaaS | IBM Cloud     | Functions        | [docs][4] | 3.7    | working | no logs                                |
+| FaaS | Alibaba Cloud | Function Compute | [docs][5] | 3.6    | working | how many different CLIs do I need      |
+| FaaS | Zeit          | Now              | [docs][6] | 3.6    | working | Just Works                             |
+| CaaS | GCP           | Cloud Run        | [docs][7] | 3.8    | working | thread time is broken for some reason? |
+| CaaS | AWS           | Fargate          | [docs][8] | 3.8    |         | how do you do this?                    |
 
 - IBM also has docker, but STDIN/STDOUT?
 - Alibaba also has docker functions, but not really documented?
