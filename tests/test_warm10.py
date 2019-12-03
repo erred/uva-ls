@@ -3,17 +3,11 @@
 import glob, requests, time, csv, datetime, os, json
 
 services_url = {'zeit-now-warm':'https://warm.lsproject.now.sh/api/zeit',
-				'zeit-now-cold':'https://cold.lsproject.now.sh/api/zeit',
 				'cp-run-warm':'https://warm-6jdjoh342a-ew.a.run.app/',
-				'gcp-run-cold':'https://cold-6jdjoh342a-ew.a.run.app/',
 				'gcp-fun-warm':'https://europe-west1-cedar-channel-259712.cloudfunctions.net/warm',
-				'gcp-fun-cold':'https://europe-west1-cedar-channel-259712.cloudfunctions.net/cold', 
 				'azure-fun-warm':'https://lsproject.azurewebsites.net/api/warm',
-				'azure-fun-cold':'https://lsproject.azurewebsites.net/api/cold',
 				'ibm-fun-warm':'https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/warm',
-				'ibm-fun-cold':'https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/cold',
-				'ali-fun-warm':'https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/warm/warm/',
-				'ali-fun-cold:':'https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/cold/cold/'
+				'ali-fun-warm':'https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/warm/warm/'
 			}
 
 
@@ -22,7 +16,7 @@ services_url = {'zeit-now-warm':'https://warm.lsproject.now.sh/api/zeit',
 def get_images():
 	try:
 		image_list = []
-		for filename in glob.glob('../images/*.*')[:10]: 
+		for filename in glob.glob('../../images/*.*')[:10]: 
 			im=open(filename, 'rb')
 			im1= im.read()
 			im.close()
@@ -40,19 +34,19 @@ def get_images():
 #if file does not exists, create and write headers
 def save_results(name, results):
 	try:
-		if not os.path.isfile('./results/iterative_' + name + '.csv'):
-			f = open('./results/iterative_' + name + '.csv', 'w')
+		if not os.path.isfile('./results/warm/test10w_' + name + '.csv'):
+			f = open('./results/warm/test10w_' + name + '.csv', 'w')
 			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
 			writer.writeheader()
 			f.close()	
 
-		with open('./results/iterative_' + name + '.csv', 'a') as csvFile:
+		with open('./results/warm/test10w' + name + '.csv', 'a') as csvFile:
 			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
 			for result in results:
 				writer.writerow(result)
 
 	except Exception as e:
-		with open('./logs/log_iterative_' + name + '.log', 'a') as logfile:
+		with open('./logs/test10w_' + name + '.log', 'a') as logfile:
 			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '(save results error): ' + str(e)  + 'results are: ' + str(results) + '\n')
 
 
@@ -80,13 +74,13 @@ if __name__ == "__main__":
 					}
 					results.append(data)
 				else:
-					with open('./logs/log_iterative_' + name + '.log', 'a') as logfile:
+					with open('./logs/test10w_' + name + '.log', 'a') as logfile:
 						logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': Status code ' + str(r.status_code) + ', ERROR: ' +  str(r.reason) +'\n')
 			
 			save_results(name, results)
 
 		except Exception as e:
-			with open('./logs/log_iterative_' + name + '.log', 'a') as logfile:
+			with open('./logs/test10w_' + name + '.log', 'a') as logfile:
 				logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': ' + str(e) + '\n')
 
 
