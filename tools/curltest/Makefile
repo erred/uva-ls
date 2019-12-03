@@ -9,7 +9,7 @@ CURLOPTS := -L -v
 CURL := curl ${CURLOPTS} ${IN} ${HEADER} ${OUT}
 
 clean:
-	-rm ${OUTFILE}
+	-@rm ${OUTFILE} 2>/dev/null || true
 test:
 	${CURL} ${URL}
 
@@ -49,6 +49,3 @@ aws-lambda-warm: clean
 	${CURL} https://xt8gn4dt7g.execute-api.eu-west-2.amazonaws.com/default/warm
 aws-lambda-cold: clean
 	${CURL} https://wo3u7x3tt8.execute-api.eu-west-2.amazonaws.com/default/cold
-
-
-
