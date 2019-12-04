@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 	"sync"
@@ -190,7 +191,7 @@ func loadFiles(dir string) []Image {
 		log.Fatalf("loadFiles read dir: %v", err)
 	}
 	for _, fi := range fis {
-		b, err := ioutil.ReadFile(fi.Name())
+		b, err := ioutil.ReadFile(path.Join(dir, fi.Name()))
 		if err != nil {
 			log.Fatalf("loadFiles read %s err: %v", fi.Name(), err)
 		}
