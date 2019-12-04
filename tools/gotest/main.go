@@ -94,6 +94,7 @@ func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perwor
 			wgstop.Add(1)
 			go request(i, imgs[(i+1)*(*perworker):(i+2)*(*perworker)], server, reschan, &wgstart, &wgstop)
 		}
+		wgstart.Done()
 		wgstop.Wait()
 		log.Printf("completed phase 2 for %s in %f seconds\n", server.Name, time.Since(t1).Seconds())
 	}
@@ -131,7 +132,7 @@ func resultWriter(fp string, reschan chan Result) {
 	w := csv.NewWriter(f)
 	defer w.Flush()
 	for res := range reschan {
-		w.Write([]string{
+		err = w.Write([]string{
 			res.Server,
 			strconv.Itoa(res.Worker),
 			res.Image,
@@ -145,6 +146,9 @@ func resultWriter(fp string, reschan chan Result) {
 			res.ThreadTime2,
 			res.ThreadTime3,
 		})
+		if err != nil {
+			log.Printf("resultWriter write to %s err: %v\n", fp, err)
+		}
 	}
 }
 
