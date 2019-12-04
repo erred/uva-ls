@@ -94,6 +94,9 @@ func parseServers(fp string) []Server {
 	}
 	bl := bytes.Split(b, []byte("\n"))
 	for i, b := range bl {
+		if len(bl) == 0 {
+			continue
+		}
 		bf := bytes.Fields(b)
 		if len(bf) != 2 {
 			log.Fatalf("parseServers parse %s line %d expected 2 fields got %d", fp, i, len(bf))
