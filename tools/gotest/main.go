@@ -53,7 +53,7 @@ func main() {
 	servers := parseServers(*serverList)
 	log.Printf("parsed servers:\n")
 	for i, s := range servers {
-		log.Printf("\t%d\t%s\t%s\n", i, s.Name, s.Url)
+		log.Printf("\t%d\t%-20s\t%s\n", i, s.Name, s.Url)
 	}
 
 	imgs := loadFiles(*imgpath)
@@ -83,8 +83,7 @@ func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perwor
 	for _, server := range servers {
 		log.Printf("starting phase 1 for %s\n", server.Name)
 		t0 := time.Now()
-		var wg0 sync.WaitGroup
-		request(0, imgs[:*perworker], server, reschan, &wg0, &wg0)
+		request(0, imgs[:*perworker], server, reschan, nil, nil)
 		t1 := time.Now()
 		log.Printf("completed phase 1 for %s in %f seconds\n", server.Name, t1.Sub(t0).Seconds())
 
@@ -150,7 +149,9 @@ func resultWriter(fp string, reschan chan Result) {
 }
 
 func request(worker int, imgs []Image, server Server, reschan chan Result, wgstart, wgstop *sync.WaitGroup) {
-	wgstart.Wait()
+	if wgstart != nil {
+		wgstart.Wait()
+	}
 	for _, img := range imgs {
 		req, err := http.NewRequest(http.MethodPost, server.Url, img.Buffer)
 		if err != nil {
@@ -194,7 +195,9 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 			ThreadTime3: tt[2],
 		}
 	}
-	wgstop.Done()
+	if wgstop != nil {
+		wgstop.Done()
+	}
 }
 
 func loadFiles(dir string) []Image {
