@@ -16,8 +16,8 @@ import (
 )
 
 type Image struct {
-	*bytes.Buffer
-	Name string
+	Buffer []byte
+	Name   string
 }
 
 type Server struct {
@@ -48,7 +48,8 @@ func main() {
 	imgpath := flag.String("imgs", "./images", "path to image directory")
 	resultpath := flag.String("results", "./results.csv", "path to results csv")
 	serverList := flag.String("servers", "./servers", "path to file with list of servers")
-	skipPhase2 := flag.Bool("skipphase2", false, "skip phase 2 (parallel)")
+	phase2 := flag.Bool("phase2", true, "phase 2 (parallel)")
+	loop := flag.Bool("loop", true, "do in looop")
 	flag.Parse()
 
 	servers := parseServers(*serverList)
@@ -58,7 +59,10 @@ func main() {
 	}
 
 	imgs := loadFiles(*imgpath)
-	minImgs := (*perworker) * (*parallel + 1)
+	minImgs := (*perworker)
+	if *phase2 {
+		minImgs += (*perworker) * (*parallel)
+	}
 	if len(imgs) < minImgs {
 		log.Fatalf("expected at least %d images, got %d", minImgs, len(imgs))
 	}
@@ -73,27 +77,30 @@ func main() {
 		time.Sleep(*wait)
 	}
 
-	cycle(servers, imgs, reschan, parallel, perworker, skipPhase2)
-	t := time.NewTicker(*tick)
-	for range t.C {
-		cycle(servers, imgs, reschan, parallel, perworker, skipPhase2)
+	cycle(servers, imgs, reschan, *parallel, *perworker, *phase2)
+	if *loop {
+		t := time.NewTicker(*tick)
+		for range t.C {
+			cycle(servers, imgs, reschan, *parallel, *perworker, *phase2)
+		}
+
 	}
 }
 
-func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perworker *int, skipPhase2 *bool) {
+func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perworker int, phase2 bool) {
 	for _, server := range servers {
 		log.Printf("starting phase 1 for %s\n", server.Name)
 		t0 := time.Now()
-		request(0, imgs[:*perworker], server, reschan, nil, nil)
+		request(0, imgs[:perworker], server, reschan, nil, nil)
 		t1 := time.Now()
 		log.Printf("completed phase 1 for %s in %f seconds\n", server.Name, t1.Sub(t0).Seconds())
-		if !*skipPhase2 {
+		if phase2 {
 			log.Printf("starting phase 2 for %s\n", server.Name)
 			var wgstart, wgstop sync.WaitGroup
 			wgstart.Add(1)
-			for i := 1; i <= *parallel; i++ {
+			for i := 1; i <= parallel; i++ {
 				wgstop.Add(1)
-				go request(i, imgs[(i+1)*(*perworker):(i+2)*(*perworker)], server, reschan, &wgstart, &wgstop)
+				go request(i, imgs[(i+1)*perworker:(i+2)*perworker], server, reschan, &wgstart, &wgstop)
 			}
 			wgstart.Done()
 			wgstop.Wait()
@@ -169,12 +176,11 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 		wgstart.Wait()
 	}
 	for _, img := range imgs {
-		req, err := http.NewRequest(http.MethodPost, server.Url, img.Buffer)
+		req, err := http.NewRequest(http.MethodPost, server.Url, bytes.NewReader(img.Buffer))
 		if err != nil {
 			log.Printf("worker %2d prepare request %s for %s err: %v\n", worker, img.Name, server.Name, err)
 			continue
 		}
-		req.Header.Add("User-Agent", "gotest-"+strconv.Itoa(worker))
 		req.Header.Add("Content-Type", "image/jpeg")
 		req.Header.Add("Accept", "image/jpeg")
 
@@ -200,8 +206,8 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 			log.Printf("worker %2d do %s for %s status %d %s\n", worker, img.Name, server.Name, res.StatusCode, res.Status)
 			continue
 		}
-		st := strings.Split(res.Header.Get("time"), ",")
-		tt := strings.Split(res.Header.Get("thread-time"), ",")
+		st := strings.Split(res.Header.Get("time"), ", ")
+		tt := strings.Split(res.Header.Get("thread-time"), ", ")
 		if len(st) != 3 || len(tt) != 3 {
 			log.Printf("worker %2d do %s for %s headers expected 3 got time: %d, thread-time: %d\n", worker, img.Name, server.Name, len(st), len(tt))
 			continue
@@ -239,7 +245,7 @@ func loadFiles(dir string) []Image {
 		if err != nil {
 			log.Fatalf("loadFiles read %s err: %v", fi.Name(), err)
 		}
-		bufs = append(bufs, Image{bytes.NewBuffer(b), fi.Name()})
+		bufs = append(bufs, Image{b, fi.Name()})
 	}
 	return bufs
 }
