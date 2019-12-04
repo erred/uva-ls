@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/csv"
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -52,39 +51,54 @@ func main() {
 	flag.Parse()
 
 	servers := parseServers(*serverList)
+	log.Printf("parsed servers:\n")
+	for i, s := range servers {
+		log.Printf("\t%d\t%s\t%s\n", i, s.Name, s.Url)
+	}
 
 	imgs := loadFiles(*imgpath)
+	minImgs := (*perworker) * (*parallel + 1)
+	if len(imgs) < minImgs {
+		log.Fatalf("expected at least %d images, got %d", minImgs, len(imgs))
+	}
+	log.Printf("loaded %d imgs\n", len(imgs))
 
 	reschan := make(chan Result, 50)
 	go resultWriter(*resultpath, reschan)
+	log.Printf("started resultWriter\n")
 
 	if *wait > 0 {
-		fmt.Printf("sleeping for %d seconds before starting\n", *wait)
+		log.Printf("sleeping for %d seconds before starting\n", *wait)
 		time.Sleep(*wait)
 	}
 
+	cycle(servers, imgs, reschan, parallel, perworker)
 	t := time.NewTicker(*tick)
 	for range t.C {
-		for _, server := range servers {
-			fmt.Printf("starting phase 1 for %s\n", server.Name)
-			t0 := time.Now()
-			var wg0 sync.WaitGroup
-			request(0, imgs[:*perworker], server, reschan, &wg0, &wg0)
-			t1 := time.Now()
-			fmt.Printf("completed phase 1 for %s in %f seconds\n", server.Name, t1.Sub(t0).Seconds())
-
-			fmt.Printf("starting phase 2 for %s\n", server.Name)
-			var wgstart, wgstop sync.WaitGroup
-			wgstart.Add(1)
-			for i := 0; i < *parallel; i++ {
-				wgstop.Add(1)
-				go request(i, imgs[(i+1)*(*perworker):(i+2)*(*perworker)], server, reschan, &wgstart, &wgstop)
-			}
-			wgstop.Wait()
-			fmt.Printf("completed phase 2 for %s in %f seconds\n", server.Name, time.Since(t1).Seconds())
-		}
-
+		cycle(servers, imgs, reschan, parallel, perworker)
 	}
+}
+
+func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perworker *int) {
+	for _, server := range servers {
+		log.Printf("starting phase 1 for %s\n", server.Name)
+		t0 := time.Now()
+		var wg0 sync.WaitGroup
+		request(0, imgs[:*perworker], server, reschan, &wg0, &wg0)
+		t1 := time.Now()
+		log.Printf("completed phase 1 for %s in %f seconds\n", server.Name, t1.Sub(t0).Seconds())
+
+		log.Printf("starting phase 2 for %s\n", server.Name)
+		var wgstart, wgstop sync.WaitGroup
+		wgstart.Add(1)
+		for i := 0; i < *parallel; i++ {
+			wgstop.Add(1)
+			go request(i, imgs[(i+1)*(*perworker):(i+2)*(*perworker)], server, reschan, &wgstart, &wgstop)
+		}
+		wgstop.Wait()
+		log.Printf("completed phase 2 for %s in %f seconds\n", server.Name, time.Since(t1).Seconds())
+	}
+
 }
 
 func parseServers(fp string) []Server {
