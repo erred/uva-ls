@@ -46,7 +46,7 @@ func main() {
 	parallel := flag.Int("parallel", 50, "workers to run in parallel for phase2")
 	perworker := flag.Int("perworker", 10, "images to send per worker")
 	imgpath := flag.String("imgs", "./images", "path to image directory")
-	resultpath := flag.String("results", "./results.csv", "path to results csv")
+	resultpath := flag.String("results", "./results."+time.Now().Format(time.RFC3339)+".csv", "path to results csv")
 	serverList := flag.String("servers", "./servers", "path to file with list of servers")
 	phase2 := flag.Bool("phase2", true, "phase 2 (parallel)")
 	loop := flag.Bool("loop", true, "do in looop")
@@ -88,6 +88,7 @@ func main() {
 }
 
 func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perworker int, phase2 bool) {
+	t := time.Now()
 	for _, server := range servers {
 		log.Printf("starting phase 1 for %s\n", server.Name)
 		t0 := time.Now()
@@ -108,67 +109,7 @@ func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perwor
 		}
 		reschan <- Result{Worker: -1}
 	}
-
-}
-
-func parseServers(fp string) []Server {
-	var servers []Server
-	b, err := ioutil.ReadFile(fp)
-	if err != nil {
-		log.Fatalf("parseServers read %s err: %v", fp, err)
-	}
-	bl := bytes.Split(b, []byte("\n"))
-	for i, b := range bl {
-		bf := bytes.Fields(b)
-		if len(bf) == 0 {
-			continue
-		} else if len(bf) != 2 {
-			log.Fatalf("parseServers parse %s line %d expected 2 fields got %d", fp, i+1, len(bf))
-		}
-		servers = append(servers, Server{
-			Name: string(bf[0]),
-			Url:  string(bf[1]),
-		})
-	}
-	return servers
-}
-
-func resultWriter(fp string, reschan chan Result) {
-	f, err := os.Create(fp)
-	if err != nil {
-		log.Fatalf("resultWriter create %s err: %v", fp, err)
-	}
-	defer f.Close()
-	w := csv.NewWriter(f)
-	defer w.Flush()
-	w.Write([]string{
-		"Server", "Worker", "Image", "ServerUUID", "Start_ns", "Time_ns",
-		"ServerTime1", "ServerTime2", "ServerTime3", "ThreadTime1", "ThreadTime2", "ThreadTime3",
-	})
-
-	for res := range reschan {
-		if res.Worker == -1 {
-			w.Flush()
-			continue
-		}
-		err = w.Write([]string{
-			res.Server,
-			strconv.Itoa(res.Worker),
-			res.Image,
-			res.ServerUuid,
-			strconv.FormatInt(res.Start, 10),
-			strconv.FormatInt(res.Time, 10),
-			res.ServerTime1,
-			res.ServerTime2,
-			res.ServerTime3,
-			res.ThreadTime1,
-			res.ThreadTime2,
-			res.ThreadTime3,
-		})
-		if err != nil {
-			log.Printf("resultWriter write to %s err: %v\n", fp, err)
-		}
-	}
+	log.Printf("completed cycle %f seconds\n", time.Since(t).Seconds())
 }
 
 func request(worker int, imgs []Image, server Server, reschan chan Result, wgstart, wgstop *sync.WaitGroup) {
@@ -230,6 +171,66 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 	}
 	if wgstop != nil {
 		wgstop.Done()
+	}
+}
+
+func parseServers(fp string) []Server {
+	var servers []Server
+	b, err := ioutil.ReadFile(fp)
+	if err != nil {
+		log.Fatalf("parseServers read %s err: %v", fp, err)
+	}
+	bl := bytes.Split(b, []byte("\n"))
+	for i, b := range bl {
+		bf := bytes.Fields(b)
+		if len(bf) == 0 {
+			continue
+		} else if len(bf) != 2 {
+			log.Fatalf("parseServers parse %s line %d expected 2 fields got %d", fp, i+1, len(bf))
+		}
+		servers = append(servers, Server{
+			Name: string(bf[0]),
+			Url:  string(bf[1]),
+		})
+	}
+	return servers
+}
+
+func resultWriter(fp string, reschan chan Result) {
+	f, err := os.Create(fp)
+	if err != nil {
+		log.Fatalf("resultWriter create %s err: %v", fp, err)
+	}
+	defer f.Close()
+	w := csv.NewWriter(f)
+	defer w.Flush()
+	w.Write([]string{
+		"Server", "Worker", "Image", "ServerUUID", "Start_ns", "Time_ns",
+		"ServerTime1", "ServerTime2", "ServerTime3", "ThreadTime1", "ThreadTime2", "ThreadTime3",
+	})
+
+	for res := range reschan {
+		if res.Worker == -1 {
+			w.Flush()
+			continue
+		}
+		err = w.Write([]string{
+			res.Server,
+			strconv.Itoa(res.Worker),
+			res.Image,
+			res.ServerUuid,
+			strconv.FormatInt(res.Start, 10),
+			strconv.FormatInt(res.Time, 10),
+			res.ServerTime1,
+			res.ServerTime2,
+			res.ServerTime3,
+			res.ThreadTime1,
+			res.ThreadTime2,
+			res.ThreadTime3,
+		})
+		if err != nil {
+			log.Printf("resultWriter write to %s err: %v\n", fp, err)
+		}
 	}
 }
 
