@@ -97,6 +97,7 @@ func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perwor
 		wgstart.Done()
 		wgstop.Wait()
 		log.Printf("completed phase 2 for %s in %f seconds\n", server.Name, time.Since(t1).Seconds())
+		reschan <- Result{Worker: -1}
 	}
 
 }
@@ -137,6 +138,10 @@ func resultWriter(fp string, reschan chan Result) {
 	})
 
 	for res := range reschan {
+		if res.Worker == -1 {
+			w.Flush()
+			continue
+		}
 		err = w.Write([]string{
 			res.Server,
 			strconv.Itoa(res.Worker),
