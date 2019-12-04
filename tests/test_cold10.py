@@ -7,7 +7,9 @@ services_url = {'zeit-now-cold':'https://cold.lsproject.now.sh/api/zeit',
 				'gcp-fun-cold':'https://europe-west1-cedar-channel-259712.cloudfunctions.net/cold', 
 				'azure-fun-cold':'https://lsproject.azurewebsites.net/api/cold',
 				'ibm-fun-cold':'https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/cold',
-				'ali-fun-cold':'https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/cold/cold/'
+				'ali-fun-cold':'https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/cold/cold/',
+				'gcp-app-cold':'https://cold-dot-cedar-channel-259712.appspot.com/',
+				'aws-lambda-cold':'https://wo3u7x3tt8.execute-api.eu-west-2.amazonaws.com/default/cold'
 			}
 
 

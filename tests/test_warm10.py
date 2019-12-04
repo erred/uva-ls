@@ -7,7 +7,9 @@ services_url = {'zeit-now-warm':'https://warm.lsproject.now.sh/api/zeit',
 				'gcp-fun-warm':'https://europe-west1-cedar-channel-259712.cloudfunctions.net/warm',
 				'azure-fun-warm':'https://lsproject.azurewebsites.net/api/warm',
 				'ibm-fun-warm':'https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/warm',
-				'ali-fun-warm':'https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/warm/warm/'
+				'ali-fun-warm':'https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/warm/warm/',
+				'gcp-app-warm': 'https://warm-dot-cedar-channel-259712.appspot.com/',
+				'aws-lambda-warm':'https://xt8gn4dt7g.execute-api.eu-west-2.amazonaws.com/default/warm'
 			}
 
 
@@ -16,7 +18,7 @@ services_url = {'zeit-now-warm':'https://warm.lsproject.now.sh/api/zeit',
 def get_images():
 	try:
 		image_list = []
-		for filename in glob.glob('../../images/*.*')[:10]: 
+		for filename in glob.glob('../../images/images_resized/*.*')[:10]: 
 			im=open(filename, 'rb')
 			im1= im.read()
 			im.close()
@@ -36,12 +38,12 @@ def save_results(name, results):
 	try:
 		if not os.path.isfile('./results/warm/test10w_' + name + '.csv'):
 			f = open('./results/warm/test10w_' + name + '.csv', 'w')
-			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
+			writer = csv.DictWriter(f, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID', 'Img'])
 			writer.writeheader()
 			f.close()	
 
-		with open('./results/warm/test10w' + name + '.csv', 'a') as csvFile:
-			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID'])
+		with open('./results/warm/test10w_' + name + '.csv', 'a') as csvFile:
+			writer = csv.DictWriter(csvFile, fieldnames=['Date', 'Client_time', 'Server_time', 'ServerThread_time', 'Server-UUID', 'Img'])
 			for result in results:
 				writer.writerow(result)
 
@@ -62,7 +64,7 @@ if __name__ == "__main__":
 
 				var = image_list[i]
 				t = time.time_ns()
-				r = requests.post(url, data=var)
+				r = requests.post(url, data=var, headers={'Accept': 'image/jpeg', 'Content-Type': 'image/jpeg'})
 				total_time = time.time_ns() - t
 				if r.status_code == 200:
 					data = {
@@ -70,7 +72,8 @@ if __name__ == "__main__":
 						'Client_time' : total_time,
 						'Server_time' : r.headers['Time'],
 						'ServerThread_time' : r.headers['Thread-Time'],
-						'Server-UUID' : r.headers['Server-UUID']
+						'Server-UUID' : r.headers['Server-UUID'],
+						'Img': str(i)
 					}
 					results.append(data)
 				else:

@@ -44,6 +44,11 @@ ali-fun-warm: clean
 ali-fun-cold: clean
 	${CURL} https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/cold/cold/
 
+gcp-app-warm: clean
+	${CURL} https://warm-dot-cedar-channel-259712.appspot.com/
+gcp-app-cold: clean
+	${CURL} https://cold-dot-cedar-channel-259712.appspot.com/
+
 # broken
 aws-lambda-warm: clean
 	${CURL} https://xt8gn4dt7g.execute-api.eu-west-2.amazonaws.com/default/warm
