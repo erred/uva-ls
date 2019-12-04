@@ -184,6 +184,9 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 			}
 
 		}
+		if err != nil {
+			continue
+		}
 		ioutil.ReadAll(res.Body)
 		res.Body.Close()
 		if res.StatusCode != 200 {
