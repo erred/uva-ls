@@ -90,7 +90,7 @@ func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perwor
 		log.Printf("starting phase 2 for %s\n", server.Name)
 		var wgstart, wgstop sync.WaitGroup
 		wgstart.Add(1)
-		for i := 0; i < *parallel; i++ {
+		for i := 1; i <= *parallel; i++ {
 			wgstop.Add(1)
 			go request(i, imgs[(i+1)*(*perworker):(i+2)*(*perworker)], server, reschan, &wgstart, &wgstop)
 		}
@@ -124,13 +124,18 @@ func parseServers(fp string) []Server {
 }
 
 func resultWriter(fp string, reschan chan Result) {
-	f, err := os.OpenFile(fp, os.O_CREATE|os.O_APPEND, 0644)
+	f, err := os.Create(fp)
 	if err != nil {
-		log.Fatalf("resultWriter open %s err: %v", fp, err)
+		log.Fatalf("resultWriter create %s err: %v", fp, err)
 	}
 	defer f.Close()
 	w := csv.NewWriter(f)
 	defer w.Flush()
+	w.Write([]string{
+		"Server", "Worker", "Image", "ServerUUID", "Start_ns", "Time_ns",
+		"ServerTime1", "ServerTime2", "ServerTime3", "ThreadTime1", "ThreadTime2", "ThreadTime3",
+	})
+
 	for res := range reschan {
 		err = w.Write([]string{
 			res.Server,
