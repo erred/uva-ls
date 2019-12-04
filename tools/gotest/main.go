@@ -171,9 +171,10 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 	for _, img := range imgs {
 		req, err := http.NewRequest(http.MethodPost, server.Url, img.Buffer)
 		if err != nil {
-			log.Printf("worker %d prepare request %s for %s err: %v\n", worker, img.Name, server.Name, err)
+			log.Printf("worker %2d prepare request %s for %s err: %v\n", worker, img.Name, server.Name, err)
 			continue
 		}
+		req.Header.Add("User-Agent", "gotest-"+strconv.Itoa(worker))
 		req.Header.Add("Content-Type", "image/jpeg")
 		req.Header.Add("Accept", "image/jpeg")
 
@@ -186,24 +187,23 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 			td = time.Now().Sub(t)
 			if err == nil {
 				break
-			} else {
-				log.Printf("worker %d do %s try %d for %s err: %v\n", worker, img.Name, retry, server.Name, err)
 			}
 
 		}
 		if err != nil {
+			log.Printf("worker %2d do %s for %s err: %v\n", worker, img.Name, server.Name, err)
 			continue
 		}
 		ioutil.ReadAll(res.Body)
 		res.Body.Close()
 		if res.StatusCode != 200 {
-			log.Printf("worker %d do %s for %s status %d %s\n", worker, img.Name, server.Name, res.StatusCode, res.Status)
+			log.Printf("worker %2d do %s for %s status %d %s\n", worker, img.Name, server.Name, res.StatusCode, res.Status)
 			continue
 		}
 		st := strings.Split(res.Header.Get("time"), ",")
 		tt := strings.Split(res.Header.Get("thread-time"), ",")
 		if len(st) != 3 || len(tt) != 3 {
-			log.Printf("worker %d do %s for %s headers expected 3 got time: %d, thread-time: %d\n", worker, img.Name, server.Name, len(st), len(tt))
+			log.Printf("worker %2d do %s for %s headers expected 3 got time: %d, thread-time: %d\n", worker, img.Name, server.Name, len(st), len(tt))
 			continue
 		}
 
