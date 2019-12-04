@@ -169,12 +169,20 @@ func request(worker int, imgs []Image, server Server, reschan chan Result, wgsta
 		}
 		req.Header.Add("Content-Type", "image/jpeg")
 		req.Header.Add("Accept", "image/jpeg")
-		t := time.Now()
-		res, err := http.DefaultClient.Do(req)
-		td := time.Now().Sub(t)
-		if err != nil {
-			log.Printf("worker %d do %s for %s err: %v\n", worker, img.Name, server.Name, err)
-			continue
+
+		var t time.Time
+		var res *http.Response
+		var td time.Duration
+		for retry := 0; retry < 5; retry++ {
+			t = time.Now()
+			res, err = http.DefaultClient.Do(req)
+			td = time.Now().Sub(t)
+			if err == nil {
+				break
+			} else {
+				log.Printf("worker %d do %s try %d for %s err: %v\n", worker, img.Name, retry, server.Name, err)
+			}
+
 		}
 		ioutil.ReadAll(res.Body)
 		res.Body.Close()
