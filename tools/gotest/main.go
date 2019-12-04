@@ -48,6 +48,7 @@ func main() {
 	imgpath := flag.String("imgs", "./images", "path to image directory")
 	resultpath := flag.String("results", "./results.csv", "path to results csv")
 	serverList := flag.String("servers", "./servers", "path to file with list of servers")
+	skipPhase2 := flag.Bool("skipphase2", false, "skip phase 2 (parallel)")
 	flag.Parse()
 
 	servers := parseServers(*serverList)
@@ -72,31 +73,32 @@ func main() {
 		time.Sleep(*wait)
 	}
 
-	cycle(servers, imgs, reschan, parallel, perworker)
+	cycle(servers, imgs, reschan, parallel, perworker, skipPhase2)
 	t := time.NewTicker(*tick)
 	for range t.C {
-		cycle(servers, imgs, reschan, parallel, perworker)
+		cycle(servers, imgs, reschan, parallel, perworker, skipPhase2)
 	}
 }
 
-func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perworker *int) {
+func cycle(servers []Server, imgs []Image, reschan chan Result, parallel, perworker *int, skipPhase2 *bool) {
 	for _, server := range servers {
 		log.Printf("starting phase 1 for %s\n", server.Name)
 		t0 := time.Now()
 		request(0, imgs[:*perworker], server, reschan, nil, nil)
 		t1 := time.Now()
 		log.Printf("completed phase 1 for %s in %f seconds\n", server.Name, t1.Sub(t0).Seconds())
-
-		log.Printf("starting phase 2 for %s\n", server.Name)
-		var wgstart, wgstop sync.WaitGroup
-		wgstart.Add(1)
-		for i := 1; i <= *parallel; i++ {
-			wgstop.Add(1)
-			go request(i, imgs[(i+1)*(*perworker):(i+2)*(*perworker)], server, reschan, &wgstart, &wgstop)
+		if !*skipPhase2 {
+			log.Printf("starting phase 2 for %s\n", server.Name)
+			var wgstart, wgstop sync.WaitGroup
+			wgstart.Add(1)
+			for i := 1; i <= *parallel; i++ {
+				wgstop.Add(1)
+				go request(i, imgs[(i+1)*(*perworker):(i+2)*(*perworker)], server, reschan, &wgstart, &wgstop)
+			}
+			wgstart.Done()
+			wgstop.Wait()
+			log.Printf("completed phase 2 for %s in %f seconds\n", server.Name, time.Since(t1).Seconds())
 		}
-		wgstart.Done()
-		wgstop.Wait()
-		log.Printf("completed phase 2 for %s in %f seconds\n", server.Name, time.Since(t1).Seconds())
 		reschan <- Result{Worker: -1}
 	}
 
