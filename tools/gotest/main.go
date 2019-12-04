@@ -47,8 +47,10 @@ func main() {
 	perworker := flag.Int("perworker", 10, "images to send per worker")
 	imgpath := flag.String("imgs", "./images", "path to image directory")
 	resultpath := flag.String("results", "./results.csv", "path to results csv")
+	serverList := flag.String("servers", "./servers", "path to file with list of servers")
+	flag.Parse()
 
-	var servers []Server
+	servers := parseServers(*serverList)
 
 	imgs := loadFiles(*imgpath)
 
