@@ -1,0 +1,9 @@
+nevers              http://nevers.studlab.os3.nl:8080
+zeit-now-warm       https://warm.lsproject.now.sh/api/zeit
+gcp-run-warm        https://warm-6jdjoh342a-ew.a.run.app/
+gcp-fun-warm        https://europe-west1-cedar-channel-259712.cloudfunctions.net/warm
+azure-fun-warm      https://lsproject.azurewebsites.net/api/warm
+ibm-fun-warm        https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/warm
+ali-fun-warm        https://5055975195697149.eu-central-1.fc.aliyuncs.com/2016-08-15/proxy/warm/warm/
+gcp-app-warm        https://warm-dot-cedar-channel-259712.appspot.com/
+aws-lambda-warm     https://xt8gn4dt7g.execute-api.eu-west-2.amazonaws.com/default/warm
