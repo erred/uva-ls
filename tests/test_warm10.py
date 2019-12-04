@@ -3,7 +3,7 @@
 import glob, requests, time, csv, datetime, os, json
 
 services_url = {'zeit-now-warm':'https://warm.lsproject.now.sh/api/zeit',
-				'cp-run-warm':'https://warm-6jdjoh342a-ew.a.run.app/',
+				'gcp-run-warm':'https://warm-6jdjoh342a-ew.a.run.app/',
 				'gcp-fun-warm':'https://europe-west1-cedar-channel-259712.cloudfunctions.net/warm',
 				'azure-fun-warm':'https://lsproject.azurewebsites.net/api/warm',
 				'ibm-fun-warm':'https://eu-gb.functions.cloud.ibm.com/api/v1/web/marbadias97%40gmail.com_dev/default/warm',

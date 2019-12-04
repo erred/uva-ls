@@ -16,9 +16,9 @@ services_url = {'zeit-now-cold':'https://cold.lsproject.now.sh/api/zeit',
 
 #get 10 images
 def get_images():
-	try:
+    try:
 		image_list = []
-		for filename in glob.glob('../../images/*.*')[:10]: 
+		for filename in glob.glob('../../images/images_resized/*.*')[:10]: 
 			im=open(filename, 'rb')
 			im1= im.read()
 			im.close()
