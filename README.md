@@ -36,7 +36,8 @@ LS project
 
 ### notes
 
-2019-12-05 13:45:00 changed GCP run concurrency 80 -> 5
+2019-12-05 13:45 changed GCP run concurrency 80 -> 5
+2019-12-05 15:00 increased Alicloud function timeout 3 -> 60
 
 ### setup
 
@@ -57,38 +58,7 @@ fun install -v --runtime python3 --package-type pip package-here
 
 https://webcache.googleusercontent.com/search?q=cache:FmmiJU_o6qkJ:https://www.alibabacloud.com/help/doc-detail/74571.htm+&cd=2&hl=en&ct=clnk&gl=nl
 
-## report ideas
-
-### target featureset
-
-- globally / publicly available HTTPS terminated endpoint
-- serverless: no managing of runtimes
-- scalable: autoscale
-- pay for usage
-
-### testing variables
-
-- Workload:
-  - distribution: stable / burst
-  - memory usage
-  - cpu usage
-  - latency sensitivity
-  - wasted cycles / external calls
-  - async / concurrent / parallel
-- Network:
-  - DNS resolution
-  - bandwidth / payload size
-  - location / latency
-- Platform:
-  - layers / overhead
-  - machine size
-  - runtime version
-  - addons feature parity
-- code / server
-  - optimized for platform ?
-  - concurrent / parallel ?
-
-### additional testing ideas
+## additional testing ideas
 
 - probe runtime CPU frequency, does 1vcpu = 1vcpu
 

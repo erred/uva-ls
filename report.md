@@ -1,0 +1,97 @@
+# report brainstorming
+
+## research question
+
+- performance difference between FaaS and CaaS
+  - proposal
+  - cpu performance
+  - platform overhead
+  - cold start latencies
+- business case: low friction serverless deployments
+  - featureset:
+    - serverless: no management of runtimes
+    - autoscale
+    - globally reachable HTTPS endpoint
+    - pay only for usage
+- available technologies
+  - PaaS
+    - 1st generation
+    - GCP App Engine
+  - FaaS
+    - 2nd generation
+    - AWS Lambda
+    - GCP Functions
+    - Zeit Now
+    - Azure Functions
+    - IBM Functions
+    - Alicloud Functions
+  - CaaS on demand
+    - GCP Cloud Run
+    - AWS Fargate (needs NLB)
+
+### testing variables
+
+- Workload:
+  - distribution: stable / burst
+    - burst
+  - memory usage
+    - doesn't fail
+  - cpu usage
+  - latency sensitivity
+    - no
+  - wasted cycles / external calls
+    - no
+  - async / concurrent / parallel
+    - async, single concurrecy
+- Network:
+  - DNS resolution
+    - no restriction
+  - bandwidth / payload size
+    - 2048 -> 256
+  - location / latency
+    - europe
+- Platform:
+  - layers / overhead
+  - machine size
+    - target 128 memory
+  - runtime version
+    - 3.6 - 3.8
+  - addons feature parity
+    - logging, monitoring
+- code / server
+  - optimized for platform ?
+    - same-ish for all
+  - concurrent / parallel ?
+    - not very
+
+### pitfalls
+
+- develop / test / release cycle
+  - local test env
+    - Good: docker (Zeit), GCP, Azure, Alicloud
+    - Meh: AWS
+    - No: IBM
+  - deploy time
+  - logging
+    - No: IBM, Alicloud
+  - traffic splitting
+
+### backing technology
+
+- GCP App Engine: cloud build, nginx reverse proxy wsgi gateway for python
+- AWS Lambda: firecracker?
+- GCP Functions: cloud build
+- Zeit Now: "lambdas", multicloud: AWS and GCP
+- Azure Functions: Oryx build, docker containers
+- IBM Functions: openwhisk, docker containers, cloudflare
+- Alicloud Functions: custom?, docker containers
+- GCP Cloud Run: Kubernetes / Knative, containers
+
+### other
+
+- Shared VPS
+- Heroku
+- Cloudflare workers: JS only V8 runtime
+- AWS Fargate
+- Hosted Kubernetes:
+  - interface to infra
