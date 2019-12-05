@@ -1,5 +1,30 @@
 # report brainstorming
 
+## layout
+
+```
+abstract
+introduction
+related work
+research question
+- business case
+- CPU
+- overhead / latencies
+- pricing model
+methodology
+- variables
+- test setup
+results
+- data
+- pricing
+discussion
+- applicability
+- billing
+- other tech
+conclusion
+references
+```
+
 ## research question
 
 - performance difference between FaaS and CaaS
