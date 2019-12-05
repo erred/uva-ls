@@ -34,6 +34,12 @@ LS project
 
 ## testing
 
+### notes
+
+2019-12-05 13:45:00 changed GCP run concurrency 80 -> 5
+
+### setup
+
 - 583 raw photos (larger than 4000x4000): [releases: v0.0.0-photos.raw][photos1]
 
 ```

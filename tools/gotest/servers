@@ -1,4 +1,4 @@
-nevers              http://nevers.studlab.os3.nl:8080
+nevers              http://localhost:8080
 zeit-now-warm       https://warm.lsproject.now.sh/api/zeit
 gcp-run-warm        https://warm-6jdjoh342a-ew.a.run.app/
 gcp-fun-warm        https://europe-west1-cedar-channel-259712.cloudfunctions.net/warm

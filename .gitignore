@@ -1,4 +1,7 @@
+.venv/
 env/
+virtualenv/
+node_modules/
 tests/logs/
 tests/results/
 images/
