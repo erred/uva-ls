@@ -17,18 +17,18 @@ services_url = {'zeit-now-cold':'https://cold.lsproject.now.sh/api/zeit',
 #get 10 images
 def get_images():
     try:
-		image_list = []
-		for filename in glob.glob('../../images/images_resized/*.*')[:10]: 
-			im=open(filename, 'rb')
-			im1= im.read()
-			im.close()
-			image_list.append(im1)
-		return image_list
+        image_list = []
+        for filename in glob.glob('../../images/images_resized/*.*')[:10]: 
+            im=open(filename, 'rb')
+            im1= im.read()
+            im.close()
+            image_list.append(im1)
+        return image_list
 
-	except Exception as e:
-		with open('./logs/imageproblems.log', 'a') as logfile:
-			logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': ' + str(e) + '\n')
-		exit()
+    except Exception as e:
+        with open('./logs/imageproblems.log', 'a') as logfile:
+            logfile.write(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': ' + str(e) + '\n')
+            exit()
 
 	
 
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
 				var = image_list[i]
 				t = time.time_ns()
-				r = requests.post(url, data=var)
+				r = requests.post(url, data=var, headers={'Accept': 'image/jpeg', 'Content-Type': 'image/jpeg'})
 				total_time = time.time_ns() - t
 				if r.status_code == 200:
 					data = {

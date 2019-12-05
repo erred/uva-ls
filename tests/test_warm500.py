@@ -72,7 +72,7 @@ async def do_requests(url, imgs, count):
             count2 = 0
             for img in imgs:
                 t = time.time_ns()
-                r = await sess.post(url, data=img)
+                r = await sess.post(url, data=img, headers={'Accept': 'image/jpeg', 'Content-Type': 'image/jpeg'})
                 total_time = time.time_ns() - t
                 if r.status != 200:
                     await err.put(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ': Status code ' + str(r.status_code) + ', ERROR: ' +  str(r.reason) +'\n')
