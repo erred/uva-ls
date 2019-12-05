@@ -4,13 +4,34 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{eurosym}
 
-\title{%  
+\title{%
   Functions as a Service vs Short-lived containers \\
   \large Large Systems project}
 \author{Sean Liao and Mar Badias}
 \begin{document}
 
 \maketitle
+
+%% abstract
+%% introduction
+%% related work
+%% research question
+%% - business case
+%% - CPU
+%% - overhead / latencies
+%% - pricing model
+%% methodology
+%% - variables
+%% - test setup
+%% results
+%% - data
+%% - pricing
+%% discussion
+%% - applicability
+%% - billing
+%% - other tech
+%% conclusion
+%% references
 
 
 \section{Introduction}
@@ -37,7 +58,7 @@ For deciding which is preferable we will consider the following subquestions:
 
 \item \textbf{Which one has lower platform overhead?}  We plan to measure the excess of computation time introduced by the platform as it supposes extra time in client request that we wish to minimize. Lower platform overhead will be considered more preferable.
 
-\item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. As answering the client request needs to be done as fast as possible, lower cold start will be considered preferable. 
+\item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. As answering the client request needs to be done as fast as possible, lower cold start will be considered preferable.
 \end{itemize}
 
 
@@ -50,7 +71,7 @@ We want to use image processing as our test workload, a real world \cite{ii} use
 
 Image processing was selected as it represents a common workload that, without hardware accelerators, relies heavily on CPU performance. It also does not require access to external resources, such as databases, which while also a common workload, introduce too much variability.
 
-We will send images as http requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and measuring the time it takes to do so. This will form the basis for our calculations of compute performance. We will additionally measure roundtrip time for requests from the client, this, minus the computation time will be used to calculate the platform overhead.  The same experiment will be performed for obtaining the cold start latencies but with different timing to ensure that the instance is created when receiving the request. 
+We will send images as http requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and measuring the time it takes to do so. This will form the basis for our calculations of compute performance. We will additionally measure roundtrip time for requests from the client, this, minus the computation time will be used to calculate the platform overhead.  The same experiment will be performed for obtaining the cold start latencies but with different timing to ensure that the instance is created when receiving the request.
 
 Our plan is to spread out testing over a week, to even out variability from running at different times. Specifically we want to test hourly over a week for compute and overhead at single and 50 concurrent requests and repeat it 10 times, to cover the different concurrency guarantees of different products, and every 3 hours for cold start times (to allow time for the function to be evicted from local caches, additional testing required).
 
@@ -58,7 +79,7 @@ At the end of the experiments, the billing of each service will be compared too.
 
 
 \section{Estimated Cost}
-Most cloud providers offer a free trial between \$200 and \$300, excepting Amazon Web Services. As explained on section \ref{methods}, our experiments will be performed hourly over a week and repeating 10 times a single and 50 concurrent requests. This supposes a total of 85680 request to the cloud service. 
+Most cloud providers offer a free trial between \$200 and \$300, excepting Amazon Web Services. As explained on section \ref{methods}, our experiments will be performed hourly over a week and repeating 10 times a single and 50 concurrent requests. This supposes a total of 85680 request to the cloud service.
 
 \paragraph{Containers as a Service}
 \begin{itemize}
@@ -73,13 +94,13 @@ We estimate that, using its lowest configuration (0.25vCPU and 0.5GB of memory) 
 So, in total we expect to spend \$1.13 which is 1.12\euro{} .
 
 \item \textbf{GCP Cloud Run} \\
-Google offers \$300 free trial during one year new Google Cloud Platform clients, which includes us. 
+Google offers \$300 free trial during one year new Google Cloud Platform clients, which includes us.
 
 \item \textbf{Azure Container Instance} \\
 Azure also offers \$200 of free trials for new users.
 
 \item \textbf{Alibaba Elastic Container Instance} \\
-They also offer \$300 of free trial for new users. 
+They also offer \$300 of free trial for new users.
 \end{itemize}
 
 \paragraph{Serverless / Functions as a Services}
@@ -88,15 +109,15 @@ They also offer \$300 of free trial for new users.
 Although AWS does not offer a free trial, AWS Lambda has a free tier which includes 1M free requests per month and 400000 GB-seconds of compute time per month. Specifically, using 128MB memory gives us  3,2M free seconds which is enough for the test we plan to perform.
 
 \item \textbf{GCP Cloud Functions} \\
-Besides offering a free trial, Cloud Functions has a free tier which includes 2M free requests, 1M seconds of compute and 400000 GB-seconds of resources. We think that is enough for this project. 
+Besides offering a free trial, Cloud Functions has a free tier which includes 2M free requests, 1M seconds of compute and 400000 GB-seconds of resources. We think that is enough for this project.
 
-\item \textbf{Azure Functions}\\ 
+\item \textbf{Azure Functions}\\
 hey offer a monthly free grant of 1 million requests and 400000 GB-s of resource consumption per month per subscription.
 
 \item \textbf{IBM Cloud Functions} \\
-They also offer a free tier which includes 5M executions per month, 128MB of memory and 500ms for execution . 
+They also offer a free tier which includes 5M executions per month, 128MB of memory and 500ms for execution .
 
-\item \textbf{Alibaba Function Compute} 
+\item \textbf{Alibaba Function Compute}
 They offer a monthly free quota of 1M requests, 400000GB-s of resource consumption, which is enough for our project.
 
 \item \textbf{Zeit Now} \\
@@ -107,7 +128,7 @@ They offer a free plan which includes 20 hours of resource consumption and 10 se
 \section{Related work}
 Cloud FaaS performance has been subject of previous research. An excellent example is \cite{aa} where multiple serverless providers are continuously been benchmarked. Their points of comparison will be used in this project for measuring and comparing them short-lived containers. Another example of an excellent comparison of Faas providers is \cite{bb}. Cloud short lived containers have also been a topic of study, comparing them to long live containers or performance test among of different provides. We can find examples of this in \cite{cc} and \cite{dd}. Comparison between Faas and short-lived containers has also been studied but from a functionality point of view, oversimplificating it and not taking into account the performance \cite{ee}\cite{ff}\cite{gg}.
 
-Up to our knowledge, the performance differences between Faas and short live containers have not been comprehensively analysed yet, which motivates our research. 
+Up to our knowledge, the performance differences between Faas and short live containers have not been comprehensively analysed yet, which motivates our research.
 
 \section{MORE ETC ETC}
 
