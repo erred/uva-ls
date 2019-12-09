@@ -1,5 +1,20 @@
 # report brainstorming
 
+## results
+
+- errors on day 1: ~5 hours of inconsistent data
+- single concurrency: 94x10, no failures
+- 50 concurrecy: 94x500 = 47000
+
+  - ali 3499: 429 too many requests
+  - gcp-fun 28: 500 internal server error
+  - zeit 5: 400 bad request
+  - azure 3: 502 bad gateway
+
+- compare: request time vs cpu
+- location / routing
+- overhead comparison
+
 ## layout
 
 ```
@@ -79,6 +94,9 @@ references
   - layers / overhead
   - machine size
     - target 128 memory
+    - cpu freq
+      - shared?
+    - memory limit
   - runtime version
     - 3.6 - 3.8
   - addons feature parity

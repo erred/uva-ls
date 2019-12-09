@@ -36,8 +36,8 @@ LS project
 
 ### notes
 
-2019-12-05 13:45 changed GCP run concurrency 80 -> 5
-2019-12-05 15:00 increased Alicloud function timeout 3 -> 60
+- 2019-12-05 13:45 changed GCP run concurrency 80 -> 5
+- 2019-12-05 15:00 increased Alicloud function timeout 3 -> 60
 
 ### setup
 
