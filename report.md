@@ -16,6 +16,8 @@
 - overhead comparison
 
 ### results from Mar tests
+- could we use Seans results for cold start?
+- warm:
 - single concurrency 6x10=960, no failures
 - 50 concurrency:  96x500=48000
     - alibaba: 1053, too many requests
@@ -23,15 +25,19 @@
     - azure: 49, too many requests
     -gcp-run: 4, too many requests
     - zeit: 1, Cannot connect to host warm.lsproject.now.sh:443 ssl:default [Connection reset by peer] too many request?
-    
-->> Question, how do we know that we haven't been executing the test at the same time againts the same services?
-Then we would have more concurrency than expected!
 
-    **from client view**
-  - azure(specially 10 req) and ibm execution time  the most inestable. WHY?
+#### from client view
+  - azure(specially 10 req) and ibm execution time the most inestable. WHY?
   - zeit now and lambada really similar -> same DC?
   - ali performance seems good(more inestable for 10 req) but do not forget about the lange amount of errors
-  - google works ok, no differences between 500 and 10.
+  - google works ok, no differences between 500 and 10. Func maybe the worst performance but not a big difference. 
+
+#### from server time 2 view (image resizing part)
+  - zeit and lambda are not that similar anymore. Zeit better, because they use the bigges machine from amazon?
+  - amazon lambda two big blocks, they use two types of machines?
+  - ibm and azure are still the most inestable  with worst performance?
+  - here we can see how that google products behave a bit different -> gpc run the best?
+  - 
 
 ## layout
 
@@ -156,3 +162,15 @@ references
 - AWS Fargate
 - Hosted Kubernetes:
   - interface to infra
+
+  
+
+### plots on the report and what they show:
+- do we need to show the reliability of our data??
+- 10 vs 500, does it change much? (platforms shoud mantain performance, it really happens?)
+- representing relation btw cpu time and client time so overhead of each platform
+- represent performance(cpu and client time) at different points in time
+- warm vs cold start, how performance changes in each case
+
+
+- x:time to  y:percentage
