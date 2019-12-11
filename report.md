@@ -15,7 +15,7 @@
 - location / routing
 - overhead comparison
 
-# results from Mar tests
+### results from Mar tests
 - single concurrency 6x10=960, no failures
 - 50 concurrency:  96x500=48000
     - alibaba: 1053, too many requests
@@ -26,6 +26,7 @@
     
 ->> Question, how do we know that we haven't been executing the test at the same time againts the same services?
 Then we would have more concurrency than expected!
+
     **from client view**
   - azure(specially 10 req) and ibm execution time  the most inestable. WHY?
   - zeit now and lambada really similar -> same DC?
