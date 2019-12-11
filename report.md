@@ -15,6 +15,23 @@
 - location / routing
 - overhead comparison
 
+# results from Mar tests
+- single concurrency 6x10=960, no failures
+- 50 concurrency:  96x500=48000
+    - alibaba: 1053, too many requests
+    - gcp-fun: 3, too many requests
+    - azure: 49, too many requests
+    -gcp-run: 4, too many requests
+    - zeit: 1, Cannot connect to host warm.lsproject.now.sh:443 ssl:default [Connection reset by peer] too many request?
+    
+->> Question, how do we know that we haven't been executing the test at the same time againts the same services?
+Then we would have more concurrency than expected!
+    **from client view**
+  - azure(specially 10 req) and ibm execution time  the most inestable. WHY?
+  - zeit now and lambada really similar -> same DC?
+  - ali performance seems good(more inestable for 10 req) but do not forget about the lange amount of errors
+  - google works ok, no differences between 500 and 10.
+
 ## layout
 
 ```
