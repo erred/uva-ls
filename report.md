@@ -130,6 +130,9 @@ references
     - same-ish for all
   - concurrent / parallel ?
     - not very
+  - python runtime
+    - not good for performance measurements
+    - different frameworks
 
 ### pitfalls
 
