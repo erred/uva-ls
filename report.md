@@ -180,9 +180,9 @@ references
 | FaaS | Azure         | Functions        | Netherlands           | CNAMEs 30,1799,59 | 0 eur (5)                              |
 | FaaS | IBM Cloud     | Functions        | London                | 300               | 0 eur. Free trial, cannot check costs  |
 | FaaS | Alibaba Cloud | Function Compute | Frankfurt             | CNAME 60,59       | 0.11$                                  |
-| FaaS | Zeit          | Now              | Brussels, Belgium**   | 60                | 0 eur free trial, cannot check costs   |
+| FaaS | Zeit          | Now              | Brussels, Belgium(11) | 60                | 0 eur free trial, cannot check costs   |
 
-**By default, the closest region to the geographical location of the deployment is used**
+(11)By default, the closest region to the geographical location of the deployment is used
 
 
 | Platform      | Product          | vCPU      | Memory | Timeout | Concurrency | CPU speed | Notes |
@@ -205,11 +205,11 @@ references
 
    Pricing (if we would had have to pay): 
 
-    | Product          | Price                     | 
-    | ---------------- | ---------                 | 
-    | Requests         | $0.20 per 1M              | 
-    | Memory (128 MB)  | $0.000000208 per 100ms    | 
-    | Cloud Watch      | Free tier for everybody   | 
+| Product          | Price                     | 
+| ---------------- | ---------                 | 
+| Requests         | $0.20 per 1M              | 
+| Memory (128 MB)  | $0.000000208 per 100ms    | 
+| Cloud Watch      | Free tier for everybody   | 
 
 
 (2) All users have 2 milion requests + 400,000 GB-seconds, 200,000 GHz-seconds of compute time + 5GB of Internet egress traffic per month
