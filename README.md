@@ -65,6 +65,7 @@ https://webcache.googleusercontent.com/search?q=cache:FmmiJU_o6qkJ:https://www.a
 ## additional references:
 
 - [GCP Functions vs Run][ref1]
+- [serverless as roaches tweet][ref2]
 
 [1]: https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model.html
 [2]: https://cloud.google.com/functions/docs/writing/http
@@ -75,4 +76,5 @@ https://webcache.googleusercontent.com/search?q=cache:FmmiJU_o6qkJ:https://www.a
 [7]: https://cloud.google.com/run/docs/deploying
 [8]: https://cloud.google.com/appengine/docs/standard/python3/
 [ref1]: https://medium.com/google-cloud/cloud-run-vs-cloud-functions-whats-the-lowest-cost-728d59345a2e
+[ref2]: https://twitter.com/ben11kehoe/status/713322946891227136
 [photos1]: https://github.com/seankhliao/uva-ls/releases/tag/v0.0.0-photos.raw
