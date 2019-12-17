@@ -91,7 +91,7 @@ How do serverless (FaaS) products compare across cloud platforms?
 
 ### Other Tech
 
-- fargate
+- fargate, cgroups
 - Kubernetes
 
 ## Conclusion
@@ -107,5 +107,13 @@ How do serverless (FaaS) products compare across cloud platforms?
   - kubernetes unified api
 
 ## References
+
+- https://engineering.opsgenie.com/how-does-proportional-cpu-allocation-work-with-aws-lambda-41cd44da3cac
+- https://epsagon.com/blog/how-to-make-aws-lambda-faster-memory-performance/
+- https://www.simform.com/aws-lambda-pricing/
+- http://docs-aliyun.cn-hangzhou.oss.aliyun-inc.com/pdf/FunctionCompute-develop-guide-intl-en-2018-12-07.pdf
+- http://jamesthom.as/
+- https://webcache.googleusercontent.com/search?q=cache:IvHnCCWD2IkJ:https://www.icsr.agh.edu.pl/~malawski/CloudFunctionsHeteroPar17CPE.pdf+&cd=6&hl=en&ct=clnk&gl=nl
+- https://sci-hub.se/10.1002/cpe.4792
 
 ## Appendix
