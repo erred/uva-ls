@@ -4,6 +4,12 @@
 
 ## Introduction
 
+current state of serverless:
+
+- old: app engine
+- current: FaaS
+- next: run
+
 ## Related Work
 
 ## Research Question
@@ -33,20 +39,17 @@ How do serverless (FaaS) products compare across cloud platforms?
   - bandwith
   - latency / location
   - DNS lookup
+  - single source, single dest
 - server code:
   - frameworks
   - same across platforms / no microoptimizations
+  - python code not good for perf
 
 ### Setup
 
 - single source, single datacenter
 - hourly test, 10x1, 10x50
 - 4 days
-
-### Limitations
-
-- single source, single datacenter
-- python not the best for perf mon
 
 ## Results
 
@@ -75,6 +78,11 @@ How do serverless (FaaS) products compare across cloud platforms?
 
 - alibaba doesn't scale
 - ms doesn't want to scale
+- ibm is slow
+- aws is consistent, but slow
+
+#### map to underlying tech?
+
 - all except lambda show a slow cpu, lambda, ibm cpu starved of time
 
 ### Applicability
@@ -87,6 +95,16 @@ How do serverless (FaaS) products compare across cloud platforms?
 - Kubernetes
 
 ## Conclusion
+
+- no thinking about servers
+  - fit in machine type to save costs
+  - machine type for perfomance
+- scaling worries
+  - depends on your cloud
+- which cloud to choose?
+  - lock-in
+- what to look forward to
+  - kubernetes unified api
 
 ## References
 
