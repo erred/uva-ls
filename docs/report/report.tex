@@ -2,36 +2,43 @@
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1.3in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage{eurosym}
+%\usepackage{eurosym}
 
 \title{%
   Functions as a Service vs Short-lived containers \\
   \large Large Systems project}
 \author{Sean Liao and Mar Badias}
+
+
+
 \begin{document}
 
 \maketitle
 
-%% abstract
-%% introduction
-%% related work
-%% research question
+%% TODO abstract   
+%% TODO introduction
+  %% -> why our reaserch is relevant, what are this services exactly
+  %% -> say they create instances.
+%% TODO related work
+%% TODO research question
 %% - business case
 %% - CPU
 %% - overhead / latencies
 %% - pricing model
-%% methodology
+%% TODO methodology
 %% - variables
 %% - test setup
-%% results
+%% TODO results
 %% - data
 %% - pricing
-%% discussion
+%% TODO discussion
 %% - applicability
 %% - billing
 %% - other tech
-%% conclusion
-%% references
+%% - answer reaserch question
+%% TODO usage case
+%% TODO conclusion
+%% TODO references
 
 
 \section{Introduction}
@@ -58,7 +65,7 @@ For deciding which is preferable we will consider the following subquestions:
 
 \item \textbf{Which one has lower platform overhead?}  We plan to measure the excess of computation time introduced by the platform as it supposes extra time in client request that we wish to minimize. Lower platform overhead will be considered more preferable.
 
-\item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. As answering the client request needs to be done as fast as possible, lower cold start will be considered preferable.
+\item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. As answering the client request needs to be done as fast as possibles, lower cold start will be considered preferable.
 \end{itemize}
 
 
@@ -67,11 +74,39 @@ We want to test the products offered by the top 5 cloud providers as of 2019 \ci
 
 \section{Methods}
 \label{methods}
-We want to use image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support.
+
+
+For answering the reaserch questions we will measure following variables:
+
+\begin{itemize}
+\item Overall performance.  
+\item Platform overhead.
+\item Compute performance.
+\end{itemize}
+
+We want to use image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support. 
 
 Image processing was selected as it represents a common workload that, without hardware accelerators, relies heavily on CPU performance. It also does not require access to external resources, such as databases, which while also a common workload, introduce too much variability.
 
-We will send images as http requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and measuring the time it takes to do so. This will form the basis for our calculations of compute performance. We will additionally measure roundtrip time for requests from the client, this, minus the computation time will be used to calculate the platform overhead.  The same experiment will be performed for obtaining the cold start latencies but with different timing to ensure that the instance is created when receiving the request.
+We will send images as HTTP requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and measuring the time it takes to do so. This will form the basis for our calculations of compute performance. We will additionally measure roundtrip time for requests from the client, this, minus the computation time will be used to calculate the platform overhead.  The same experiment will be performed for obtaining the cold start latencies but with different timing to ensure that the instance is created when receiving the request.
+
+
+
+- we will get the ServerUID which is the instance UID
+- 
+
+
+
+
+For each service, which config did we used and why 
+
+%------
+
+
+
+
+
+
 
 Our plan is to spread out testing over a week, to even out variability from running at different times. Specifically we want to test hourly over a week for compute and overhead at single and 50 concurrent requests and repeat it 10 times, to cover the different concurrency guarantees of different products, and every 3 hours for cold start times (to allow time for the function to be evicted from local caches, additional testing required).
 
@@ -98,7 +133,7 @@ After performing the mentioned experiments we obtained the following results:
 The table shows. Parallel instances say they are parallel duirng a single test cycle. 
 %inset tambe out8 -> cols(single and multi): server, total requests, succes rate, cold sarts percentage (100-warm ratio),  parallel instances and standard desviation
 
-
+Overall performence does not change during time (time of the day does not matter)
 
 \subsection{Overhead}
 
@@ -120,7 +155,7 @@ In figure XX we can see strictly the time of resizing the image in each test(mul
 
 \section{Discussion}
 Say: alibaba has a low succes rate so its results bla bla
-
+Overall performence does not change during time (time of the day does not matter)
 
 \subsection{Overhead}
 - cold is higher (as expected) because it has to iniciate the instance. 
