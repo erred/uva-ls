@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{popular1}
+CloudFlare.
+\newblock {What Is Serverless Computing? | Serverless Definition}.
+\newblock \url{
+  https://www.cloudflare.com/learning/serverless/what-is-serverless/}.
+
+\bibitem{aa}
+Bernd Strehl.
+\newblock {Serverless Benchmark}.
+\newblock \url{ https://serverless-benchmark.com/}.
+
+\end{thebibliography}

@@ -3,9 +3,21 @@
 \usepackage[margin=1.3in]{geometry}
 \usepackage[hidelinks]{hyperref}
 %\usepackage{eurosym}
+\usepackage{caption}
+\usepackage{titling}
+\usepackage{xcolor,colortbl}
+\usepackage{tabularx}
+%------------------------------------------ 
+\captionsetup[table]{position=bottom}
+\setlength{\parindent}{0pt}
+\definecolor{Gray}{rgb}{0.7,0.7,0.7}
+\pretitle{\begin{center}\Large\bfseries}
+%------------------------------------------
 
-\title{%
-  Functions as a Service vs Short-lived containers \\
+
+
+\title{
+  Serverless technologies comparison\\
   \large Large Systems project}
 \author{Sean Liao and Mar Badias}
 
@@ -18,15 +30,16 @@
 %% TODO abstract   
 %% TODO introduction
   %% -> why our reaserch is relevant, what are this services exactly
-  %% -> say they create instances.
+  %% -> why can we put Caas and FaaS in the same bag
+
 %% TODO related work
 %% TODO research question
 %% - business case
+%% TODO methodology
+%% - variables
 %% - CPU
 %% - overhead / latencies
 %% - pricing model
-%% TODO methodology
-%% - variables
 %% - test setup
 %% TODO results
 %% - data
@@ -41,21 +54,29 @@
 %% TODO references
 
 
+\begin{abstract}
+Write abstrat here
+\end{abstract}
+
+
+
 \section{Introduction}
-Public clouds are growing, and with it comes the latest push into serverless offerings. These come in many forms depending on the abstraction level, but they can largely be grouped into: long-lived containers, short-lived containers, functions as a service.
+\label{introduction}
+Public clouds are growing, and with it comes the latest push into serverless offerings. These come in many forms depending on the abstraction level, but they can largely be grouped into: long-lived containers, short-lived containers, functions as a service. \\
 
-Functions as a Service (FaaS): Currently the highest level of abstraction, developers provide their application code for the clouds to compile, package, deploy, and run. These are short-lived and stateless, an instance may be started for every request and killed after it completes. Billing is only for the time it is running serving a request. Examples: AWS Lambda, GCP Cloud Functions, Azure Functions, Alibaba Function Compute, IBM Cloud Functions, Zeit Now.
+Long-lived containers or Platform as a Service (PaaS). They represent the first generation of serverless technologies. These can be full-fledged, stateful applications, packaged in containers. The clouds will take these and run them for you on VMs. Auto-scaling and load balancing is usually offered, but fast startup times are not guaranteed. These should be considered an alternative UI to the underlying VMs, which will be reflected in the pricing model (charge for underlying VMs). Examples: AWS Elastic Container service, GCP App Engine, Azure App Services, Alibaba Container Service. \\
 
-Short-lived containers: These are similar to FaaS: short-lived, stateless runtimes and a similar billing model. Where they differ is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance.
+Functions as a Service (FaaS). Currently the highest level of abstraction they are the second generation of serverless technologies, developers provide their application code for the clouds to compile, package, deploy, and run. These are short-lived and stateless, an instance may be started for every request and killed after it completes. Billing is only for the time it is running serving a request. Examples: AWS Lambda, GCP Cloud Functions, Azure Functions, Alibaba Function Compute, IBM Cloud Functions, Zeit Now.\\
 
-Long-lived containers (traditionally Platform as a Service (PaaS)): These can be full-fledged, stateful applications, packaged in containers. The clouds will take these and run them for you on VMs. Auto-scaling and load balancing is usually offered, but fast startup times are not guaranteed. These should be considered an alternative UI to the underlying VMs, which will be reflected in the pricing model (charge for underlying VMs). Examples: AWS Elastic Container service, GCP App Engine, Azure App Services, Alibaba Container Service.
+Short-lived containers or Containers as a Service (CaaS). Is the newest technologies short-lived, stateless runtimes and a similar billing model. Where they differ from FaaS is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance.
 
 
 \section{Research question}
-Given the similarities between FaaS and short-lived containers, we want to look into both profiles and answer the following question:
+
+Given the amount of services of this type in the current market we defined a buisness case based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, autoscaling, globally reachable HTTP(S) endpoint and pay only for usage. Having defined our preferences, we want to look in their profiles and answer the following question:
 
 \begin{itemize}
-\item \textbf{When one should be chosen over the other when both are available?}
+\item \textbf{When one should be chosen over the others when all are available?}
 \end{itemize}
 
 For deciding which is preferable we will consider the following subquestions:
@@ -69,20 +90,69 @@ For deciding which is preferable we will consider the following subquestions:
 \end{itemize}
 
 
-We want to test the products offered by the top 5 cloud providers as of 2019 \cite{hh}: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally we want to test Zeit Now, a startup in the FaaS space popular for its streamlined experience. We will not be testing long-lived containers as they require a different application architecture for effective utilization and should be compared to raw VMs (AWS EC2, GCP Compute Engine).
+
+
+
+
+%We will not be testing long-lived containers as they require a different application architecture for effective utilization and should be compared to raw VMs.
 
 
 \section{Methods}
 \label{methods}
+We want to test the products offered by the top 5 cloud providers as of 2019: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally we will also test Zeit, a startup in the FaaS space popular for its streamlined experience. In the table \ref{Tab:services} we can see the products we will work with and in wich category they fit. \\
 
+\begin{table}
+\centering
+ \begin{tabularx}{\textwidth}{ X  X  X }
+ %\hline
+ %\rowcolor{Gray}
+ \textbf{Type} & \textbf{Platform} & \textbf{Product} \\  
+ \hline
+ \hline
+ FaaS & AWS & Lambda \\  
+ \hline
+ FaaS & GCP & Functions \\  
+ \hline
+ FaaS & Azure & Functions \\ 
+ \hline
+ FaaS & IBM Cloud & Functions \\ 
+ \hline
+ FaaS & Alibaba Cloud & Function Compute \\ 
+ \hline
+ FaaS & Zeit & Now \\ 
+ \hline
+ CaaS & GCP & Cloud Run \\ 
+ \hline
+ PaaS & GCP & App Engine \\ 
+ %\hline
+
+\end{tabularx}
+\caption{Serverless services that will be tested in this reaserch.}
+\label{Tab:services}
+\end{table}
+
+As mentioned in section \label{introduction}, the the pricing model for Pass, charge for underlying VMs, does not fit in the 'Pay only for usage' defined in our Reaserch question. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our buissnes case.  
+
+
+
+%%What we are going to measure
 
 For answering the reaserch questions we will measure following variables:
 
 \begin{itemize}
-\item Overall performance.  
+\item Overall performance. We want to obtaint how much does it take for each services to performe a request   
 \item Platform overhead.
 \item Compute performance.
 \end{itemize}
+
+
+- we will get the ServerUID which is the instance UID
+- time of the day we execute it
+
+
+%How we are going to measure it.
+
+-using images that their size are somehow ok. diferent formats but they follow a normal distribution, which makes their okok. 
 
 We want to use image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support. 
 
@@ -92,8 +162,7 @@ We will send images as HTTP requests to the various platforms to be resized. The
 
 
 
-- we will get the ServerUID which is the instance UID
-- 
+
 
 
 
@@ -122,6 +191,9 @@ Cloud FaaS performance has been subject of previous research. An excellent examp
 
 Up to our knowledge, the performance differences between Faas and short live containers have not been comprehensively analysed yet, which motivates our research.
 %SEAN WANTED TO ADD SOMETHING
+READ THIS AND SEE WHAT CAN U INCLUDE HERE
+\url{https://sci-hub.se/10.1002/cpe.4792}
+
 
 \section{Results}
 After performing the mentioned experiments we obtained the following results:
@@ -197,5 +269,11 @@ how does this explain about performance.
 
 \subsection{Research Questions}
 (answer research questions)
+
+
+\bibliography{references}
+\bibliographystyle{unsrt}
+
+
 
 \end{document}
