@@ -36,7 +36,7 @@
 
 %% TODO related work
 %% TODO research question
-%% - business case
+%% - business case/ 
 %% TODO methodology
 %% - variables
 %% - CPU
@@ -73,7 +73,7 @@ Functions as a Service (FaaS), currently the highest level of abstraction and th
 
 Short-lived containers or Containers as a Service (CaaS). Is the newest technologies short-lived, stateless runtimes and a similar billing model. Where they differ from FaaS is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance. \\
 
-Given the amount of services of this type in the current market we defined a buisness case based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, globally reachable HTTP(S) endpoint, pay only for usage and autoscaling. Having defined these characteristics, we selected the products that provide them offered by the top 5 cloud providers as of 2019: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally, we also included Zeit, a startup in the FaaS space popular for its streamlined experience. The products selected are:
+Given the amount of services of this type in the current market we defined a selection criteria based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, globally reachable HTTP(S) endpoint, pay only for usage and autoscaling. Having defined these characteristics, we selected the products that provide them offered by the top 5 cloud providers as of 2019: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally, we also included Zeit, a startup in the FaaS space popular for its streamlined experience. The products selected are:
 
 \begin{multicols}{2}
 \begin{itemize}
@@ -88,7 +88,7 @@ Given the amount of services of this type in the current market we defined a bui
 \end{itemize}
 \end{multicols}
 
-As mentioned in section before, the the pricing model for PaaS (charge for underlying VMs) does not fit in the 'Pay only for usage' defined in our buisness case. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our buissnes case. \\
+As mentioned in section before, the the pricing model for PaaS (charge for underlying VMs) does not fit in the 'Pay only for usage' defined in our selection criteria. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our selection criteria. \\
 
 Our reaserch will measure and analiyse its CPU performance, overhead and specially their capacity to scale when the workload increases. Scaling entails creating more instances, known as cold starts, and assigning new resources between them without influencing others' instances performance. 
 
@@ -105,7 +105,7 @@ Aldought serverless performance has been heavily analized, to the best of our kn
 %Sentence that seems cool and we can use: We observe that the number of potential usage scenarios of these highly elastic infrastructures is growing fast.
 
 \section{Research question}
-Having defined our buisness case, we needed to answer the following question:
+Having defined the services that fullfill our selection criteria, we needed to answer the following question:
 
 \begin{itemize}
 \item \textbf{When one should be chosen over the others when all are available?}
@@ -114,7 +114,8 @@ Having defined our buisness case, we needed to answer the following question:
 For deciding which is preferable we will consider the following subquestions:
 
 \begin{itemize}
-\item \textbf{Which has better raw computer performance?} With this question we will determine which solution provides the faster performance. While some platforms do provide numbers, we aim to check if these are comparable across services. Better here would be a faster completion of tasks, and/or a corresponding reduction in costs.
+
+\item \textbf{Does scaling out affect the performance of the services?}
 
 \item \textbf{Which one has lower platform overhead?}  We plan to measure the excess of computation time introduced by the platform as it supposes extra time in client request that we wish to minimize. Lower platform overhead will be considered more preferable.
 
@@ -134,17 +135,35 @@ For deciding which is preferable we will consider the following subquestions:
 
 \section{Methods}
 \label{methods}
-As mentioned in section \ref{introduction}, we want to test the products offered by the top cloud providers as of 2019. We measured:
+As mentioned in section \ref{introduction}, we want to test the products offered by the top cloud providers as of 2019. In order to answer the reseach questions we used used image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support. We will send images as HTTP requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and sending the image back to the client.
 
-%%What we are going to measure
+Image processing was selected as it represents a common workload that, without hardware accelerators, relies heavily on CPU performance. It also does not require access to external resources, such as databases, which while also a common workload, introduce too much variability. \\
+
+During these experimients, the following variables will be measured: 
+
+
 \begin{itemize}
-\item Overall performance. We want to obtaint how much does it take for each services to performe a request
-\item Platform overhead.
-\item Compute performance.
+\item Compute performance. How much time does the platform need to do the resizing opetation. This has been measured in the code deployed in the platforms and sent back in the response headers. 
+\item Overall performance. How much does it take for each services to performe a request from the client's point of view. 
+\item Platform overhead. Defined has de extra time introduced by the platform to handle the request and deliver it to our code. It will be calculated using the overall performance minus the compute performance
+\item Instance reusage. The code delpoyed on the platforms also sended in the response the Instance ID that compute/answered each request. Each instance has a unique ID and analyiing them we can determine which  
+\item Cold start ?
+\item Time of the day we perform the request.
 \end{itemize}
 
 
+We will send images as HTTP requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and measuring the time it takes to do so. This will form the basis for our calculations of compute performance. We will additionally measure roundtrip time for requests from the client, this, minus the computation time will be used to calculate the platform overhead.  The same experiment will be performed for obtaining the cold start latencies but with different timing to ensure that the instance is created when receiving the request.
 
+
+
+measured:
+
+
+
+
+
+- we will get the ServerUID which is the instance UID
+- time of the day we execute it
 In the table \ref{Tab:services} we can see the products we will work with and in wich category they fit.// A detailed description \\
 
 
@@ -154,19 +173,17 @@ For answering the reaserch questions we will measure following variables:
 
 
 
-- we will get the ServerUID which is the instance UID
-- time of the day we execute it
+
 
 
 %How we are going to measure it.
 
 -using images that their size are somehow ok. diferent formats but they follow a normal distribution, which makes their okok.
 
-We want to use image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support.
 
-Image processing was selected as it represents a common workload that, without hardware accelerators, relies heavily on CPU performance. It also does not require access to external resources, such as databases, which while also a common workload, introduce too much variability.
 
-We will send images as HTTP requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and measuring the time it takes to do so. This will form the basis for our calculations of compute performance. We will additionally measure roundtrip time for requests from the client, this, minus the computation time will be used to calculate the platform overhead.  The same experiment will be performed for obtaining the cold start latencies but with different timing to ensure that the instance is created when receiving the request.
+
+
 
 
 For each service, which config did we used and why
