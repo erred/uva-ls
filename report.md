@@ -152,12 +152,14 @@ references
 ### backing technology
 
 - GCP App Engine: cloud build, nginx reverse proxy wsgi gateway for python
+
 - AWS Lambda: firecracker?
 - GCP Functions: cloud build
 - Zeit Now: "lambdas", multicloud: AWS and GCP
 - Azure Functions: Oryx build, docker containers
-- IBM Functions: openwhisk, docker containers, cloudflare
 - Alicloud Functions: custom?, docker containers
+- IBM Functions: openwhisk, docker containers, cloudflare
+
 - GCP Cloud Run: Kubernetes / Knative, containers
 
 ### other

@@ -277,16 +277,52 @@ Our results in Figure 2 % number?
 show that, as expected, in most cases,
 single concurrency cold starts are slower than warm starts
 and the start times are highly consistent.
-Surprisingly, cold start times are much more variable at higher concurrency levels,
+Cold start times are much more variable at higher concurrency levels,
 with the exception of AWS Lambda which appears unaffected.
 
 What is unexpected is in Figure 3, % number ?
 that that cold starts affect CPU performance.
 These instances consistently perform worse on a cold start,
 even as they are reused for future requests.
+Further testing would be needed to identify the root cause of thus.
 
 \subsection{Technologies}
-how does this explain about performance.
+GCP App Engine is the oldest technology being compared.
+Under the hood it appears to be an NGINX reverse proxying Python apps through Gunicorn.
+Its scaling is controlled by CPU utilization,
+and in our case a heavy workload pushes that up
+and limits the concurrent requests a single instance can handle.
+While it can scale to zero instances,
+each instance has a high (15 minute) startup fee % https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed
+resulting in higher costs for short spikes in traffic.
+
+The current generation of Functions as a Service
+are built on a wide variety of technologies.
+AWS and GCP have publicly stated that they use their own VMs,
+Firecracker and gVisor respectively, to isolate workloads.
+The results from Figure 3 % number?
+show they provide a highly consistent environment even under load.
+Zeit Now uses AWS datacenters % https://zeit.co/docs/v2/network/regions-and-providers/
+for their serverless offering.
+They behave similarly to AWS Lambda
+and we believe that is what they use, but with the largest machine type.
+
+Alibaba Functions, Azure Functions, and IBM Functions
+all appear to be implemented on Docker containers,
+as either their developer tooling or documentation
+hint at the possiblitily of customizing the runtime
+in not very well documentated ways.
+They exhibit similar characteristics of degraded performance under load.
+
+GCP Cloud Run is a fully managed Kubernetes runtime and
+the only service we tested that exposed the Docker runtime directly.
+As expected, single concurrency performance is consistent
+but drops when more requests are routed to a single instance.
+As the industry moves to converge on Kubernetes as a common interface and runtime,
+we expect more fully integrated products in this space in the future.
+While other platforms provide container runtimes or hosted Kubernetes,
+they are at a lower level in the stack and don't provide the full functionality we were looking for.
+Zeit also used to provide a Docker runtime, but dropped it in a strategic pivot in 2018.
 
 \subsection{Research Questions}
 (answer research questions)
