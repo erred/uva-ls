@@ -6,6 +6,11 @@ CloudFlare.
 \newblock \url{
   https://www.cloudflare.com/learning/serverless/what-is-serverless/}.
 
+\bibitem{googleappengine}
+Prodan R. Sperk M.~Ostermann S.
+\newblock {Evaluating High-Performance Computing on Google App Engine}.
+\newblock IEEE Software (Volume: 29, Issue: 2, March-April 2012).
+
 \bibitem{aa}
 Bernd Strehl.
 \newblock {Serverless Benchmark}.

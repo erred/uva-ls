@@ -1,16 +1,13 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Research question}{}% 2
-\BOOKMARK [1][-]{section.3}{Methods}{}% 3
-\BOOKMARK [1][-]{section.4}{Related work}{}% 4
+\BOOKMARK [1][-]{section.2}{Related work}{}% 2
+\BOOKMARK [1][-]{section.3}{Research question}{}% 3
+\BOOKMARK [1][-]{section.4}{Methods}{}% 4
 \BOOKMARK [1][-]{section.5}{Results}{}% 5
 \BOOKMARK [2][-]{subsection.5.1}{Overall performance}{section.5}% 6
 \BOOKMARK [2][-]{subsection.5.2}{Overhead}{section.5}% 7
 \BOOKMARK [2][-]{subsection.5.3}{Compute performance}{section.5}% 8
-\BOOKMARK [2][-]{subsection.5.4}{Price to performance}{section.5}% 9
-\BOOKMARK [1][-]{section.6}{Discussion}{}% 10
-\BOOKMARK [2][-]{subsection.6.1}{Overhead}{section.6}% 11
-\BOOKMARK [2][-]{subsection.6.2}{Computer performance}{section.6}% 12
-\BOOKMARK [2][-]{subsection.6.3}{Scaling}{section.6}% 13
-\BOOKMARK [2][-]{subsection.6.4}{Price to performance}{section.6}% 14
-\BOOKMARK [2][-]{subsection.6.5}{Technologies}{section.6}% 15
-\BOOKMARK [2][-]{subsection.6.6}{Research Questions}{section.6}% 16
+\BOOKMARK [1][-]{section.6}{Discussion}{}% 9
+\BOOKMARK [2][-]{subsection.6.1}{Scaling}{section.6}% 10
+\BOOKMARK [2][-]{subsection.6.2}{Warm vs Cold Starts}{section.6}% 11
+\BOOKMARK [2][-]{subsection.6.3}{Technologies}{section.6}% 12
+\BOOKMARK [2][-]{subsection.6.4}{Research Questions}{section.6}% 13
