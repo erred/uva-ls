@@ -115,13 +115,11 @@ For deciding which is preferable we will consider the following subquestions:
 
 \begin{itemize}
 
-\item \textbf{Does scaling out affect the performance of the services?}
+\item \textbf{Does scaling out affect the performance of the services?} When the workload increases, serverless platforms should create more instances and assign more resources to them to provide an stable performance to the client. The stablest performance and overhead when incresing the workoad would be considered better.
 
-\item \textbf{Which one has lower platform overhead?}  We plan to measure the excess of computation time introduced by the platform as it supposes extra time in client request that we wish to minimize. Lower platform overhead will be considered more preferable.
+\item \textbf{Is platform overhead affected by parallel requests?} We plan to measure the excess of computation time introduced by the platform as it supposes extra time in client request. We will measure the overhead under low and heavy workload. Lower platform overhead will be considered more preferable, specially under instense workload.
 
-\item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. As answering the client request needs to be done as fast as possibles, lower cold start will be considered preferable.
-
-\item \textbf{Does scaling out affect the performance of the services?} When the workload increases, serverless platforms should create more instances and assign more resources to them to provide an stable performance to the client. The stablest performance and overhead when incresing the workoad would be considered better.  
+\item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. When recieving multiple parallel request, more instances will be created possibliy introducing a major latencie/overhead.As answering the client request needs to be done as fast as possibles, lower cold start overherad/latency will be considered preferable. 
 \end{itemize}
 
 
@@ -135,66 +133,14 @@ For deciding which is preferable we will consider the following subquestions:
 
 \section{Methods}
 \label{methods}
-As mentioned in section \ref{introduction}, we want to test the products offered by the top cloud providers as of 2019. In order to answer the reseach questions we used used image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support. We will send images as HTTP requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and sending the image back to the client.
+As mentioned in section \ref{introduction}, we want to test the products offered by the top cloud providers as of 2019. In order to answer the reseach questions we used used image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation).
+
+ We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support. We will send images as HTTP requests to the various platforms to be resized. The code deployed on the platforms will be responsible for resizing and sending the image back to the client. 
 
 Image processing was selected as it represents a common workload that, without hardware accelerators, relies heavily on CPU performance. It also does not require access to external resources, such as databases, which while also a common workload, introduce too much variability. \\
 
-During these experimients, the following variables will be measured: 
-
-
-\begin{itemize}
-\item Compute performance. How much time does the platform need to do the resizing opetation. This has been measured in the code deployed in the platforms and sent back in the response headers. 
-\item Overall performance. How much does it take for each services to performe a request from the client's point of view. 
-\item Platform overhead. Defined has de extra time introduced by the platform to handle the request and deliver it to our code. It will be calculated using the overall performance minus the compute performance
-\item Instance reusage. The code delpoyed on the platforms also sended in the response the Instance ID that compute/answered each request. Each instance has a unique ID and analyiing them we can determine which  
-\item Cold start ?
-\item Time of the day we perform the request.
-\end{itemize}
-
-
-We will send images as HTTP requests to the various platforms to be resized. The code we deploy on the platforms will be responsible for both resizing and measuring the time it takes to do so. This will form the basis for our calculations of compute performance. We will additionally measure roundtrip time for requests from the client, this, minus the computation time will be used to calculate the platform overhead.  The same experiment will be performed for obtaining the cold start latencies but with different timing to ensure that the instance is created when receiving the request.
-
-
-
-measured:
-
-
-
-
-
-- we will get the ServerUID which is the instance UID
-- time of the day we execute it
-In the table \ref{Tab:services} we can see the products we will work with and in wich category they fit.// A detailed description \\
-
-
-
-For answering the reaserch questions we will measure following variables:
-
-
-
-
-
-
-
-%How we are going to measure it.
-
--using images that their size are somehow ok. diferent formats but they follow a normal distribution, which makes their okok.
-
-
-
-
-
-
-
-For each service, which config did we used and why
-
-
-Our plan is to spread out testing over a week, to even out variability from running at different times. Specifically we want to test hourly over a week for compute and overhead at single and 50 concurrent requests and repeat it 10 times, to cover the different concurrency guarantees of different products, and every 3 hours for cold start times (to allow time for the function to be evicted from local caches, additional testing required).
-
-At the end of the experiments, the billing of each service will be compared too.
-
-
-
+%is this accurate? What shoud I say about web framework?
+Each service was configured as similar as possible. We the instance image was set to 128 MB and the highest possible version of Python was used. Also, we choose a location as closest as possible to Amsterdam. In the table \ref{Tab:services} we can see the products that have been use with their configuration/
 
 
 %single data center -> the clostest to us
@@ -232,7 +178,29 @@ At the end of the experiments, the billing of each service will be compared too.
 
 \end{table}
 
- 
+
+During these experimients, the following variables will be measured: 
+
+\begin{itemize}
+\item Success ratio. How many request answer with HTTP code 200.
+\item Compute performance or resizing time. How much time does the platform need to do the resizing opetation. This has been measured in the code deployed in the platforms and sent back in the response headers. 
+\item Overall performance or client time. How much does it take for each services to performe a request from the client's point of view. 
+\item Platform overhead. Defined as the extra time introduced by the platform to handle the request and deliver it to our code. It will be calculated using the overall performance minus the compute performance
+\item Instance ID. Each instance has a unique ID which will be added as a variable in to the headers response.
+\item Time of the day we perform the request. In order to be able to observe the variablity of the results over time.
+\end{itemize}
+
+
+The tests will consist of two parts. First, we will do 10 request sequentially, which we will call \textit{single} test, and, after 20 minutes to ensure that the previous part has finished, we will test again 10 sequentally requests but executing 50 of them in parallel, which we will call \textit{multi} test .These will be performed duing four days, non stop, with one test every hour.
+
+
+Using the variables mentioned before, the following data can be obtained:
+\begin{itemize}
+\item We can observe the behaviour of all services with a high and low workload.
+\item Using the instance ID is possible to determine the number of instances created and if the execution is a cold start. Also, it they have been reused for executing several requests.
+\item The client time minus the resizing time shows the overhead introduced by the network and the platform. As we know which request supose a cold stard, we can also appreciate the overhead differences between a cold start and an already iniciated instance.
+\item Finally, with the time we can express the mentioned variables and verify if they change over time.
+\end{itemize}
 
 
 
