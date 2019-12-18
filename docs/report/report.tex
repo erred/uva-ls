@@ -70,10 +70,19 @@ Functions as a Service (FaaS). Currently the highest level of abstraction they a
 
 Short-lived containers or Containers as a Service (CaaS). Is the newest technologies short-lived, stateless runtimes and a similar billing model. Where they differ from FaaS is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance.
 
+Given the amount of services of this type in the current market we defined a buisness case based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, globally reachable HTTP(S) endpoint, pay only for usage and autoscaling. Having defined this features, our reaserch will measure and analiyse its CPU performance, overhead and specially their capacity to scale when the workload increases. Scaling entails creating more instances, known as cold starts, and assigning new resources between them without influencing others' instances performance. 
+
+
+As we will see in section XX, aldough serverless performance has been heavily analized, as as far as our knowledge reaches?????
+ its consequences in performance and overhead.
+
+%put more focus on the autoscaling (and cold starts, they are important for autoscaling)! cold starts are a major factor in concurrency, u want to scale out
+
+
+
 
 \section{Research question}
-
-Given the amount of services of this type in the current market we defined a buisness case based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, autoscaling, globally reachable HTTP(S) endpoint and pay only for usage. Having defined our preferences, we want to look in their profiles and answer the following question:
+Having defined our preferences, we want to look in their profiles and answer the following question:
 
 \begin{itemize}
 \item \textbf{When one should be chosen over the others when all are available?}
@@ -89,7 +98,7 @@ For deciding which is preferable we will consider the following subquestions:
 \item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. As answering the client request needs to be done as fast as possibles, lower cold start will be considered preferable.
 \end{itemize}
 
-
+%Why we want autoscaling
 % focus on single v multi
 % and cold starts and burst workloads
 % single = baseline
@@ -102,8 +111,8 @@ For deciding which is preferable we will consider the following subquestions:
 \section{Methods}
 \label{methods}
 We want to test the products offered by the top 5 cloud providers as of 2019: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally we will also test Zeit, a startup in the FaaS space popular for its streamlined experience. In the table \ref{Tab:services} we can see the products we will work with and in wich category they fit. \\
-
-% Include in table: instance size (memory), python runtime, web framework
+%single data center -> the clostest to us
+% Include in table: instance size (memory), python runtime, web framework, location of dc + provider specific things (aws we use their api gateway)
 
 \begin{table}
 \centering
