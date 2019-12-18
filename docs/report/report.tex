@@ -246,11 +246,6 @@ In figure XX we can see strictly the time of resizing the image in each test(mul
 
 %plot only concurrency
 
-\subsection{Price to performance}
-%plot to draw.
-
-
-
 \section{Discussion}
 
 \subsection{Scaling}
@@ -288,51 +283,57 @@ built to keep your instances warm, such as AWS Provisioned Concurrency % https:/
 and Azure Functions Premium Plan.
 
 Our results in Figure 2 % number?
-show that, as expected, cold starts are slower than warm starts in most cases.
+show that, as expected, in most cases,
+single concurrency cold starts are slower than warm starts
+and the start times are highly consistent.
+Surprisingly, cold start times are much more variable at higher concurrency levels,
+with the exception of AWS Lambda which appears unaffected.
 
-
-\subsection{Overall Performance}
-
-\subsection{Overhead}
-- cold is higher (as expected) because it has to iniciate the instance.
-
-
-AWS landa load balancer is better because no differenec un single vs munlti
-Multi is slower because load balancer can be a bottleneck.
-if the graf increases at the end is bad because it means that the difference in overhead between request is high: the overherad is not stable. overhead is not stable in gpc-fun.
-What might affect this overhead? ->
-alibab at the end warm jumps
-
-
-\subsection{Computer performance}
-Something about CPU freq and how
-green and purple line very togethrt-> provide a good isolation of resources
-gpc-run results expected because it can handle 5 req at the same time.
-IMB and alibaba -bad isolation.
-if the lines grows, the platform gives(flat) or not consitency to the request (not very important here.)
-
-
-
-\subsection{Scaling}
-
--alibaba succes rate is the lowest because it has to many request, do not scales well. Does it invalidate results?
-gpc-fun there are outlayers.
-
-- azure just creates 4 instances.
--aws is very consistent. for both overhead and cpu time/servertime2
-- (of the table) -> say we are sending 50 paralel req. Some of them gives us 50 instances but gcp-run gives us many instances but the standard desviation is really high which it means its very insconsitency giving instances???
-- if its lower then 50 means they are not doing it one to one. If there is more than 50, they are not good at reusing instances. gcp-run
--gcp-run may have been affected by us, when telling it that just 5 req per instance.
--GCP-APP-enginee it scales depending on cpu utilitzation and it looks like it consistencly handles 2 req per instance.
-
-\subsection{Price to performance}
-
+What is unexpected is in Figure 3, % number ?
+that that cold starts affect CPU performance.
+These instances consistently perform worse on a cold start,
+even as they are reused for future requests.
 
 \subsection{Technologies}
 how does this explain about performance.
 
 \subsection{Research Questions}
 (answer research questions)
+
+% \subsection{Overall Performance}
+%
+% \subsection{Overhead}
+% - cold is higher (as expected) because it has to iniciate the instance.
+%
+%
+% AWS landa load balancer is better because no differenec un single vs munlti
+% Multi is slower because load balancer can be a bottleneck.
+% if the graf increases at the end is bad because it means that the difference in overhead between request is high: the overherad is not stable. overhead is not stable in gpc-fun.
+% What might affect this overhead? ->
+% alibab at the end warm jumps
+%
+%
+% \subsection{Computer performance}
+% Something about CPU freq and how
+% green and purple line very togethrt-> provide a good isolation of resources
+% gpc-run results expected because it can handle 5 req at the same time.
+% IMB and alibaba -bad isolation.
+% if the lines grows, the platform gives(flat) or not consitency to the request (not very important here.)
+%
+%
+%
+% \subsection{Scaling}
+%
+% -alibaba succes rate is the lowest because it has to many request, do not scales well. Does it invalidate results?
+% gpc-fun there are outlayers.
+%
+% - azure just creates 4 instances.
+% -aws is very consistent. for both overhead and cpu time/servertime2
+% - (of the table) -> say we are sending 50 paralel req. Some of them gives us 50 instances but gcp-run gives us many instances but the standard desviation is really high which it means its very insconsitency giving instances???
+% - if its lower then 50 means they are not doing it one to one. If there is more than 50, they are not good at reusing instances. gcp-run
+% -gcp-run may have been affected by us, when telling it that just 5 req per instance.
+% -GCP-APP-enginee it scales depending on cpu utilitzation and it looks like it consistencly handles 2 req per instance.
+
 
 
 \bibliography{references}
