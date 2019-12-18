@@ -81,18 +81,30 @@ How do serverless (FaaS) products compare across cloud platforms?
 - ibm is slow
 - aws is consistent, but slow
 
-#### map to underlying tech?
+## Discussion
+
+### Overhead
+
+
+
+### Overhead
+
+### Compute Performance
+
+### Scaling
+
+### Price to Performance
+
+### Technologies
+
+#### Current
+#### What to look forward to
 
 - all except lambda show a slow cpu, lambda, ibm cpu starved of time
 
-### Applicability
+### Research Question
 
-### Pricing
-
-### Other Tech
-
-- fargate, cgroups
-- Kubernetes
+#### Applicability
 
 ## Conclusion
 
@@ -115,5 +127,7 @@ How do serverless (FaaS) products compare across cloud platforms?
 - http://jamesthom.as/
 - https://webcache.googleusercontent.com/search?q=cache:IvHnCCWD2IkJ:https://www.icsr.agh.edu.pl/~malawski/CloudFunctionsHeteroPar17CPE.pdf+&cd=6&hl=en&ct=clnk&gl=nl
 - https://sci-hub.se/10.1002/cpe.4792
+- https://mikhail.io/2018/10/azure-functions-v2-released-how-performant-is-it/
+- https://markheath.net/post/avoiding-azure-functions-cold-starts
 
 ## Appendix

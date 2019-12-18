@@ -7,7 +7,7 @@
 \usepackage{titling}
 \usepackage{xcolor,colortbl}
 \usepackage{tabularx}
-%------------------------------------------ 
+%------------------------------------------
 \captionsetup[table]{position=bottom}
 \setlength{\parindent}{0pt}
 \definecolor{Gray}{rgb}{0.7,0.7,0.7}
@@ -27,7 +27,7 @@
 
 \maketitle
 
-%% TODO abstract   
+%% TODO abstract
 %% TODO introduction
   %% -> why our reaserch is relevant, what are this services exactly
   %% -> why can we put Caas and FaaS in the same bag
@@ -90,7 +90,9 @@ For deciding which is preferable we will consider the following subquestions:
 \end{itemize}
 
 
-
+% focus on single v multi
+% and cold starts and burst workloads
+% single = baseline
 
 
 
@@ -101,29 +103,31 @@ For deciding which is preferable we will consider the following subquestions:
 \label{methods}
 We want to test the products offered by the top 5 cloud providers as of 2019: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally we will also test Zeit, a startup in the FaaS space popular for its streamlined experience. In the table \ref{Tab:services} we can see the products we will work with and in wich category they fit. \\
 
+% Include in table: instance size (memory), python runtime, web framework
+
 \begin{table}
 \centering
  \begin{tabularx}{\textwidth}{ X  X  X }
  %\hline
  %\rowcolor{Gray}
- \textbf{Type} & \textbf{Platform} & \textbf{Product} \\  
+ \textbf{Type} & \textbf{Platform} & \textbf{Product} \\
  \hline
  \hline
- FaaS & AWS & Lambda \\  
+ FaaS & AWS & Lambda \\
  \hline
- FaaS & GCP & Functions \\  
+ FaaS & GCP & Functions \\
  \hline
- FaaS & Azure & Functions \\ 
+ FaaS & Azure & Functions \\
  \hline
- FaaS & IBM Cloud & Functions \\ 
+ FaaS & IBM Cloud & Functions \\
  \hline
- FaaS & Alibaba Cloud & Function Compute \\ 
+ FaaS & Alibaba Cloud & Function Compute \\
  \hline
- FaaS & Zeit & Now \\ 
+ FaaS & Zeit & Now \\
  \hline
- CaaS & GCP & Cloud Run \\ 
+ CaaS & GCP & Cloud Run \\
  \hline
- PaaS & GCP & App Engine \\ 
+ PaaS & GCP & App Engine \\
  %\hline
 
 \end{tabularx}
@@ -131,7 +135,7 @@ We want to test the products offered by the top 5 cloud providers as of 2019: Am
 \label{Tab:services}
 \end{table}
 
-As mentioned in section \label{introduction}, the the pricing model for Pass, charge for underlying VMs, does not fit in the 'Pay only for usage' defined in our Reaserch question. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our buissnes case.  
+As mentioned in section \label{introduction}, the the pricing model for Pass, charge for underlying VMs, does not fit in the 'Pay only for usage' defined in our Reaserch question. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our buissnes case.
 
 
 
@@ -140,7 +144,7 @@ As mentioned in section \label{introduction}, the the pricing model for Pass, ch
 For answering the reaserch questions we will measure following variables:
 
 \begin{itemize}
-\item Overall performance. We want to obtaint how much does it take for each services to performe a request   
+\item Overall performance. We want to obtaint how much does it take for each services to performe a request
 \item Platform overhead.
 \item Compute performance.
 \end{itemize}
@@ -152,9 +156,9 @@ For answering the reaserch questions we will measure following variables:
 
 %How we are going to measure it.
 
--using images that their size are somehow ok. diferent formats but they follow a normal distribution, which makes their okok. 
+-using images that their size are somehow ok. diferent formats but they follow a normal distribution, which makes their okok.
 
-We want to use image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support. 
+We want to use image processing as our test workload, a real world \cite{ii} use case. Specifically we will be testing image resizing (thumbnail creation). We aim to use the same code for all platforms (excluding API adapters) and our choice of language is Python because is one of the few languages that all platforms support.
 
 Image processing was selected as it represents a common workload that, without hardware accelerators, relies heavily on CPU performance. It also does not require access to external resources, such as databases, which while also a common workload, introduce too much variability.
 
@@ -167,7 +171,7 @@ We will send images as HTTP requests to the various platforms to be resized. The
 
 
 
-For each service, which config did we used and why 
+For each service, which config did we used and why
 
 %------
 
@@ -197,26 +201,39 @@ READ THIS AND SEE WHAT CAN U INCLUDE HERE
 
 \section{Results}
 After performing the mentioned experiments we obtained the following results:
+
+% Say: alibaba has a low succes rate so its results bla bla
+% Say: other rare transient failures considered negligible
+% Overall performence does not change during time (time of the day does not matter)
+
 %presentation: does it work?
 %talk about the x and y axis if necessary
 
 \subsection{Overall performance}
 
-The table shows. Parallel instances say they are parallel duirng a single test cycle. 
+The table shows. Parallel instances say they are parallel duirng a single test cycle.
 %inset tambe out8 -> cols(single and multi): server, total requests, succes rate, cold sarts percentage (100-warm ratio),  parallel instances and standard desviation
+
+% include perf over time
 
 Overall performence does not change during time (time of the day does not matter)
 
 \subsection{Overhead}
 
-In figure XX we can find one plot for each service we have analized. They show the overhead of single vs muntiple and the other cold vs warm. 
+In figure XX we can find one plot for each service we have analized. They show the overhead of single vs muntiple and the other cold vs warm.
 
-%plotde les curves, baixdetot out17. 
+% Say: How this was measured: t1 - t2
+% Say: What this includes: network, load balancing, scheduling, ...
+% explain missing appengine line
+
+%plotde les curves, baixdetot out17.
 
 
 \subsection{Compute performance}
 
-In figure XX we can see strictly the time of resizing the image in each test(multi vs single). 
+In figure XX we can see strictly the time of resizing the image in each test(multi vs single).
+
+
 
 %plot only concurrency
 
@@ -226,24 +243,62 @@ In figure XX we can see strictly the time of resizing the image in each test(mul
 
 
 \section{Discussion}
-Say: alibaba has a low succes rate so its results bla bla
-Overall performence does not change during time (time of the day does not matter)
+
+\subsection{Scaling}
+From Table 2 % table number?
+we observed elevated failure rates for Alibaba Function Compute.
+Their documentation % https://www.alibabacloud.com/help/doc-detail/51907.htm
+states they have a limit of 50 instances per service,
+and even though our client places a strict limit of 50 inflight requests at any point in time,
+their scheduler might not be keeping up.
+
+Also from Table 2 % table number
+we can see the average number of unique instances per test cycle.
+Ideally, this number would be 50,
+to match the number of parallel requests we are sending.
+
+On the low end,
+Azure Functions is notable for only starting 4 instances.
+This may be from a documented limitation % https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale
+of only starting at most 1 instance per second with HTTP triggers.
+Their load balancers still hold the requests in queue,
+but they appear to be reluctant to start new instances even as sufficient time has passed.
+
+At the high end,
+we configured GCP Cloud Run to accept up to 5 concurrent requests per instance,
+expecting it to utilise the available memory and CPU more efficiently.
+Unfortunately we are unsure if this negatively impacted their scheduler
+as we observed a less efficient reuse of instances
+and greater variability in the number of instances started.
+
+\subsection{Warm vs Cold Starts}
+An often cited concern of using truly on-demand compute services is the cold start,
+when the platforms have to start up a new instance to handle increases in load.
+This is such a concern that some some platforms have specific features
+built to keep your instances warm, such as AWS Provisioned Concurrency % https://aws.amazon.com/about-aws/whats-new/2019/12/aws-lambda-announces-provisioned-concurrency/
+and Azure Functions Premium Plan.
+
+Our results in Figure 2 % number?
+show that, as expected, cold starts are slower than warm starts in most cases.
+
+
+\subsection{Overall Performance}
 
 \subsection{Overhead}
-- cold is higher (as expected) because it has to iniciate the instance. 
+- cold is higher (as expected) because it has to iniciate the instance.
 
 
 AWS landa load balancer is better because no differenec un single vs munlti
 Multi is slower because load balancer can be a bottleneck.
 if the graf increases at the end is bad because it means that the difference in overhead between request is high: the overherad is not stable. overhead is not stable in gpc-fun.
-What might affect this overhead? -> 
-alibab at the end warm jumps  
+What might affect this overhead? ->
+alibab at the end warm jumps
 
 
 \subsection{Computer performance}
-Something about CPU freq and how 
+Something about CPU freq and how
 green and purple line very togethrt-> provide a good isolation of resources
-gpc-run results expected because it can handle 5 req at the same time. 
+gpc-run results expected because it can handle 5 req at the same time.
 IMB and alibaba -bad isolation.
 if the lines grows, the platform gives(flat) or not consitency to the request (not very important here.)
 
@@ -252,20 +307,20 @@ if the lines grows, the platform gives(flat) or not consitency to the request (n
 \subsection{Scaling}
 
 -alibaba succes rate is the lowest because it has to many request, do not scales well. Does it invalidate results?
-gpc-fun there are outlayers. 
+gpc-fun there are outlayers.
 
-- azure just creates 4 instances. 
+- azure just creates 4 instances.
 -aws is very consistent. for both overhead and cpu time/servertime2
 - (of the table) -> say we are sending 50 paralel req. Some of them gives us 50 instances but gcp-run gives us many instances but the standard desviation is really high which it means its very insconsitency giving instances???
-- if its lower then 50 means they are not doing it one to one. If there is more than 50, they are not good at reusing instances. gcp-run 
--gcp-run may have been affected by us, when telling it that just 5 req per instance. 
--GCP-APP-enginee it scales depending on cpu utilitzation and it looks like it consistencly handles 2 req per instance. 
+- if its lower then 50 means they are not doing it one to one. If there is more than 50, they are not good at reusing instances. gcp-run
+-gcp-run may have been affected by us, when telling it that just 5 req per instance.
+-GCP-APP-enginee it scales depending on cpu utilitzation and it looks like it consistencly handles 2 req per instance.
 
 \subsection{Price to performance}
 
 
 \subsection{Technologies}
-how does this explain about performance. 
+how does this explain about performance.
 
 \subsection{Research Questions}
 (answer research questions)
