@@ -9,6 +9,8 @@
 \usepackage{tabularx}
 \usepackage{changepage}
 \usepackage{multicol}
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
 %------------------------------------------
 \captionsetup[table]{position=bottom}
 \setlength{\parindent}{0pt}
@@ -148,8 +150,9 @@ Each service was configured as similar as possible. We the instance image was se
 
 
 \begin{table}
-\centering
- \begin{tabularx}{1\textwidth}{X X X X X X X X}
+%\centering
+\begin{adjustwidth}{-0.9cm}{}
+ \begin{tabularx}{1.1\textwidth}{p{1cm} X X X X X p{3cm}}
  %\hline
  %\rowcolor{Gray}
  \textbf{Type} & \textbf{Platform} & \textbf{Product} & \textbf{Web Framework} & \textbf{Instance Size} & \textbf{Pyhon runtime} & \textbf{Location of the DC} \\
@@ -170,12 +173,12 @@ Each service was configured as similar as possible. We the instance image was se
  CaaS & GCP & Cloud Run & Python http.server & 128 MB & 3.8 & St. Ghislain, BE\\
  \hline
  PaaS & GCP & App Engine & Flask & 128 MB & 3.8 & St. Ghislain, BE\\
- %\hline
+ \hline
 
 \end{tabularx}
 \caption{Serverless services that will be tested in this reaserch.}
 \label{Tab:services}
-
+\end{adjustwidth}
 \end{table}
 
 
@@ -225,7 +228,74 @@ The table shows. Parallel instances say they are parallel duirng a single test c
 
 % include perf over time
 
+\begin{table}
+\centering
+ \begin{tabularx}{1\textwidth}{p{4cm} X X X X X X}
+ %\hline
+ %\rowcolor{Gray}
+ \textbf{Service} & \textbf{Total request} & \textbf{Success rate} & \textbf{Cold starts ratio} & \textbf{Parallel instances} & \textbf{StDev (parallel inst.)} \\
+ \hline
+ \hline
+ AWS Lambda & 47000 & 1 & 0.097 & 50.402 & 3.858\\
+ \hline
+ GCP Functions & 46972 & 0.999 & 0.062 & 36.348 & 6.231\\
+ \hline
+ Azure Functions & 46997 & 1 & 0.005 & 3.598 & 0.680\\
+ \hline
+ IBM Cloud Functions & 47000 & 1 & 0.097 & 50.685 & 5.256\\
+ \hline
+ Alibaba Cloud Function Compute & 43501 & 0.926 & 0.169 & 81.043 & 4.427\\
+ \hline
+ Zeit Now & 46995  & 1 & 0.08 & 41.663 & 4.962\\
+ \hline
+ GCP Cloud Run & 47000 & 1 & 81.163 & 33.575\\
+ \hline
+ GCP App Engine & 47000 & 1 & 0.049 & 29.402 & 5.985\\
+ \hline
+
+\end{tabularx}
+\caption{Results multi test.}
+\label{Tab:multi}
+\end{table}
+
+
+\begin{table}
+\centering
+ \begin{tabularx}{1\textwidth}{p{4cm} X X X X X X}
+ %\hline
+ %\rowcolor{Gray}
+ \textbf{Service} & \textbf{Total request} & \textbf{Success rate} & \textbf{Cold starts ratio} & \textbf{Parallel instances} & \textbf{StDev (parallel inst.)} \\
+ \hline
+ \hline
+ AWS Lambda & 940 & 1 & 0.098 & 1.022 & 0.209\\
+ \hline
+ GCP Functions & 940 & 1 & 0.027 & 1.022 & 0.209\\
+ \hline
+ Azure Functions & 940 & 1 & 0.099 & 1.022 & 0.209\\
+ \hline
+ IBM Cloud Functions & 940 & 1 & 0.099 & 1.022 & 0.209\\
+ \hline
+ Alibaba Cloud Function Compute & 940 & 1 & 0.098 & 1.022 & 0.209\\
+ \hline
+ Zeit Now & 940 & 1 & 0.098 & 1.022 & 0.209\\
+ \hline
+ GCP Cloud Run & 940 & 1 & 0.098 & 1.011 & 0.104\\
+ \hline
+ GCP App Engine & 940 & 1 & 0.001 & 1.011 & 0.104\\
+ \hline
+
+\end{tabularx}
+\caption{Results single test.}
+\label{Tab:single}
+\end{table}
+
+
 Overall performence does not change during time (time of the day does not matter)
+
+%\begin{figure}[h]
+%\includegraphics[width=14cm]{perfovertime.png}
+%\centering
+%\end{figure}
 
 \subsection{Overhead}
 
@@ -238,10 +308,29 @@ In figure XX we can find one plot for each service we have analized. They show t
 %plotde les curves, baixdetot out17.
 
 
+\begin{figure}[h]
+\begin{adjustwidth}{-1.7cm}{}
+\includegraphics[width=18cm]{overhead.png}
+\centering
+\caption{Acumulative distribution of overhead time}
+\label{Fig:overhead}
+\end{adjustwidth}
+\end{figure}
+
+
 \subsection{Compute performance}
 
 In figure XX we can see strictly the time of resizing the image in each test(multi vs single).
 
+
+\begin{figure}[h]
+\begin{adjustwidth}{-1.7cm}{}
+\includegraphics[width=18cm]{cputime.png}
+\centering
+\caption{Acumulative distribution of overhead time}
+\label{Fig:overhead}
+\end{adjustwidth}
+\end{figure}
 
 
 %plot only concurrency

@@ -1,54 +1,53 @@
-This is BibTeX, Version 0.99d (TeX Live 2019/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: report.aux
 The style file: unsrt.bst
 Database file #1: references.bib
-Warning--I didn't find a database entry for "bb"
-Warning--I didn't find a database entry for "cc"
-Warning--I didn't find a database entry for "dd"
-Warning--I didn't find a database entry for "ee"
-Warning--I didn't find a database entry for "ff"
-Warning--I didn't find a database entry for "gg"
-Warning--I didn't find a database entry for "ii"
-You've used 3 entries,
+Warning--I didn't find a database entry for "14"
+Warning--I didn't find a database entry for "https://sci-hub.se/10.1002/cpe.4792"
+Too many commas in name 1 of "Malawski, M. Kuzniar, M. Wojcik, P. BubakM, H." for entry googleappengine2
+while executing---line 944 of file unsrt.bst
+Too many commas in name 1 of "Malawski, M. Kuzniar, M. Wojcik, P. BubakM, H." for entry googleappengine2
+while executing---line 944 of file unsrt.bst
+You've used 11 entries,
             1791 wiz_defined-function locations,
-            463 strings with 3914 characters,
-and the built_in function-call counts, 395 in all, are:
-= -- 30
-> -- 12
+            491 strings with 5088 characters,
+and the built_in function-call counts, 1401 in all, are:
+= -- 111
+> -- 44
 < -- 0
-+ -- 6
-- -- 3
-* -- 2
-:= -- 66
-add.period$ -- 9
-call.type$ -- 3
-change.case$ -- 3
++ -- 22
+- -- 11
+* -- 3
+:= -- 221
+add.period$ -- 33
+call.type$ -- 11
+change.case$ -- 11
 chr.to.int$ -- 0
-cite$ -- 3
-duplicate$ -- 15
-empty$ -- 55
-format.name$ -- 3
-if$ -- 91
+cite$ -- 11
+duplicate$ -- 55
+empty$ -- 199
+format.name$ -- 11
+if$ -- 332
 int.to.chr$ -- 0
-int.to.str$ -- 3
+int.to.str$ -- 11
 missing$ -- 0
-newline$ -- 18
-num.names$ -- 3
-pop$ -- 15
+newline$ -- 58
+num.names$ -- 11
+pop$ -- 56
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 15
+skip$ -- 52
 stack$ -- 0
 substring$ -- 0
-swap$ -- 3
+swap$ -- 11
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 3
-width$ -- 4
-write$ -- 29
-(There were 7 warnings)
+while$ -- 11
+width$ -- 13
+write$ -- 102
+(There were 2 error messages)
