@@ -85,8 +85,6 @@ How do serverless (FaaS) products compare across cloud platforms?
 
 ### Overhead
 
-
-
 ### Overhead
 
 ### Compute Performance
@@ -98,6 +96,7 @@ How do serverless (FaaS) products compare across cloud platforms?
 ### Technologies
 
 #### Current
+
 #### What to look forward to
 
 - all except lambda show a slow cpu, lambda, ibm cpu starved of time
@@ -129,5 +128,7 @@ How do serverless (FaaS) products compare across cloud platforms?
 - https://sci-hub.se/10.1002/cpe.4792
 - https://mikhail.io/2018/10/azure-functions-v2-released-how-performant-is-it/
 - https://markheath.net/post/avoiding-azure-functions-cold-starts
+- https://github.com/ahmetb/cloud-run-faq#how-is-it-different-than-app-engine-flexible
+- https://read.acloud.guru/the-good-and-the-bad-of-google-cloud-run-34455e673ef5
 
 ## Appendix
