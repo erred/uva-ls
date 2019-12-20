@@ -68,6 +68,11 @@ Write abstrat here
 \section{Introduction}
 \label{introduction}
 
+% todo: narrow title scope
+% todo: define PaaS, FaaS, CaaS, cold start
+% todo: introduce common usecase: why people choose serverless
+% skip selection
+
 
 % Public clouds are growing, and with it comes the latest push into serverless offerings. These come in many forms depending on the abstraction level, but they can largely be grouped into: long-lived containers, short-lived containers, functions as a service. \\
 %
@@ -102,7 +107,7 @@ Write abstrat here
 % Serverless technologies have been subject of previous research.
 % We can find good examples of PaaS analysis in \cite{googleappengine} and \cite{googleappengine2},
 % where the reaserchers analize Google App Enginee performance with CPU-intensive applications.
-% CaaS have also been a topic of study,
+% CaaS have also been a topic of study, 
 % comparing them to long live containers or performance test among of different provides.
 % We can find examples of this in \cite{cc} and \cite{dd}.
 % Comparison between Faas and short-lived containers has also been analized
@@ -128,28 +133,29 @@ Write abstrat here
 \section{Research question}
 % Having defined the services that fullfill our selection criteria, we needed to answer the following question:
 %
-% \begin{itemize}
-% \item \textbf{When one should be chosen over the others when all are available?}
-% \end{itemize}
-%
-% For deciding which is preferable we will consider the following subquestions:
-%
-% \begin{itemize}
-%
-% \item \textbf{Does scaling out affect the performance of the services?} When the workload increases, serverless platforms should create more instances and assign more resources to them to provide an stable performance to the client. The stablest performance and overhead when incresing the workoad would be considered better.
-%
-% \item \textbf{Is platform overhead affected by parallel requests?} We plan to measure the excess of computation time introduced by the platform as it supposes extra time in client request. We will measure the overhead under low and heavy workload. Lower platform overhead will be considered more preferable, specially under instense workload.
-%
-% \item \textbf{Which one has lower cold start latencies?} When a new instance receives its first request, the response time increases because this instance must be created. When recieving multiple parallel request, more instances will be created possibliy introducing a major latencie/overhead.As answering the client request needs to be done as fast as possibles, lower cold start overherad/latency will be considered preferable.
-% \end{itemize}
+\begin{itemize}
+\item \textbf{How do different platforms compare when with sudden spikes in traffic?}
+\end{itemize}
+
+Specifically we will be looking at:
+
+\begin{itemize}
+
+\item \textbf{Does scaling out affect the performance of the services?}
+When scaling out to meet demand,
+serverless platforms should isolate instances
+to provide a consistent level of performance.
+
+\item \textbf{Does scaling out affect platform overhead}
+Everything has a cost,
+what we hope to see is that scaling out does not severely degrade the platform's performance,
+in terms of instance management.
+
+% can;t come up with a third one our data can prove
+
+\end{itemize}
 
 
-%Why we want autoscaling
-% focus on single v multi
-% and cold starts and burst workloads
-% single = baseline
-
-%We will not be testing long-lived containers as they require a different application architecture for effective utilization and should be compared to raw VMs.
 
 
 \section{Methods}
@@ -184,6 +190,7 @@ For each request we recorded the total roundtrip time,
 in addition to the metadata returned by the server,
 We aimed to use a stable set of images with similar distributions
 of file sizes for both phases
+
 
 \begin{table}
 %\centering
@@ -303,7 +310,9 @@ In Figure 2 % todo check
 we see the cumulative frequencies for the image processing time
 as measured by the server, split by concurrency level and cold/warm starts.
 
+
 % todo figure 2:
+% explain single v multi in legend
 
 \subsection{Overhead}
 
@@ -315,6 +324,7 @@ With all else being equal,
 we atrribute the difference to time spent conducting a cold start.
 
 % todo figure 3:
+% explain single v multi in legend
 
 
 
@@ -327,7 +337,8 @@ we observed elevated failure rates for Alibaba Function Compute.
 Their documentation % https://www.alibabacloud.com/help/doc-detail/51907.htm
 states they have a limit of 50 instances per service,
 and even though our client places a strict limit of 50 inflight requests at any point in time,
-their scheduler might not be keeping up.
+their scheduler might not be keeping up
+in either reusing an instance or cleaning it up before the next request arrives.
 
 Also from Table 2 % table number
 we can see the average number of unique instances per test cycle.
@@ -343,9 +354,19 @@ but they appear to be reluctant to start new instances even as sufficient time h
 
 At the high end,
 we configured GCP Cloud Run to accept up to 5 concurrent requests per instance,
-expecting it to utilise the available memory and CPU more efficiently.
+expecting it to utilise the available memory and CPU more efficiently as this was one of its main selling points.
 However, their scheduler also took CPU utilitzation into account,
-limiting the usefulness with our CPU intensive task.
+limiting the usefulness of setting a higher concurrency level with our CPU intensive task.
+In hindsight, setting the concurrency level to 1 would have been a fairer comparison.
+
+From Figure 2 we can see for AWS, Azure, Zeit, and GCP Functions,
+we saw good isolation of workloads,
+they performed similarly for warm requests at both concurrency levels.
+GCP Cloud Run saw an expected degradation in performance from handling multiple requests,
+While Alibaba and IBM were serverely impacted.
+
+
+
 
 \subsection{Warm vs Cold Starts}
 An often cited concern of using truly on-demand compute services is the cold start,
@@ -360,12 +381,16 @@ single concurrency cold starts are slower than warm starts
 and the start times are highly consistent.
 Cold start times are much more variable at higher concurrency levels,
 with the exception of AWS Lambda which appears unaffected.
+We suspect this could be due to having the system image on disk,
+which is reusable as long as instances are on the same machine,
+vs needing to retrieve the image over a network,
+but we don't have a solid way of testing this.
 
 What is unexpected is in Figure 2, % number ?
 that that cold starts affect CPU performance.
 These instances consistently perform worse on a cold start,
 even as they are reused for future requests.
-Further testing would be needed to identify the root cause of thus.
+Further testing would be needed to identify the root cause of this.
 
 \subsection{Technologies}
 GCP App Engine is the oldest technology being compared.
@@ -377,8 +402,7 @@ While it can scale to zero instances,
 each instance has a high (15 minute) startup fee % https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed
 resulting in higher costs for short spikes in traffic.
 
-The current generation of Functions as a Service
-are built on a wide variety of technologies.
+The current generation of FaaS are built on a wide variety of technologies.
 AWS and GCP have publicly stated that they use their own VMs,
 Firecracker and gVisor respectively, to isolate workloads.
 The results from Figure 3 % number?
@@ -387,13 +411,11 @@ Zeit Now uses AWS datacenters % https://zeit.co/docs/v2/network/regions-and-prov
 for their serverless offering.
 They behave similarly to AWS Lambda
 and we believe that is what they use, but with the largest machine type.
-
 Alibaba Functions, Azure Functions, and IBM Functions
 all appear to be implemented on containers,
 as either their developer tooling or documentation
-hint at the possiblitily of customizing the runtime
-in not very well documentated ways.
-They exhibit similar characteristics of degraded performance under load,
+hint at the possiblitily of customizing the runtime in not very well documentated ways.
+Both Alibaba and IBM exhibit similar characteristics of degraded performance under load,
 possibliy from poor isolation between workloads.
 
 GCP Cloud Run is a fully managed container runtime implementing the Kubernetes Serving API,
@@ -405,13 +427,15 @@ we expect more fully integrated products in this space in the future.
 While other platforms provide container runtimes or hosted Kubernetes,
 they are at a lower level in the stack and don't provide the full functionality we were looking for.
 
-% todo: check hit all research question points
+
 
 
 \section{Conclusion}
 
 % todo write conclusion
 
+% AWS lambda for stability
+% others might work if workload wasn't cpu bound
 
 
 
