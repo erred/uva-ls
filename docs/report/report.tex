@@ -58,6 +58,9 @@
 %% TODO conclusion
 %% TODO references
 
+%coses q haurien de quedar molt clares: cold starts
+
+
 
 \begin{abstract}
 Write abstrat here
@@ -73,66 +76,49 @@ Write abstrat here
 % todo: introduce common usecase: why people choose serverless
 % skip selection
 
+Public clouds are growing, and with it comes the latest push into serverless offerings. These come in many forms depending on the abstraction level, but they can largely be grouped into: long-lived containers, short-lived containers, functions as a service. \\
 
-% Public clouds are growing, and with it comes the latest push into serverless offerings. These come in many forms depending on the abstraction level, but they can largely be grouped into: long-lived containers, short-lived containers, functions as a service. \\
-%
-% Long-lived containers or Platform as a Service (PaaS) represent the first generation of serverless technologies. These can be full-fledged, stateful applications, packaged in containers. The clouds will take these and run them for you on VMs. Auto-scaling and load balancing is usually offered, but fast startup times are not guaranteed. These should be considered an alternative UI to the underlying VMs, which will be reflected in the pricing model (charge for underlying VMs). Examples: AWS Elastic Container service, GCP App Engine, Azure App Services, Alibaba Container Service. \\
-%
-% Functions as a Service (FaaS), currently the highest level of abstraction and the second generation of serverless technologies. Developers provide their application code for the clouds to compile, package, deploy, and run. These are short-lived and stateless, an instance may be started for every request and killed after it completes. Billing is only for the time it is running serving a request. Examples: AWS Lambda, GCP Cloud Functions, Azure Functions, Alibaba Function Compute, IBM Cloud Functions, Zeit Now.\\
-%
-% Short-lived containers or Containers as a Service (CaaS). Is the newest technologies short-lived, stateless runtimes and a similar billing model. Where they differ from FaaS is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance. \\
-%
-% Given the amount of services of this type in the current market we defined a selection criteria based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, globally reachable HTTP(S) endpoint, pay only for usage and autoscaling. Having defined these characteristics, we selected the products that provide them offered by the top 5 cloud providers as of 2019: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally, we also included Zeit, a startup in the FaaS space popular for its streamlined experience. The products selected are:
-%
-% \begin{multicols}{2}
-% \begin{itemize}
-% \item AWS Lambda (FaaS)
-% \item GCP Functions (FaaS)
-% \item GCP Cloud Run (CaaS)
-% \item GCP App Engine (PaaS)
-% \item Azure Functions (FaaS)
-% \item IBM Cloud Functions (FaaS)
-% \item Alibaba Cloud Function Compute (FaaS)
-% \item Zeit Now (FaaS)
-% \end{itemize}
-% \end{multicols}
-%
-% As mentioned in section before, the the pricing model for PaaS (charge for underlying VMs) does not fit in the 'Pay only for usage' defined in our selection criteria. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our selection criteria. \\
-%
-% Our reaserch will measure and analiyse its CPU performance, overhead and specially their capacity to scale when the workload increases. Scaling entails creating more instances, known as cold starts, and assigning new resources between them without influencing others' instances performance.
+Long-lived containers or Platform as a Service (PaaS) represent the first generation of serverless technologies. These can be full-fledged, stateful applications, packaged in containers. The clouds will take these and run them for you on VMs. Auto-scaling and load balancing is usually offered, but fast startup times are not guaranteed. These should be considered an alternative UI to the underlying VMs, which will be reflected in the pricing model (charge for underlying VMs). Examples: AWS Elastic Container service, GCP App Engine, Azure App Services, Alibaba Container Service. \\
+
+Functions as a Service (FaaS), currently the highest level of abstraction and the second generation of serverless technologies. Developers provide their application code for the clouds to compile, package, deploy, and run. These are short-lived and stateless, an instance may be started for every request and killed after it completes. Billing is only for the time it is running serving a request. Examples: AWS Lambda, GCP Cloud Functions, Azure Functions, Alibaba Function Compute, IBM Cloud Functions, Zeit Now.\\
+
+Short-lived containers or Containers as a Service (CaaS). Is the newest technologies short-lived, stateless runtimes and a similar billing model. Where they differ from FaaS is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance. \\
+
+
+insert why people use serverless. \\
+
+Our reaserch will measure and analiyse its CPU performance, overhead and specially their capacity to scale when the workload increases. Scaling entails creating more instances, known as cold starts, and assigning new resources between them without influencing others' instances performance.
 
 
 \section{Related work}
 
-% Serverless technologies have been subject of previous research.
-% We can find good examples of PaaS analysis in \cite{googleappengine} and \cite{googleappengine2},
-% where the reaserchers analize Google App Enginee performance with CPU-intensive applications.
-% CaaS have also been a topic of study, 
-% comparing them to long live containers or performance test among of different provides.
-% We can find examples of this in \cite{cc} and \cite{dd}.
-% Comparison between Faas and short-lived containers has also been analized
-% but from a functionality point of view
-% but oversimplificating it and not taking into account the performance \cite{ee}\cite{ff}\cite{gg}.
-%
-% FaaS on its own also has been subject of previous research.
-% An excellent example is \cite{aa}
-% where multiple serverless providers are continuously been benchmarked.
-% Another example of a comparison of Faas providers is \cite{bb}.
-% In \cite{14} the researches dicuss the advantages of using cloud services
-% and AWS Lambada for systems that require higher resilance.
-% Finally, is necessary to mention \cite{https://sci-hub.se/10.1002/cpe.4792},
-% which fouses in its performance evaluation
-% and also benchmarking the data transfer to storage and its lifetime of the major cloud functions providers.
-%
-% Aldought serverless performance has been heavily analized,
-% to the best of our knowledge their scaling and its consequences to performance
-% and overhead have not been comprehensively analysed yet, which motivates our research.
+Serverless technologies have been subject of previous research.
+We can find good examples of PaaS analysis in \cite{googleappengine} and \cite{googleappengine2},
+where the reaserchers analize Google App Enginee performance with CPU-intensive applications.
+CaaS have also been a topic of study,
+comparing them to long live containers or performance test among of different provides.
+We can find examples of this in \cite{cc} and \cite{dd}.
+Comparison between Faas and short-lived containers has also been analized
+but from a functionality point of view
+but oversimplificating it and not taking into account the performance \cite{ee}\cite{ff}\cite{gg}. \\
 
-%Sentence that seems cool and we can use: We observe that the number of potential usage scenarios of these highly elastic infrastructures is growing fast.
+FaaS on its own also has been subject of previous research.
+An excellent example is \cite{aa}
+where multiple serverless providers are continuously been benchmarked.
+Another example of a comparison of Faas providers is \cite{bb}.
+In \cite{14} the researches dicuss the advantages of using cloud services
+and AWS Lambada for systems that require higher resilance.
+Finally, is necessary to mention \cite{https://sci-hub.se/10.1002/cpe.4792},
+which fouses in its performance evaluation
+and also benchmarking the data transfer to storage and its lifetime of the major cloud functions providers. \\
+
+Aldought serverless performance has been heavily analized,
+to the best of our knowledge their scaling and its consequences to performance
+and overhead have not been comprehensively analysed yet, which motivates our research.
+
 
 \section{Research question}
-% Having defined the services that fullfill our selection criteria, we needed to answer the following question:
-%
+
 \begin{itemize}
 \item \textbf{How do different platforms compare when with sudden spikes in traffic?}
 \end{itemize}
@@ -150,46 +136,42 @@ to provide a consistent level of performance.
 Everything has a cost,
 what we hope to see is that scaling out does not severely degrade the platform's performance,
 in terms of instance management.
-
-% can;t come up with a third one our data can prove
-
 \end{itemize}
-
-
 
 
 \section{Methods}
 \label{methods}
 
-We selected FaaS services from the 5 largest public clouds. % todo: find source
-We also tested Zeit Now, a service popular for its streamlined developer experience.
-Additionally, we tested Google Cloud's App Engine and Cloud Run,
-as examples of PaaS and CaaS services that provide similar functionality as existing FaaS solutions.
+Given the amount of services of this type in the current market we defined a selection criteria based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, globally reachable HTTP(S) endpoint, pay only for usage and autoscaling. \\
 
-Our choice of workload was an image resizing service implemented in Python.
-a real world % todo: find source
-usecase and an often used example in what FaaS solutions are good for. % todo: find sourcem AWS?
+Having defined these characteristics, we selected the products that provide them offered by the top 5 cloud providers as of 2019 \cite{hh}: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally, we also included Zeit, a startup in the FaaS space popular for its streamlined experience. The products selected can be found in Table \ref{Tab:services}.
+
+As mentioned in section \ref{introduction}, the the pricing model for PaaS (charge for underlying VMs) does not fit in the 'Pay only for usage' defined in our selection criteria. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our selection criteria. \\
+
+Our choice of workload was an image resizing service implemented in Python, a real world \cite{ii}
+usecase and an often used example in what FaaS solutions are good for.
 This is a more CPU intensive workload that
 doesn't rely on external services.
 
-We aimed to use the same code (excluding API adapters) for all platforms,
-running on the highest version of Python 3 available.
+We aimed to use the same code (excluding API adapters) for all platforms, running on the highest version of Python 3 available.
 We used the datacenters closest to Amsterdam,
 with machine types configured with 128MB of memory where available.
+
+
 Based on prior research % todo cite the colorful paper
-machine size should not affect platform overhead.
+machine size should not affect platform overhead. \\
 
 Our server code accepts HTTP requests with an image,
 resizes it, and responds with the resized image.
 It also returns the time spent processing the image,
 and a unique identifier generated on startup.
 Our client code has a 2 phase testing cycle run every hour:
-phase 1 sends 10 requests sequentially,
-phase 2 starts 50 workers in parallel to each send 10 requests sequentially.
+phase 1 (which will be referred single test) sends 10 requests sequentially,
+phase 2 (which will be referred multi test) starts 50 workers in parallel to each send 10 requests sequentially.
 For each request we recorded the total roundtrip time,
 in addition to the metadata returned by the server,
 We aimed to use a stable set of images with similar distributions
-of file sizes for both phases
+of file sizes for both phases.
 
 
 \begin{table}
@@ -229,26 +211,13 @@ of file sizes for both phases
 
 \section{Results}
 
-Running our test over the course of 4 days (including weekdays and weekends),
-we did not observe any variations based on the time of day.
+We ran our test over the course of 4 days (including weekdays and weekends). In table \ref{Tab:multi} and table \ref{Tab:single} we can find a summary of the multi and single phases of the test performance and the data gathered, which will be discussed in section \ref{discussion}. \\
 
-% todo: figure 1: performance over time
-
-% %\begin{figure}[h]
-% %\includegraphics[width=14cm]{perfovertime.png}
-% %\centering
-% %\end{figure}
-
-Looking into the success rate of our requests,
-we see some transient errors whose effect we consider negligible.
-However, Alibaba Cloud had a significantly elevated error rate,
-which we will discuss later.
+Looking into the success rate of our requests, we see some transient errors whose effect we consider negligible. However, Alibaba Cloud had a significantly elevated error rate, which we will discuss later. It is also important to mention that we did not observe any variations based on the time of day (see figure \ref{Fig:performance}).
 
 \begin{table}
 \centering
  \begin{tabularx}{1\textwidth}{p{4cm} X X X X X X}
- %\hline
- %\rowcolor{Gray}
  \textbf{Service} & \textbf{Total request} & \textbf{Success rate} & \textbf{Cold starts ratio} & \textbf{Parallel instances} & \textbf{StDev (parallel inst.)} \\
  \hline
  \hline
@@ -268,7 +237,6 @@ which we will discuss later.
  \hline
  GCP App Engine & 47000 & 1 & 0.049 & 29.402 & 5.985\\
  \hline
-
 \end{tabularx}
 \caption{Results multi test.}
 \label{Tab:multi}
@@ -278,8 +246,6 @@ which we will discuss later.
 \begin{table}
 \centering
  \begin{tabularx}{1\textwidth}{p{4cm} X X X X X X}
- %\hline
- %\rowcolor{Gray}
  \textbf{Service} & \textbf{Total request} & \textbf{Success rate} & \textbf{Cold starts ratio} & \textbf{Parallel instances} & \textbf{StDev (parallel inst.)} \\
  \hline
  \hline
@@ -305,18 +271,31 @@ which we will discuss later.
 \label{Tab:single}
 \end{table}
 
+\begin{figure}[h]
+\includegraphics[width=14cm]{perfovertime.png}
+\centering
+\caption{Performance over time of all services tested.}
+\label{Fig:performance}
+\end{figure}
+
+
 \subsection{Compute performance}
-In Figure 2 % todo check
+In Figure \ref{Fig:cputime}
 we see the cumulative frequencies for the image processing time
-as measured by the server, split by concurrency level and cold/warm starts.
+as measured by the server, split by concurrency level (single and multi test phase) and cold/warm starts.
 
 
-% todo figure 2:
-% explain single v multi in legend
+\begin{figure}[h]
+\includegraphics[width=14cm]{cputime.png}
+\centering
+\caption{Acumulative distribution of CPU time.}
+\label{Fig:cputime}
+\end{figure}
+
 
 \subsection{Overhead}
 
-In Figure 3 % todo check
+In Figure \ref{Fig:overhead}
 we see the cumulative frequencies for the overhead time
 (total roundtrip time - server processing time) % todo: maths
 split by concurrency level and cold/warm starts.
@@ -328,26 +307,35 @@ we atrribute the difference to time spent conducting a cold start.
 
 
 
+\begin{figure}[h]
+\includegraphics[width=14cm]{overhead.png}
+\centering
+\caption{Acumulative distribution of overhead time.}
+\label{Fig:overhead}
+\end{figure}
+
+
 
 \section{Discussion}
+\label{discussion}
 
 \subsection{Scaling}
-From Table 2 % table number?
+From Table \ref{Tab:multi}
 we observed elevated failure rates for Alibaba Function Compute.
-Their documentation % https://www.alibabacloud.com/help/doc-detail/51907.htm
+Their documentation \cite{ali}
 states they have a limit of 50 instances per service,
 and even though our client places a strict limit of 50 inflight requests at any point in time,
 their scheduler might not be keeping up
 in either reusing an instance or cleaning it up before the next request arrives.
 
-Also from Table 2 % table number
+Also from Table \ref{Tab:multi}
 we can see the average number of unique instances per test cycle.
 Ideally, this number would be 50,
 to match the number of parallel requests we are sending.
 
 On the low end,
 Azure Functions is notable for only starting 4 instances.
-This may be from a documented limitation % https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale
+This may be from a documented limitation \cite{azure}
 of only starting at most 1 instance per second with HTTP triggers.
 Their load balancers still hold the requests in queue,
 but they appear to be reluctant to start new instances even as sufficient time has passed.
@@ -359,7 +347,7 @@ However, their scheduler also took CPU utilitzation into account,
 limiting the usefulness of setting a higher concurrency level with our CPU intensive task.
 In hindsight, setting the concurrency level to 1 would have been a fairer comparison.
 
-From Figure 2 we can see for AWS, Azure, Zeit, and GCP Functions,
+From Figure \ref{Fig:cputime} we can see for AWS, Azure, Zeit, and GCP Functions,
 we saw good isolation of workloads,
 they performed similarly for warm requests at both concurrency levels.
 GCP Cloud Run saw an expected degradation in performance from handling multiple requests,
@@ -372,10 +360,10 @@ While Alibaba and IBM were serverely impacted.
 An often cited concern of using truly on-demand compute services is the cold start,
 when the platforms have to start up a new instance to handle increases in load.
 This is such a concern that some some platforms have specific features
-built to keep your instances warm, such as AWS Provisioned Concurrency % https://aws.amazon.com/about-aws/whats-new/2019/12/aws-lambda-announces-provisioned-concurrency/
+built to keep your instances warm, such as AWS Provisioned Concurrency \cite{ams}
 and Azure Functions Premium Plan.
 
-Our results in Figure 3 % number?
+Our results in Figure \ref{Fig:overhead}
 show that, as expected, in most cases,
 single concurrency cold starts are slower than warm starts
 and the start times are highly consistent.
@@ -386,7 +374,7 @@ which is reusable as long as instances are on the same machine,
 vs needing to retrieve the image over a network,
 but we don't have a solid way of testing this.
 
-What is unexpected is in Figure 2, % number ?
+What is unexpected is in Figure \ref{Fig:cputime},
 that that cold starts affect CPU performance.
 These instances consistently perform worse on a cold start,
 even as they are reused for future requests.
@@ -399,15 +387,15 @@ Its scaling is controlled by CPU utilization,
 and in our case a heavy workload pushes that up
 and limits the concurrent requests a single instance can handle.
 While it can scale to zero instances,
-each instance has a high (15 minute) startup fee % https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed
+each instance has a high (15 minute) startup fee \cite{gcp}
 resulting in higher costs for short spikes in traffic.
 
 The current generation of FaaS are built on a wide variety of technologies.
 AWS and GCP have publicly stated that they use their own VMs,
 Firecracker and gVisor respectively, to isolate workloads.
-The results from Figure 3 % number?
+The results from Figure \ref{Fig:overhead}
 show they provide a highly consistent environment even under load.
-Zeit Now uses AWS datacenters % https://zeit.co/docs/v2/network/regions-and-providers/
+Zeit Now uses AWS datacenters \cite{zn}
 for their serverless offering.
 They behave similarly to AWS Lambda
 and we believe that is what they use, but with the largest machine type.
@@ -442,6 +430,13 @@ they are at a lower level in the stack and don't provide the full functionality 
 \bibliography{references}
 \bibliographystyle{unsrt}
 
+
+%Questions for sean:
+%For some reason I cannot open sci hub in spain. Could you open this link (https://sci-hub.se/10.1002/cpe.4792) and send me a screenshoot or the titel of the paper? I will get it from uva lib.
+%Secction introducction: FaaS, CaaS, etc. Aren't the current definitins good enought?
+%Section results, overhead your comment % todo: maths. What do you mean?
+%Which is the colorful paper?, narrow description pls.
+%Methods section: It is necessary to mention web framework in the table 1 if its not mentioned in the text?
 
 
 \end{document}

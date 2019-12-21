@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.1)  19 DEC 2019 19:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.4.1)  21 DEC 2019 12:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -621,11 +621,7 @@ Package graphics Info: Driver file: pdftex.def on input line 99.
 \Gin@req@height=\dimen138
 \Gin@req@width=\dimen139
 )
-(./report.aux
-
-LaTeX Warning: Label `Fig:overhead' multiply defined.
-
-)
+(./report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
@@ -738,253 +734,289 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 70--71
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 72--73
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--75
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 76--77
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 
  []
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 82.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 82.
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 90--91
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--106
+
+ []
+
+
+LaTeX Warning: Citation `14' on page 2 undefined on input line 111.
+
+
+LaTeX Warning: Citation `https://sci-hub.se/10.1002/cpe.4792' on page 2 undefin
+ed on input line 113.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--116
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 100--101
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 125.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 125.
+
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
 
  []
 
 
-LaTeX Warning: Citation `14' on page 3 undefined on input line 102.
-
-
-LaTeX Warning: Citation `https://sci-hub.se/10.1002/cpe.4792' on page 3 undefin
-ed on input line 102.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 102--103
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 142--143
+Underfull \hbox (badness 10000) in paragraph at lines 163--165
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/bx/n/10.95 Web
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 \OT1/cmr/bx/n/10.95 Frame-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/bx/n/10.95 Instance
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/bx/n/10.95 Pyhon
  []
 
 
-Overfull \hbox (2.08708pt too wide) in paragraph at lines 178--178
+Overfull \hbox (2.08708pt too wide) in paragraph at lines 205--205
 []|\OT1/cmr/m/n/10.95 OpenWhisk| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/m/n/10.95 Alibaba
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/m/n/10.95 Function
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/m/n/10.95 Python
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/m/n/10.95 Python
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []|\OT1/cmr/m/n/10.95 App En-
  []
 
 
-Overfull \hbox (17.03455pt too wide) in paragraph at lines 178--179
+Overfull \hbox (17.03455pt too wide) in paragraph at lines 205--206
 [][] 
  []
 
-[4] [5]
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+
+Underfull \hbox (badness 10000) in paragraph at lines 216--217
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 []|\OT1/cmr/bx/n/10.95 Success
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 []|\OT1/cmr/bx/n/10.95 Cold
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 \OT1/cmr/bx/n/10.95 starts
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 []|\OT1/cmr/bx/n/10.95 Parallel
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 \OT1/cmr/bx/n/10.95 in-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 []|\OT1/cmr/bx/n/10.95 StDev
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
 \OT1/cmr/bx/n/10.95 (par-al-lel
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--287
+Underfull \hbox (badness 10000) in paragraph at lines 271--271
 []|\OT1/cmr/bx/n/10.95 Success
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--287
+Underfull \hbox (badness 10000) in paragraph at lines 271--271
 []|\OT1/cmr/bx/n/10.95 Cold
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--287
+Underfull \hbox (badness 10000) in paragraph at lines 271--271
 \OT1/cmr/bx/n/10.95 starts
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--287
+Underfull \hbox (badness 10000) in paragraph at lines 271--271
 []|\OT1/cmr/bx/n/10.95 Parallel
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--287
+Underfull \hbox (badness 10000) in paragraph at lines 271--271
 \OT1/cmr/bx/n/10.95 in-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--287
+Underfull \hbox (badness 10000) in paragraph at lines 271--271
 []|\OT1/cmr/bx/n/10.95 StDev
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 287--287
+Underfull \hbox (badness 10000) in paragraph at lines 271--271
 \OT1/cmr/bx/n/10.95 (par-al-lel
  []
 
-<./img/overhead.png, id=108, 1181.41376pt x 791.95876pt>
-File: ./img/overhead.png Graphic file (type png)
-<use ./img/overhead.png>
-Package pdftex.def Info: ./img/overhead.png  used on input line 313.
-(pdftex.def)             Requested size: 512.1496pt x 343.3271pt.
-
-Overfull \hbox (37.38745pt too wide) in paragraph at lines 313--315
- [] 
- []
-
+<./img/perfovertime.png, id=101, 853.1875pt x 612.2875pt>
+File: ./img/perfovertime.png Graphic file (type png)
+<use ./img/perfovertime.png>
+Package pdftex.def Info: ./img/perfovertime.png  used on input line 277.
+(pdftex.def)             Requested size: 398.33858pt x 285.86925pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./img/cputime.png, id=110, 1181.41376pt x 791.95876pt>
+<./img/cputime.png, id=104, 1181.41376pt x 791.95876pt>
 File: ./img/cputime.png Graphic file (type png)
 <use ./img/cputime.png>
-Package pdftex.def Info: ./img/cputime.png  used on input line 328.
-(pdftex.def)             Requested size: 512.1496pt x 343.3271pt.
-
-Overfull \hbox (37.38745pt too wide) in paragraph at lines 328--330
- [] 
- []
-
-[6]
+Package pdftex.def Info: ./img/cputime.png  used on input line 291.
+(pdftex.def)             Requested size: 398.33858pt x 267.01474pt.
+[4] [5]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[7 <./img/overhead.png>] [8 <./img/cputime.png>] (./report.bbl [9]
-Underfull \hbox (badness 2080) in paragraph at lines 53--57
+<./img/overhead.png, id=117, 1181.41376pt x 791.95876pt>
+File: ./img/overhead.png Graphic file (type png)
+<use ./img/overhead.png>
+Package pdftex.def Info: ./img/overhead.png  used on input line 316.
+(pdftex.def)             Requested size: 398.33858pt x 267.01474pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6 <./img/perfovertime.png>] [7 <./img/cputime.png>] [8 <./img/overhead.png>]
+(./report.bbl
+Underfull \hbox (badness 2080) in paragraph at lines 47--51
 []\OT1/cmr/m/n/10.95 Maciej Malawski; Kamil Figiela; Adam Gajek; Adam Zima.  Be
 nch-mark-
  []
 
+[9]
+Overfull \hbox (216.01837pt too wide) in paragraph at lines 59--64
+\OT1/cmtt/m/n/10.95 top-[]cloud-[]providers-[]2019-[]aws-[]microsoft-[]azure-[]
+google-[]cloud-[]ibm-[]makes-[]hybrid-[]move-[]salesforce-[]dominates-[]saas/$[
+]\OT1/cmr/m/n/10.95 . 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+[]\OT1/cmr/m/n/10.95 AWS Lambda.  AWS Lambda an-nounces Pro-vi-sioned Con-cur-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+\OT1/cmr/m/n/10.95 rency.  []$\OT1/cmtt/m/n/10.95 https : / / aws . amazon . co
+m / about-[]aws / whats-[]new / 2019 / 12 /
+ []
+
+
+Underfull \hbox (badness 3354) in paragraph at lines 94--97
+[]\OT1/cmr/m/n/10.95 Zeit Now.  Re-gions and Providers.  []$\OT1/cmtt/m/n/10.95
+ https : / / zeit . co / docs / v2 / network /
+ []
+
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 469.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 440.
  [10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 469.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 440.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 469.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 469.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 440.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 440.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 656ADB0EA79B6B8EAD2E9801830E1D8F;724.
+(rerunfilecheck)             Checksum: 5B3374999BE39DA0417E9699A4E4225B;633.
 
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 469.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 440.
  ) 
 Here is how much of TeX's memory you used:
- 7696 strings out of 494284
- 113782 string characters out of 6162694
- 220522 words of memory out of 5000000
- 10936 multiletter control sequences out of 15000+600000
- 9334 words of font info for 33 fonts, out of 8000000 for 9000
+ 7713 strings out of 494284
+ 113977 string characters out of 6162694
+ 230817 words of memory out of 5000000
+ 10947 multiletter control sequences out of 15000+600000
+ 8988 words of font info for 32 fonts, out of 8000000 for 9000
  376 hyphenation exceptions out of 8191
- 36i,11n,39p,685b,426s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,11n,39p,599b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on report.pdf (10 pages, 327290 bytes).
+/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on report.pdf (10 pages, 415224 bytes).
 PDF statistics:
- 194 PDF objects out of 1000 (max. 8388607)
- 169 compressed objects within 2 object streams
- 41 named destinations out of 1000 (max. 500000)
- 115 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 226 PDF objects out of 1000 (max. 8388607)
+ 200 compressed objects within 2 object streams
+ 47 named destinations out of 1000 (max. 500000)
+ 112 words of extra memory for PDF output out of 10000 (max. 10000000)
 

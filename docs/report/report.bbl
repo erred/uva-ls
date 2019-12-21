@@ -1,11 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{popular1}
-CloudFlare.
-\newblock {What Is Serverless Computing? | Serverless Definition}.
-\newblock \url{
-  https://www.cloudflare.com/learning/serverless/what-is-serverless/}.
-
 \bibitem{googleappengine}
 Prodan R. Sperk M.~Ostermann S.
 \newblock {Evaluating High-Performance Computing on Google App Engine}.
@@ -55,9 +49,50 @@ Maciej Malawski; Kamil Figiela; Adam Gajek;~Adam Zima.
 \newblock
   \url{https://www.icsr.agh.edu.pl/~malawski/CloudFunctionsHeteroPar17InformalProceedings.pdf}.
 
+\bibitem{popular1}
+CloudFlare.
+\newblock {What Is Serverless Computing? | Serverless Definition}.
+\newblock \url{
+  https://www.cloudflare.com/learning/serverless/what-is-serverless/}.
+
+\bibitem{hh}
+Larry Dignan.
+\newblock {Top cloud providers 2019: AWS, Microsoft Azure, Google Cloud; IBM
+  makes hybrid move; Salesforce dominates SaaS}.
+\newblock
+  \url{https://www.zdnet.com/article/top-cloud-providers-2019-aws-microsoft-azure-google-cloud-ibm-makes-hybrid-move-salesforce-dominates-saas/}.
+
 \bibitem{ii}
 Amazon~Web Services.
 \newblock {Square Enix Case Study}.
 \newblock \url{https://aws.amazon.com/solutions/case-studies/square-enix/}.
+
+\bibitem{ali}
+Alibaba~Cloud Documentation.
+\newblock {Limits}.
+\newblock \url{https://www.alibabacloud.com/help/doc-detail/51907.htm}.
+
+\bibitem{azure}
+Microsoft~Azure Documentation.
+\newblock {Azure Functions scale and hosting}.
+\newblock
+  \url{https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale}.
+
+\bibitem{ams}
+AWS Lambda.
+\newblock {AWS Lambda announces Provisioned Concurrency}.
+\newblock
+  \url{https://aws.amazon.com/about-aws/whats-new/2019/12/aws-lambda-announces-provisioned-concurrency/}.
+
+\bibitem{gcp}
+Google~Cloud Guides.
+\newblock {How Instances are Managed}.
+\newblock
+  \url{https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed}.
+
+\bibitem{zn}
+Zeit Now.
+\newblock {Regions and Providers}.
+\newblock \url{https://zeit.co/docs/v2/network/regions-and-providers/}.
 
 \end{thebibliography}
