@@ -2,7 +2,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1.3in]{geometry}
 \usepackage[hidelinks]{hyperref}
-%\usepackage{eurosym}
 \usepackage{caption}
 \usepackage{titling}
 \usepackage{xcolor,colortbl}
@@ -10,110 +9,78 @@
 \usepackage{changepage}
 \usepackage{multicol}
 \usepackage{graphicx}
-\graphicspath{ {./img/} }
+
 %------------------------------------------
+
+\graphicspath{ {./img/} }
 \captionsetup[table]{position=bottom}
 \setlength{\parindent}{0pt}
 \definecolor{Gray}{rgb}{0.7,0.7,0.7}
 \pretitle{\begin{center}\Large\bfseries}
+
 %------------------------------------------
 
-
-
 \title{
-  Serverless technologies comparison\\
+  Serverless technologies scaling comparison\\
   \large Large Systems project}
 \author{Sean Liao and Mar Badias}
-
 
 
 \begin{document}
 
 \maketitle
 
-%% TODO abstract
-%% TODO introduction
-  %% -> why our reaserch is relevant, what are this services exactly
-  %% -> why can we put Caas and FaaS in the same bag
-
-%% TODO related work
-%% TODO research question
-%% - business case/
-%% TODO methodology
-%% - variables
-%% - CPU
-%% - overhead / latencies
-%% - pricing model
-%% - test setup
-%% TODO results
-%% - data
-%% - pricing
-%% TODO discussion
-%% - applicability
-%% - billing
-%% - other tech
-%% - answer reaserch question
-%% TODO usage case
-%% TODO future work
-%% TODO conclusion
-%% TODO references
-
-%coses q haurien de quedar molt clares: cold starts
-
-
 
 \begin{abstract}
-Write abstrat here
+This research has tested and compared how different serverless services scale when there are spikes in traffic that increase the workload in a CPU bound environment. We have tested the flowing services: AWS Lambda, GCP Functions, Azure Functions, IBM Cloud Functions, Alibaba Cloud Function Compute, Zeit Now, GCP Cloud Run and GCP App Engine.
+
+We have focused in comparing the performance of the client's application and the overhead introduced by the platform, testing cold starts (when a new instance of the application is created) and warm starts (reusing previously created instances). We concluded that scaling affects heavily the performance and platform overhead of almost all services excluding AWS Lambda, which presents a stable behaviour under all the performed tests.
 \end{abstract}
 
-\newpage
 
 \section{Introduction}
 \label{introduction}
-
-% todo: narrow title scope
-% todo: define PaaS, FaaS, CaaS, cold start
-% todo: introduce common usecase: why people choose serverless
-% skip selection
 
 Public clouds are growing, and with it comes the latest push into serverless offerings. These come in many forms depending on the abstraction level, but they can largely be grouped into: long-lived containers, short-lived containers, functions as a service. \\
 
 Long-lived containers or Platform as a Service (PaaS) represent the first generation of serverless technologies. These can be full-fledged, stateful applications, packaged in containers. The clouds will take these and run them for you on VMs. Auto-scaling and load balancing is usually offered, but fast startup times are not guaranteed. These should be considered an alternative UI to the underlying VMs, which will be reflected in the pricing model (charge for underlying VMs). Examples: AWS Elastic Container service, GCP App Engine, Azure App Services, Alibaba Container Service. \\
 
-Functions as a Service (FaaS), currently the highest level of abstraction and the second generation of serverless technologies. Developers provide their application code for the clouds to compile, package, deploy, and run. These are short-lived and stateless, an instance may be started for every request and killed after it completes. Billing is only for the time it is running serving a request. Examples: AWS Lambda, GCP Cloud Functions, Azure Functions, Alibaba Function Compute, IBM Cloud Functions, Zeit Now.\\
+Functions as a Service (FaaS), currently the highest level of abstraction and the second generation of serverless technologies. Developers provide their application code for the clouds to compile, package, deploy and run. These are short-lived and stateless, an instance may be started for every request and killed after it completes. Billing is only for the time it is running serving a request. Examples: AWS Lambda, GCP Cloud Functions, Azure Functions, Alibaba Function Compute, IBM Cloud Functions, Zeit Now.\\
 
-Short-lived containers or Containers as a Service (CaaS). Is the newest technologies short-lived, stateless runtimes and a similar billing model. Where they differ from FaaS is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance. \\
+Short-lived containers or Containers as a Service (CaaS) is the newest technologies short-lived, stateless runtimes and a similar billing model. Where they differ from FaaS is that they introduce containers, giving developers control of the execution environment, allowing them to run languages or runtimes unsupported by FaaS. Examples: AWS Fargate, GCP Cloud Run, Azure Container Instance, Alibaba Elastic Container Instance. \\
 
 
-insert why people use serverless. \\
+With serverless architectures developers do not need to worry about managing, provisioning or purchasing servers. Moreover, their services offer more flexibility, quicker time to release and great scalability. \\
 
-Our reaserch will measure and analiyse its CPU performance, overhead and specially their capacity to scale when the workload increases. Scaling entails creating more instances, known as cold starts, and assigning new resources between them without influencing others' instances performance.
+
+Our research will measure, analyse and compare their CPU performance, platform overhead and specially their capacity to scale when the workload increases unexpectedly. Scaling entails creating more instances, known as \textbf{cold starts}, and assigning new resources to them and it should be done without influencing others' instances performance.
 
 
 \section{Related work}
 
 Serverless technologies have been subject of previous research.
 We can find good examples of PaaS analysis in \cite{googleappengine} and \cite{googleappengine2},
-where the reaserchers analize Google App Enginee performance with CPU-intensive applications.
+where the researchers analyze Google App Engine performance with CPU-intensive applications. \\
+
 CaaS have also been a topic of study,
 comparing them to long live containers or performance test among of different provides.
 We can find examples of this in \cite{cc} and \cite{dd}.
-Comparison between Faas and short-lived containers has also been analized
-but from a functionality point of view
-but oversimplificating it and not taking into account the performance \cite{ee}\cite{ff}\cite{gg}. \\
+Comparison between Faas and short-lived containers has also been analyzed
+but from a functionality point of view, oversimplificating it and not taking into account the performance \cite{ee}\cite{ff}\cite{gg}. \\
 
 FaaS on its own also has been subject of previous research.
 An excellent example is \cite{aa}
 where multiple serverless providers are continuously been benchmarked.
 Another example of a comparison of Faas providers is \cite{bb}.
-In \cite{14} the researches dicuss the advantages of using cloud services
-and AWS Lambada for systems that require higher resilance.
-Finally, is necessary to mention \cite{https://sci-hub.se/10.1002/cpe.4792},
-which fouses in its performance evaluation
+In \cite{num14} the researches discuss the advantages of using cloud services
+and AWS Lambada for systems that require higher resilence.
+Finally, is necessary to mention \cite{laltre},
+which focuses in its performance evaluation
 and also benchmarking the data transfer to storage and its lifetime of the major cloud functions providers. \\
 
-Aldought serverless performance has been heavily analized,
-to the best of our knowledge their scaling and its consequences to performance
+
+Although serverless performance has been heavily analyzed,
+to the best of our knowledge, their scaling and its consequences to performance
 and overhead have not been comprehensively analysed yet, which motivates our research.
 
 
@@ -132,7 +99,7 @@ When scaling out to meet demand,
 serverless platforms should isolate instances
 to provide a consistent level of performance.
 
-\item \textbf{Does scaling out affect platform overhead}
+\item \textbf{Does scaling out affect platform overhead?}
 Everything has a cost,
 what we hope to see is that scaling out does not severely degrade the platform's performance,
 in terms of instance management.
@@ -142,34 +109,32 @@ in terms of instance management.
 \section{Methods}
 \label{methods}
 
-Given the amount of services of this type in the current market we defined a selection criteria based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, globally reachable HTTP(S) endpoint, pay only for usage and autoscaling. \\
+Given the number of services of this type in the current market we defined a selection criteria based on the most popular features \cite{popular1} of serverless computing: dynamically managed runtimes, globally reachable HTTP(S) endpoint, pay only for usage and autoscaling. \\
 
-Having defined these characteristics, we selected the products that provide them offered by the top 5 cloud providers as of 2019 \cite{hh}: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally, we also included Zeit, a startup in the FaaS space popular for its streamlined experience. The products selected can be found in Table \ref{Tab:services}.
+Having defined these characteristics, we selected the products that provide them offered by the top 5 cloud providers as of 2019 \cite{hh}: Amazon Web Services (AWS), Google Cloud Platform (GCP), Microsoft Azure, Alibaba Cloud, and IBM Cloud. Additionally, we also included Zeit, a startup in the FaaS space popular for its streamlined experience. The products selected can be found in Table \ref{Tab:services}. \\
 
-As mentioned in section \ref{introduction}, the the pricing model for PaaS (charge for underlying VMs) does not fit in the 'Pay only for usage' defined in our selection criteria. However GCP App Engine offers the possiblitily to scale your applications to 0 when it is not been used so it fits into our selection criteria. \\
+As mentioned in section \ref{introduction}, the pricing model for PaaS (charge for underlying VMs) does not fit in the 'Pay only for usage' defined in our selection criteria. However GCP App Engine offers the possibility to scale your applications to zero when it is not been used so it fits into our selection criteria. \\
 
 Our choice of workload was an image resizing service implemented in Python, a real world \cite{ii}
-usecase and an often used example in what FaaS solutions are good for.
+use-case and an often used example in what FaaS solutions are good for.
 This is a more CPU intensive workload that
-doesn't rely on external services.
+does not rely on external services.
 
 We aimed to use the same code (excluding API adapters) for all platforms, running on the highest version of Python 3 available.
 We used the datacenters closest to Amsterdam,
-with machine types configured with 128MB of memory where available.
-
-
-Based on prior research % todo cite the colorful paper
+with machine types configured with 128MB of memory where available. Based on prior research \cite{laltre}
 machine size should not affect platform overhead. \\
 
 Our server code accepts HTTP requests with an image,
-resizes it, and responds with the resized image.
+resizes it and responds with the resized image.
 It also returns the time spent processing the image,
 and a unique identifier generated on startup.
 Our client code has a 2 phase testing cycle run every hour:
-phase 1 (which will be referred single test) sends 10 requests sequentially,
-phase 2 (which will be referred multi test) starts 50 workers in parallel to each send 10 requests sequentially.
+phase 1 (which will be referred as single test) sends 10 requests sequentially,
+phase 2 (which will be referred as multi test) starts 50 workers in parallel to each send 10 requests sequentially.
 For each request we recorded the total roundtrip time,
-in addition to the metadata returned by the server,
+in addition to the metadata returned by the server. \\
+
 We aimed to use a stable set of images with similar distributions
 of file sizes for both phases.
 
@@ -177,27 +142,27 @@ of file sizes for both phases.
 \begin{table}
 %\centering
 \begin{adjustwidth}{-0.9cm}{}
- \begin{tabularx}{1.1\textwidth}{p{1cm} X X X X X p{3cm}}
+ \begin{tabularx}{1.1\textwidth}{p{1cm} X X X X p{3cm}}
  %\hline
  %\rowcolor{Gray}
- \textbf{Type} & \textbf{Platform} & \textbf{Product} & \textbf{Web Framework} & \textbf{Instance Size} & \textbf{Pyhon runtime} & \textbf{Location of the DC} \\
+ \textbf{Type} & \textbf{Platform} & \textbf{Product} & \textbf{Instance Size} & \textbf{Pyhon runtime} & \textbf{Location of the DC} \\
  \hline
  \hline
- FaaS & AWS & Lambda & Custom & 128 MB & 3.8 & London, UK \\
+ FaaS & AWS & Lambda & 128 MB & 3.8 & London, UK \\
  \hline
- FaaS & GCP & Functions & Flask & 128 MB & 3.7 & St. Ghislain, BE \\
+ FaaS & GCP & Functions & 128 MB & 3.7 & St. Ghislain, BE \\
  \hline
- FaaS & Azure & Functions & Custom & 128 MB & 3.7 & NL \\
+ FaaS & Azure & Functions & 128 MB & 3.7 & NL \\
  \hline
- FaaS & IBM Cloud & Functions & OpenWhisk & 128 MB & 3.7 & London, UK\\
+ FaaS & IBM Cloud & Functions & 128 MB & 3.7 & London, UK\\
  \hline
- FaaS & Alibaba Cloud & Function Compute & Custom & 128 MB & 3.6 & Frankfurt, DE\\
+ FaaS & Alibaba Cloud & Function Compute  & 128 MB & 3.6 & Frankfurt, DE\\
  \hline
- FaaS & Zeit & Now & Python http.server  & 128 MB & 3.6 & Brussels, BE\\
+ FaaS & Zeit & Now  & 128 MB & 3.6 & Brussels, BE\\
  \hline
- CaaS & GCP & Cloud Run & Python http.server & 128 MB & 3.8 & St. Ghislain, BE\\
+ CaaS & GCP & Cloud Run & 128 MB & 3.8 & St. Ghislain, BE\\
  \hline
- PaaS & GCP & App Engine & Flask & 128 MB & 3.8 & St. Ghislain, BE\\
+ PaaS & GCP & App Engine & 128 MB & 3.8 & St. Ghislain, BE\\
  \hline
 
 \end{tabularx}
@@ -211,7 +176,7 @@ of file sizes for both phases.
 
 \section{Results}
 
-We ran our test over the course of 4 days (including weekdays and weekends). In table \ref{Tab:multi} and table \ref{Tab:single} we can find a summary of the multi and single phases of the test performance and the data gathered, which will be discussed in section \ref{discussion}. \\
+We ran our test over the course of 4 days (including weekdays and weekends). In table \ref{Tab:multi} and table \ref{Tab:single} we can find a summary of the multi and single phases of the test. \\
 
 Looking into the success rate of our requests, we see some transient errors whose effect we consider negligible. However, Alibaba Cloud had a significantly elevated error rate, which we will discuss later. It is also important to mention that we did not observe any variations based on the time of day (see figure \ref{Fig:performance}).
 
@@ -295,16 +260,10 @@ as measured by the server, split by concurrency level (single and multi test pha
 
 \subsection{Overhead}
 
-In Figure \ref{Fig:overhead}
-we see the cumulative frequencies for the overhead time
-(total roundtrip time - server processing time) % todo: maths
-split by concurrency level and cold/warm starts.
-With all else being equal,
-we atrribute the difference to time spent conducting a cold start.
-
-% todo figure 3:
-% explain single v multi in legend
-
+In Figure \ref{Fig:overhead} we see the cumulative frequencies for the overhead time
+(total roundtrip time - server processing time) 
+split by concurrency level(single or multi test phase) and cold/warm starts.
+With all else being equal, we attribute the difference to time spent conducting a cold start.
 
 
 \begin{figure}[h]
@@ -315,37 +274,37 @@ we atrribute the difference to time spent conducting a cold start.
 \end{figure}
 
 
-
 \section{Discussion}
 \label{discussion}
 
 \subsection{Scaling}
+\label{subscaling}
 From Table \ref{Tab:multi}
 we observed elevated failure rates for Alibaba Function Compute.
 Their documentation \cite{ali}
 states they have a limit of 50 instances per service,
 and even though our client places a strict limit of 50 inflight requests at any point in time,
 their scheduler might not be keeping up
-in either reusing an instance or cleaning it up before the next request arrives.
+in either reusing an instance or cleaning it up before the next request arrives. 
 
 Also from Table \ref{Tab:multi}
 we can see the average number of unique instances per test cycle.
 Ideally, this number would be 50,
-to match the number of parallel requests we are sending.
+to match the number of parallel requests we are sending. \\
 
 On the low end,
 Azure Functions is notable for only starting 4 instances.
 This may be from a documented limitation \cite{azure}
 of only starting at most 1 instance per second with HTTP triggers.
 Their load balancers still hold the requests in queue,
-but they appear to be reluctant to start new instances even as sufficient time has passed.
+but they appear to be reluctant to start new instances even as sufficient time has passed. \\
 
 At the high end,
 we configured GCP Cloud Run to accept up to 5 concurrent requests per instance,
 expecting it to utilise the available memory and CPU more efficiently as this was one of its main selling points.
 However, their scheduler also took CPU utilitzation into account,
 limiting the usefulness of setting a higher concurrency level with our CPU intensive task.
-In hindsight, setting the concurrency level to 1 would have been a fairer comparison.
+In hindsight, setting the concurrency level to 1 would have been a fairer comparison. \\
 
 From Figure \ref{Fig:cputime} we can see for AWS, Azure, Zeit, and GCP Functions,
 we saw good isolation of workloads,
@@ -361,7 +320,7 @@ An often cited concern of using truly on-demand compute services is the cold sta
 when the platforms have to start up a new instance to handle increases in load.
 This is such a concern that some some platforms have specific features
 built to keep your instances warm, such as AWS Provisioned Concurrency \cite{ams}
-and Azure Functions Premium Plan.
+and Azure Functions Premium Plan. \\
 
 Our results in Figure \ref{Fig:overhead}
 show that, as expected, in most cases,
@@ -372,7 +331,7 @@ with the exception of AWS Lambda which appears unaffected.
 We suspect this could be due to having the system image on disk,
 which is reusable as long as instances are on the same machine,
 vs needing to retrieve the image over a network,
-but we don't have a solid way of testing this.
+but we don't have a solid way of testing this. \\
 
 What is unexpected is in Figure \ref{Fig:cputime},
 that that cold starts affect CPU performance.
@@ -388,7 +347,7 @@ and in our case a heavy workload pushes that up
 and limits the concurrent requests a single instance can handle.
 While it can scale to zero instances,
 each instance has a high (15 minute) startup fee \cite{gcp}
-resulting in higher costs for short spikes in traffic.
+resulting in higher costs for short spikes in traffic. \\
 
 The current generation of FaaS are built on a wide variety of technologies.
 AWS and GCP have publicly stated that they use their own VMs,
@@ -404,7 +363,7 @@ all appear to be implemented on containers,
 as either their developer tooling or documentation
 hint at the possiblitily of customizing the runtime in not very well documentated ways.
 Both Alibaba and IBM exhibit similar characteristics of degraded performance under load,
-possibliy from poor isolation between workloads.
+possibliy from poor isolation between workloads. \\
 
 GCP Cloud Run is a fully managed container runtime implementing the Kubernetes Serving API,
 and the only service we tested that exposed the Docker runtime directly.
@@ -416,27 +375,45 @@ While other platforms provide container runtimes or hosted Kubernetes,
 they are at a lower level in the stack and don't provide the full functionality we were looking for.
 
 
+\section{Future work}
+
+There are still a lot of possiblities for continiuing the testing of serverless services that we could not cover because of shortage in time. We would like to suggest some further investigations:
+
+\begin{itemize}
+\item Test the serverless products with different workloads. This reserch has focused in testing using a CPU bound application but differents types of workloads can be used.
+\item Test different concurrency levels. This reserch has demonstarate that perfomance degrades with higher workloads but it would be intresting to investigate on how performance decreases with the increase of different workloads. 
+\item Test with diffent image sizes of the serverless services. This reasech has used 128 MB but the providers offer more. Platform overhead should not be affected but the performance of the client's application should \cite{laltre}.
+\item Reaserch on other's providers serverless solutions and keep conducting reaserch on all new serverless products as the cloud evolves rapidly and new products are lauch every day.
+
+\end{itemize}
+
 
 
 \section{Conclusion}
 
-% todo write conclusion
+After this reaserch we can answer our reaserch subquestions and question.
 
-% AWS lambda for stability
-% others might work if workload wasn't cpu bound
+\begin{itemize}
 
+\item \textbf{Does scaling out affect the performance of the services?} AWS Lambda and Zeit Now present no performance deterioration when scaling out. They present lower performance when the request implies a cold start but no differences can be found between a low and a high workload performance.
+
+However Azure, Alibaba Cloud Function Compute, IBM Cloud Function and GCP App Engine present a clear degradation of the performance when the workload is increased and more instances are created. As mentioned in section \ref{subscaling}, comparing GCP Cloud Run would not be a far comparison, but its worth mention that, even its performance with low concurrency is stable, it degradates when scaling out.
+
+\item \textbf{Does scaling out affect platform overhead?} AWS Lambda presents the most stable platform overhead, slightly increasing with cold starts, but mantaint over time. However all other platforms present high variablity in overhead when scaling out specially when multiple instances are created at the same time (multi cold).
+
+\end{itemize}
+
+Finally, our main reaserch quesion:
+
+\begin{itemize}
+\item \textbf{How do different platforms compare when with sudden spikes in traffic?}
+\end{itemize}
+In practice almost all platforms are heavily affected by spikes in traffic. The performance of the uploaded code decreases and its affected by the cold starts needed for iniciating new instances. AWS Lambda is the ony platform tested that has been able to mantain equal performance and overherad in all situations.  \\
+
+
+We can affirm that, under a CPU bound workload, AWS Lambda has presented the best performance stability(and for extension, instance isolation) and less overhead when increasing the workload in a CPU bound application.
 
 
 \bibliography{references}
 \bibliographystyle{unsrt}
-
-
-%Questions for sean:
-%For some reason I cannot open sci hub in spain. Could you open this link (https://sci-hub.se/10.1002/cpe.4792) and send me a screenshoot or the titel of the paper? I will get it from uva lib.
-%Secction introducction: FaaS, CaaS, etc. Aren't the current definitins good enought?
-%Section results, overhead your comment % todo: maths. What do you mean?
-%Which is the colorful paper?, narrow description pls.
-%Methods section: It is necessary to mention web framework in the table 1 if its not mentioned in the text?
-
-
 \end{document}

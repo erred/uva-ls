@@ -49,6 +49,17 @@ Maciej Malawski; Kamil Figiela; Adam Gajek;~Adam Zima.
 \newblock
   \url{https://www.icsr.agh.edu.pl/~malawski/CloudFunctionsHeteroPar17InformalProceedings.pdf}.
 
+\bibitem{num14}
+Wagner B.~Sood A.
+\newblock {Economics of resilient cloud services}.
+\newblock 2016 IEEE International Conference on Software Quality, Reliability
+  and Security Companion (QRS-C); 2016; Vienna, Austria.
+
+\bibitem{laltre}
+Figiela K. Gajek A. Obrok B.~Malawski M.
+\newblock {Performance evaluation of heterogeneous cloud functions}.
+\newblock 2018 Concurrency and Comutation: Practice and Experience, e4792.
+
 \bibitem{popular1}
 CloudFlare.
 \newblock {What Is Serverless Computing? | Serverless Definition}.
